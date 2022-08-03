@@ -9,7 +9,7 @@ class User(models.Model):
     email = models.EmailField()
     birthday = models.DateField()
 
-class PersonSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id','name','username','password','email','birthday']
