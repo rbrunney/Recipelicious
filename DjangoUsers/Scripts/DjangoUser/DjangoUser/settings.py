@@ -78,8 +78,9 @@ WSGI_APPLICATION = 'DjangoUser.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
-        'PASSWORD': '',
+        'NAME': 'djangousers',
+        'USER': 'djangologin',
+        'PASSWORD': 'abcd@12#F',
         'HOST': 'localhost', #To be changed once dockerized.
         'PORT': '3306',
     }
