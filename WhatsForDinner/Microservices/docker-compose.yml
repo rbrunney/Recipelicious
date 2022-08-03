@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+
+  shopping_list_service:
+    build: ./Shopping List Service/ShoppingListService
+    image: "shoppinglist-service:1.0"
+    environment:
+      - DB_HOST=shopping_list_db
+    networks:
+      - base-net
+    deploy:
+      replicas: 3
+
+  shopping_list_db:
+    image: "mongodb:latest"
+    container_name: shopping_list_db
+    environment:
+      - MONGO_INITDB_DATABASE=ShoppingList
+    networks:
+      - base-net
+      
+networks:
+  base-net:
+    - "whatsfordinner"
