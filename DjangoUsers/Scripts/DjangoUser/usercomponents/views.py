@@ -106,6 +106,72 @@ def updateUser(request, *args, **kwargs):
 
     return JsonResponse(response)
 
+@api_view(('GET',))
+def checkPw(request, *args, **kwargs):
+    #Path variables are stored in kwargs
+    print(kwargs.values())
+
+    #Gotta do encryption on the password - waiting on flutter frontend for it first
+    username = kwargs["username"]
+    password = kwargs["password"]
+
+    usertoVerify = User.objects.get(username=username)
+
+    userSerializer = UserSerializer(usertoVerify)
+
+
+    if(bcrypt.checkpw(password.encode('utf8'),userSerializer.data["password"].encode('utf8'))):
+        print("passwords match!")
+    else:
+        print("passwords do not match!")        
+        response = {
+            "message":"Login credentials incorrect",
+            "result": bcrypt.checkpw(password.encode('utf8'),userSerializer.data["password"].encode('utf8')),
+            "date-time": datetime.datetime.now()
+        }
+        return JsonResponse(response, status=401)
+
+
+
+    response = {
+        "message":"Login credentials correct",
+        "result": bcrypt.checkpw(password.encode('utf8'),userSerializer.data["password"].encode('utf8')),
+        "date-time": datetime.datetime.now()
+    }
+
+
+    return JsonResponse(response)
+
+@api_view(('DELETE',))
+def deleteUser(request, *args, **kwargs):
+    #need to do token verification so things don't blow up
+    #also more decryption for password
+    requestData = request.data
+
+    try:
+        userToDelete = User.objects.filter(username=requestData["username"])
+        userSerializer = UserSerializer(userToDelete)
+        if(bcrypt.checkpw(requestData["password"].encode("utf8"),userSerializer.data["password"].encode("utf8"))):
+            userToDelete.delete()
+            response = {
+                "message": "User Account Deleted",
+                "date-time": datetime.datetime.now()
+            }
+            JsonResponse(response)
+        else:
+            response = {
+                "message": "Incorrect password given",
+                "date-time": datetime.datetime.now()
+            }
+            JsonResponse(response, status=401)
+    except Exception as e:
+        print(e.with_traceback.__str__())
+        response = {
+            "message": "Account not found",
+            "date-time": datetime.datetime.now()
+        }
+        JsonResponse(response, status=404)
+
 
 
 
