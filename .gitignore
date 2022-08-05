@@ -7,7 +7,9 @@ __pycache__/
 
 #Ignoring djangoLib
 DjangoUsers/Lib/site-packages/
-Lib\site-packages
+Chat Room Service/Lib/site-packages/
+/Lib/site-packages
+Lib/site-packages
 # Log file
 *.log
 
