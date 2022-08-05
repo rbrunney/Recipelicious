@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\dngo\OneDrive - Neumont College of Computer Science\Neumont\Quarter 8\PRO290\WhatsForDinner\WhatsForDinner\DjangoUsers
+set VIRTUAL_ENV=C:\Users\dngo\OneDrive - Neumont College of Computer Science\Neumont\Quarter 8\PRO290\WhatsForDinner\WhatsForDinner\WhatsForDinner\Microservices\Chat Room Service
 
 if not defined PROMPT set PROMPT=$P$G
 
@@ -16,7 +16,7 @@ if defined _OLD_VIRTUAL_PROMPT set PROMPT=%_OLD_VIRTUAL_PROMPT%
 if defined _OLD_VIRTUAL_PYTHONHOME set PYTHONHOME=%_OLD_VIRTUAL_PYTHONHOME%
 
 set _OLD_VIRTUAL_PROMPT=%PROMPT%
-set PROMPT=(DjangoUsers) %PROMPT%
+set PROMPT=(Chat Room Service) %PROMPT%
 
 if defined PYTHONHOME set _OLD_VIRTUAL_PYTHONHOME=%PYTHONHOME%
 set PYTHONHOME=
