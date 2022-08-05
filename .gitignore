@@ -2,6 +2,11 @@
 *.class
 *.pyc
 
+#pycache ignore
+__pycache__/
+
+#Ignoring djangoLib
+DjangoUsers/Lib/site-packages/
 # Log file
 *.log
 
