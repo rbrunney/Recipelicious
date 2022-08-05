@@ -7,6 +7,7 @@ __pycache__/
 
 #Ignoring djangoLib
 DjangoUsers/Lib/site-packages/
+Lib\site-packages
 # Log file
 *.log
 
