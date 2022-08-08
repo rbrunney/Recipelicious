@@ -89,6 +89,8 @@ public class FridgeBll {
 
             Map<String, Object> result = new HashMap<>();
 
+            fridge.setFridgeID(oldFridge.getFridgeID());
+
             fridgeRepo.save(fridge);
 
             result.put("FridgeID", fridge.getFridgeID());
@@ -188,6 +190,8 @@ public class FridgeBll {
 
             }
 
+            fridgeRepo.save(fridge);
+
             Map<String, Object> result = new HashMap<>();
 
             result.put("FridgeID", fridge.getFridgeID());
@@ -219,8 +223,7 @@ public class FridgeBll {
                 fridge.getUserName().equals(FridgeUtil.decodeAuth(auth)[0])){
 
 
-
-            fridge.getIngredients().remove(ingredient);
+            fridge.getIngredients().removeIf(currentIngredient -> currentIngredient.getName().equals(ingredient.getName()));
 
             fridgeRepo.save(fridge);
 
