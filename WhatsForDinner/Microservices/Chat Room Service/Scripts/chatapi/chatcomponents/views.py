@@ -1,7 +1,11 @@
-from django.http.response import HttpResponse
+from collections import OrderedDict
+from datetime import datetime
+import json
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
-from chatcomponents.models import Person, Channels
+from chatcomponents.models import Person, Channels, ChannelSerializer
+import socketio
 
 # Create your views here.
 
@@ -24,6 +28,8 @@ def createRooms(request, *args, **kwargs):
     for person in requestData["invitedPeople"]:
         
         # newPerson = Person(userID=person["userID"], name=person["name"])
+        # Apparently you don't serialize person objects into the array field for Channels. 
+        # Go figure.
         newPerson = {
             "userID": person["userID"],
             "name": person["name"],
@@ -43,8 +49,33 @@ def createRooms(request, *args, **kwargs):
 
     channelToSave.save()
 
-    return HttpResponse("ok")
+    response = {
+        "message": f'{requestData["groupName"]} has been created',
+        "date-time": datetime.now()
+    }
+
+    return JsonResponse(response)
+
+@api_view(("GET",))
+def getUserRooms(request, *args, **kwargs):
+    userID = kwargs["id"]
+
+    serializer = ChannelSerializer(Channels.objects.filter(invitedPeople={"userID":userID})[0:50], many=True)
+
+    print(serializer.data)
 
 
+    responseList = []
 
 
+    for dictionary in serializer.data:
+        rawDict = OrderedDict(dictionary)
+        response = {
+            "_id": rawDict["_id"],
+            "groupName": rawDict["groupName"],
+            "invitedPeople": json.loads(rawDict["invitedPeople"])
+        }
+        responseList.append(response)
+
+
+    return JsonResponse(responseList, safe=False)

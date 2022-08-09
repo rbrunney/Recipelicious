@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from chatcomponents.views import createRooms
+from chatcomponents.views import createRooms, getUserRooms
+from socketio import Server
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('createRoom/', createRooms),
+    path('getUserRooms/<int:id>', getUserRooms),
+    #path('socket.io/', Server.handle_request)
 ]
