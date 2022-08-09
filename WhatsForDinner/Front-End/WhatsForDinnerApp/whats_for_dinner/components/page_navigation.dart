@@ -32,11 +32,7 @@ class _PageNavigation extends State<PageNavigation> {
         },
           children: [
             Container(
-              child: const Text(
-                'Home Page',
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
+              child: HomePage(),
             ),
             Container(
               child: const Text(
