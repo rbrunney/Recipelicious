@@ -25,6 +25,11 @@ class _PageNavigation extends State<PageNavigation> {
       child: Scaffold(
         body: PageView(
           controller: pageController,
+          onPageChanged: (newPage){
+          setState((){
+            _selectedIndex=newPage;
+          });
+        },
           children: [
             Container(
               child: const Text(
