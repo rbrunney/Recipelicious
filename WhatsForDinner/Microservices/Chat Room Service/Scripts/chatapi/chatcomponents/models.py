@@ -18,7 +18,7 @@ class Channels(models.Model):
 class ChannelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Channels
-        fields = ["_id","invitedPeople"]
+        fields = ["_id","groupName","invitedPeople"]
 
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
