@@ -45,7 +45,7 @@ def createRooms(request, *args, **kwargs):
 
     print(dataToSave)
 
-    channelToSave = Channels(groupName = requestData["groupName"], invitedPeople = personList)
+    channelToSave = Channels(groupName = requestData["groupName"], invitedPeople = personList, messages = [])
 
     channelToSave.save()
 
