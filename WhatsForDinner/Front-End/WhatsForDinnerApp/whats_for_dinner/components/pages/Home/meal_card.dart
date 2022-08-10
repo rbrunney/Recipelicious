@@ -29,8 +29,9 @@ class _MealCard extends State<MealCard> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 200),
+      constraints: const BoxConstraints(maxWidth: 300),
       child: Card(
+        elevation: 2,
         child: Column(
           children: [
             const Text('Name of Meal Here'),
@@ -40,30 +41,31 @@ class _MealCard extends State<MealCard> {
             const Text('This is a test description...'),
             Container(
               alignment: Alignment.center,
-              child: Row(children: [
-                IconButton(
-                  icon: Icon(_liked
-                      ? Icons.thumb_up
-                      : Icons.thumb_up_outlined),
-                  onPressed: () {
-                    setState(() {
-                      //need to make request dependent on state
-                      _liked = !_liked;
-                    });
-                  },
-                ),
-                const Text('Likes Go Here'),
-                IconButton(
-                  icon: Icon(_bookMarked
-                      ? Icons.bookmark 
-                      : Icons.bookmark_add_outlined),
-                  onPressed: () {
-                    setState(() {
-                      //need to make request dependent on state
-                      _bookMarked = !_bookMarked;
-                    });
-                  },
-                ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(_liked
+                        ? Icons.thumb_up
+                        : Icons.thumb_up_outlined),
+                    onPressed: () {
+                      setState(() {
+                        //need to make request dependent on state
+                        _liked = !_liked;
+                      });
+                    },
+                  ),
+                  const Text('Likes Go Here'),
+                  IconButton(
+                    icon: Icon(_bookMarked
+                        ? Icons.bookmark 
+                        : Icons.bookmark_add_outlined),
+                    onPressed: () {
+                      setState(() {
+                        //need to make request dependent on state
+                        _bookMarked = !_bookMarked;
+                      });
+                    },
+                  ),
               ]),
             ),
           ],
