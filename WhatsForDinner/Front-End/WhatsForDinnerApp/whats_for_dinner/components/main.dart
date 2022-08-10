@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'page_navigation.dart';
+import 'util/page_navigation.dart';
 
 void main() {
   runApp(const WhatsForDinner());

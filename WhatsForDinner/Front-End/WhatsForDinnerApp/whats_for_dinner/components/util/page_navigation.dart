@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/Home/home_page.dart';
+import '../pages/Home/home_page.dart';
 
 class PageNavigation extends StatefulWidget {
   const PageNavigation({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _PageNavigation extends State<PageNavigation> {
         },
           children: [
             Container(
-              child: HomePage(),
+              child: HomePage()
             ),
             Container(
               child: const Text(

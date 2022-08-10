@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../meal_card.dart';
+import 'meal_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,8 +11,20 @@ class HomePage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: const [
-          Text('Home Page'),
-          MealCard()
+          // Text('Home Page'),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
+          MealCard(),
         ],
       ),
     );
