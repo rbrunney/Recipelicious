@@ -77,6 +77,17 @@ def testChannels(sid, data):
 
     channel.save()
 
+@sio.on("connectToRoom")
+def checkRoom(sid, data):
+    chatroom = data["groupName"]
+    # Do objectIds here. This is for testing purposes and in case someone adds a group that's named the same as someone else's.
+    channel = Channels.objects.get(groupName = chatroom)
+    channelSerializer = ChannelSerializer(channel)
+    requestingUser = data["userID"]
+    data = channelSerializer.data
+    userList = json.loads(data["invitedPeople"])
+
+
 
 
 

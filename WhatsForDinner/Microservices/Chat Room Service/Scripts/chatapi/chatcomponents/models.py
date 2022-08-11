@@ -27,6 +27,14 @@ class ChannelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Channels
         fields = ["_id","groupName","invitedPeople","messages"]
+    def create(self, validated_data):
+        return Channels(**validated_data)
+    def update(self, instance, validated_data):
+        instance.groupName = validated_data.get("groupName", instance.groupName)
+        instance.invitedPeople = validated_data.get("invitedPeople", instance.invitedPeople)
+        instance.messages = validated_data.get("messages", instance.messages)
+        instance.save()
+        return instance
 
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
