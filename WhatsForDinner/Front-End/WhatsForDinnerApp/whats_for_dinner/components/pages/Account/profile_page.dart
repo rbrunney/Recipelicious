@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'account_header.dart';
+import 'your_meals_switch.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -19,79 +21,8 @@ class _ProfilePage extends State<ProfilePage> {
           alignment: Alignment.topRight,
           child: const Icon(Icons.settings_outlined, size: 25),
         ),
-        Container(
-          margin: const EdgeInsets.only(top: 25, left: 5, right: 5),
-          child: Row(children: [
-            Container(
-              child: const Expanded(
-                flex: 1,
-                child: Icon(
-                  Icons.account_circle_outlined,
-                  size: 85,
-                ),
-              ),
-            ),
-            Container(
-              child: Expanded(
-                flex: 2,
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.bottomLeft,
-                        child: const Text(
-                          'Hello,',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomLeft,
-                        child: const Text(
-                          'ROBERT BRUNNEY',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ]),
-        ),
-        Container(
-          child: Row(
-            children: [
-              Container(
-                child: const Expanded(
-                  flex: 2,
-                  child: Text('Your Meals'),
-                ),
-              ),
-              Container(
-                child: Expanded(
-                  child: Switch(
-                    value: isSwitched,
-                    onChanged: ((value) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                    }),
-                    activeTrackColor: Colors.grey,
-                    activeColor: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const AccountHeader(),
+        const YourMealsSwitch(),
       ]),
     );
   }
