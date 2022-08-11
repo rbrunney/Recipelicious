@@ -79,6 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': "userchannels",
+        'ENFORCE_SCHEMA': False,
         # 'CLIENT': {
         #     'host': 'host-name or ip address',
         #     'port': port_number,
