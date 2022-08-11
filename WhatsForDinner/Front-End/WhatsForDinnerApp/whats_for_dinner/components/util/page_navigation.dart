@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../pages/Home/home_page.dart';
+import '../pages/Account/profile_page.dart';
 
 class PageNavigation extends StatefulWidget {
   const PageNavigation({Key? key}) : super(key: key);
@@ -49,11 +50,7 @@ class _PageNavigation extends State<PageNavigation> {
               ),
             ),
             Container(
-              child: const Text(
-                'Profile Page',
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
+              child: ProfilePage(),
             ),
           ],
         ),
