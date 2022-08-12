@@ -25,6 +25,13 @@ class ChatLog extends StatelessWidget {
               ),
             ),
             Text(chatName),
+            Container (
+              child: const Expanded (
+                child: SingleChildScrollView(
+                  
+                )
+              )
+            )
           ]
         )   
       )

@@ -6,7 +6,7 @@ class MealCard extends StatefulWidget {
       {Key? key,
       this.liked = false,
       this.bookMarked = false,
-      this.imageUrl = ""})
+      this.imageUrl = "https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg"})
       : super(key: key);
 
   final bool liked;
@@ -40,7 +40,7 @@ class _MealCard extends State<MealCard> {
             Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                    builder: (BuildContext context) => MealInfo()));
+                    builder: (BuildContext context) => MealInfo(imgUrl: widget.imageUrl,)));
           },
           child: Card(
             margin: const EdgeInsets.all(10),
