@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Back/meal_info.dart';
 
 class MealCard extends StatefulWidget {
   const MealCard({
@@ -34,18 +35,7 @@ class _MealCard extends State<MealCard> {
         child: GestureDetector(
           onTap: () {
             Navigator.push(context, MaterialPageRoute<void>(
-              builder: (BuildContext context) {
-                return Scaffold(
-                  body: Center(
-                    child: TextButton(
-                      child: Text('Icon Needs to Go Here'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                );
-              },
+              builder: (BuildContext context) => MealInfo()
             ));
           },
           child: Card(

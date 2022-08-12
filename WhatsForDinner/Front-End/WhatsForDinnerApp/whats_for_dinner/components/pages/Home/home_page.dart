@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'meal_card.dart';
+import 'Meal Cards/Front/meal_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  // Make request to get list of meals
 
   @override
   Widget build(BuildContext build) {
