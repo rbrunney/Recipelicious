@@ -68,7 +68,7 @@ class _PageNavigation extends State<PageNavigation> {
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey,
+          unselectedItemColor: Colors.blueGrey,
           onTap: onTapped,
         ),
       ),
