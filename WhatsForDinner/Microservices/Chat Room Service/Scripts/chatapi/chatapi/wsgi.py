@@ -38,9 +38,6 @@ app = socketio.WSGIApp(sio, application)
 #If you want to add a new @event decorator, be sure to do it before you actually run the socketIO server
 #other wise you'll have none of them loaded in the actual server object.
 
-def mergeDict(dict1, dict2):
-    result = dict1 | dict2
-    return result
 
 @sio.on("chat message")
 def handleMessage(sid, data):
