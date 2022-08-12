@@ -10,6 +10,7 @@ class Person(models.Model):
 
 class ChatMessages(models.Model):
     userID = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=2048)
     content = models.CharField(max_length=6000)
     postTime = models.DateTimeField()
 

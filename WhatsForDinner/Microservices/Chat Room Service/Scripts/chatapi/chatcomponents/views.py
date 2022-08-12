@@ -62,7 +62,7 @@ def getUserRooms(request, *args, **kwargs):
 
     serializer = ChannelSerializer(Channels.objects.filter(invitedPeople={"userID":userID})[0:50], many=True)
 
-    print(serializer.data)
+    # print(serializer.data)
 
 
     responseList = []
