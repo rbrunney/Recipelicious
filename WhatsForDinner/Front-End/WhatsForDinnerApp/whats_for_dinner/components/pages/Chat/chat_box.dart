@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import '../Chat/chat_log.dart';
 
 class ChatBox extends StatelessWidget {
   String chatBoxName;
@@ -31,7 +33,12 @@ class ChatBox extends StatelessWidget {
                 ))
           ])),
       onTap: () {
-        print('This is a test');
+        Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: ChatLog(chatName: chatBoxName,),
+            ));
       },
     );
   }

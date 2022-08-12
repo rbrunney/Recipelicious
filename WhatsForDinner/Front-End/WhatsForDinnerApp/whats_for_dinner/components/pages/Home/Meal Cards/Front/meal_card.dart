@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import '../Back/meal_info.dart';
 
 class MealCard extends StatefulWidget {
-  const MealCard({
-    Key? key,
-    this.liked = false,
-    this.bookMarked = false,
-  }) : super(key: key);
+  const MealCard(
+      {Key? key,
+      this.liked = false,
+      this.bookMarked = false,
+      this.imageUrl = ""})
+      : super(key: key);
 
   final bool liked;
   final bool bookMarked;
+  final String imageUrl;
 
   @override
   _MealCard createState() => _MealCard();
@@ -18,6 +20,7 @@ class MealCard extends StatefulWidget {
 class _MealCard extends State<MealCard> {
   late bool _liked;
   late bool _bookMarked;
+  late String _imageUrl;
 
   @override
   void initState() {
@@ -34,9 +37,10 @@ class _MealCard extends State<MealCard> {
         ),
         child: GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute<void>(
-              builder: (BuildContext context) => MealInfo()
-            ));
+            Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                    builder: (BuildContext context) => MealInfo()));
           },
           child: Card(
             margin: const EdgeInsets.all(10),
@@ -51,7 +55,7 @@ class _MealCard extends State<MealCard> {
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)),
                   child: Image.network(
-                    "https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg",
+                    widget.imageUrl,
                     width: 350,
                     height: 150,
                     fit: BoxFit.cover,
