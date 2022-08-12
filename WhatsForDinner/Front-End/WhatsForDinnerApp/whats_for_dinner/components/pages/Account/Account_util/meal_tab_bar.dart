@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Home/Meal Cards/Front/meal_card.dart';
+import '../../Home/Meal Cards/Front/meal_card.dart';
 import 'add_floating_button.dart';
 
 class MealAppBar extends StatelessWidget {

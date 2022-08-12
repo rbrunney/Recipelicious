@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'account_header.dart';
-import 'your_meals_switch.dart';
-import 'meal_tab_bar.dart';
+import 'Account_util/account_header.dart';
+import 'Account_util/meal_tab_bar.dart';
+import 'Settings/settings_page.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -20,7 +21,17 @@ class _ProfilePage extends State<ProfilePage> {
         Container(
           margin: const EdgeInsets.only(right: 15, top: 15),
           alignment: Alignment.topRight,
-          child: const Icon(Icons.settings_outlined, size: 25),
+          child: IconButton(
+            icon: const Icon(Icons.settings_outlined, size: 25),
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child: const SettingsPage()),
+              );
+            },
+          ),
         ),
         const AccountHeader(),
         const MealAppBar(),
