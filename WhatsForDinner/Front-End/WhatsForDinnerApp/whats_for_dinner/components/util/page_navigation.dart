@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../pages/Home/home_page.dart';
+import '../pages/Account/profile_page.dart';
+import '../pages/Chat/chat_page.dart';
 
 class PageNavigation extends StatefulWidget {
   const PageNavigation({Key? key}) : super(key: key);
@@ -25,22 +27,14 @@ class _PageNavigation extends State<PageNavigation> {
       child: Scaffold(
         body: PageView(
           controller: pageController,
-          onPageChanged: (newPage){
-          setState((){
-            _selectedIndex=newPage;
-          });
-        },
+          onPageChanged: (newPage) {
+            setState(() {
+              _selectedIndex = newPage;
+            });
+          },
           children: [
-            Container(
-              child: HomePage()
-            ),
-            Container(
-              child: const Text(
-                'Chat Page',
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            Container(child: HomePage()),
+            Container(child: ChatPage()),
             Container(
               child: const Text(
                 'Search Page',
@@ -49,11 +43,7 @@ class _PageNavigation extends State<PageNavigation> {
               ),
             ),
             Container(
-              child: const Text(
-                'Profile Page',
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
+              child: ProfilePage(),
             ),
           ],
         ),
@@ -78,7 +68,7 @@ class _PageNavigation extends State<PageNavigation> {
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey,
+          unselectedItemColor: Colors.blueGrey,
           onTap: onTapped,
         ),
       ),
