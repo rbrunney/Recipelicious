@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'account_header.dart';
 import 'your_meals_switch.dart';
+import 'meal_tab_bar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _ProfilePage extends State<ProfilePage> {
           child: const Icon(Icons.settings_outlined, size: 25),
         ),
         const AccountHeader(),
-        const YourMealsSwitch(),
+        const MealAppBar(),
       ]),
     );
   }
