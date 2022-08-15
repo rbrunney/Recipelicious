@@ -1,7 +1,9 @@
 python3 -m venv .
 pip install these.
 python-socketio
+eventlet
+py-eureka-client
 Django
 djangorestframework
 djongo
-pymongo-3.12.1
+pymongo==3.12.1
