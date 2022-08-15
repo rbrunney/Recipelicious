@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class ChatLog extends StatelessWidget {
@@ -24,7 +22,12 @@ class ChatLog extends StatelessWidget {
                 },
               ),
             ),
-            Text(chatName),
+            Text(
+              chatName,
+              style: const TextStyle(
+                fontSize: 20
+              )
+            ),
             Container (
               child: const Expanded (
                 child: SingleChildScrollView(
