@@ -12,7 +12,7 @@ class WhatsForDinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Whats For Dinner',
       theme: ThemeData.dark(),
       home: const PageNavigation(),
     );
