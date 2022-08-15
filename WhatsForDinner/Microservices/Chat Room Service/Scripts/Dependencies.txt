@@ -1,0 +1,6 @@
+python3 -m venv .
+pip install these.
+python-socketio
+djangorestframework
+djongo
+pymongo-3.12.1

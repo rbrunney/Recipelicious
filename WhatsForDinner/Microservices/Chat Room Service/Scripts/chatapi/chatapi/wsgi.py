@@ -12,7 +12,7 @@ import os
 import socketio
 import eventlet
 import eventlet.wsgi
-import redis
+# import redis
 from chatcomponents.models import Person, Channels, ChannelSerializer, ChatMessages
 import djongo.database
 from django.core.wsgi import get_wsgi_application
