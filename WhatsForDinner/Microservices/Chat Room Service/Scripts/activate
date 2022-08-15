@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\dngo\OneDrive - Neumont College of Computer Science\Neumont\Quarter 8\PRO290\WhatsForDinner\WhatsForDinner\WhatsForDinner\Microservices\Chat Room Service"
+VIRTUAL_ENV="C:\Users\dngo\Documents\PRO290\WhatsForDinner\WhatsForDinner\Microservices\Chat Room Service"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
