@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../Edit_pages/edit_name.dart';
+import '../Edit_pages/edit_info_page.dart';
 import 'package:page_transition/page_transition.dart';
+
+import 'account_edit_info.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -20,12 +22,10 @@ class SettingsPage extends StatelessWidget {
                 },
               ),
             ),
-            Container(
-              child: const Text(
-                "Settings",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
+            const Text(
+              "Settings",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25),
@@ -38,36 +38,51 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
             ),
-            Row(children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: const Text(
-                    "Robert Brunney",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            Column(
+              children: const [
+                Text(
+                  "Name",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: IconButton(
-                  icon: const Icon(Icons.edit_outlined),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const EditNamePage()),
-                    );
-                  },
+                AccountEditInfo(
+                    accountInfo: "Robert Brunney", editProfileInfo: "Name"),
+              ],
+            ),
+            Column(
+              children: const [
+                Text(
+                  "Email",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
-              )
-            ]),
+                AccountEditInfo(
+                    accountInfo: "Rbrunney@student.neumont.edu",
+                    editProfileInfo: "Email"),
+              ],
+            ),
+            Column(
+              children: const [
+                Text(
+                  "Password",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                AccountEditInfo(
+                    accountInfo: "***********", editProfileInfo: "Password"),
+              ],
+            ),
+            Column(
+              children: const [
+                Text(
+                  "Birthday",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                AccountEditInfo(
+                    accountInfo: "10/1/2001", editProfileInfo: "Birthday"),
+              ],
+            ),
           ],
         ),
       ),
