@@ -1,5 +1,0 @@
-django
-djangorestframework
-mysql-connector-python
-mysqlclient
-bcrypt
