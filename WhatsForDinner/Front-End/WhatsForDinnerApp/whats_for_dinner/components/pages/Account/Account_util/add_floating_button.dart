@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class AddFloatingButton extends StatelessWidget {
-  const AddFloatingButton({Key? key}) : super(key: key);
+  Icon btnIcon;
+  Widget widgetPage;
+  AddFloatingButton({
+    Key? key,
+    this.btnIcon = const Icon(Icons.add),
+    this.widgetPage = const SafeArea(
+      child: Scaffold(
+        body: Text('What the nut check yourslef')
+      )    
+    )
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +22,14 @@ class AddFloatingButton extends StatelessWidget {
       child: FloatingActionButton(
         backgroundColor: Colors.tealAccent,
         onPressed: () {
-          print("This is a test, put your hands up!");
+          Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.bottomToTop,
+              child: widgetPage
+            ));
         },
-        child: const Icon(Icons.add),
+        child: btnIcon,
       ),
     );
   }

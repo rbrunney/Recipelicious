@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../Account/Account_util/add_floating_button.dart';
 import 'chat_box.dart';
 import 'search_bar.dart';
 
@@ -10,6 +11,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: AddFloatingButton(btnIcon: const Icon(Icons.group_add_outlined),),
         body: SingleChildScrollView(
           child: Column(
             children: [

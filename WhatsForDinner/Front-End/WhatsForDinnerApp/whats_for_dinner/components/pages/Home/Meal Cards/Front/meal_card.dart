@@ -20,7 +20,6 @@ class MealCard extends StatefulWidget {
 class _MealCard extends State<MealCard> {
   late bool _liked;
   late bool _bookMarked;
-  late String _imageUrl;
 
   @override
   void initState() {
