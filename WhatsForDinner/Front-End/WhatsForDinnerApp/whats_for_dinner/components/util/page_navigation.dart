@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../pages/Home/home_page.dart';
 import '../pages/Account/profile_page.dart';
 import '../pages/Chat/chat_page.dart';
+import '../pages/Search_Meal/search_page.dart';
 
 class PageNavigation extends StatefulWidget {
   const PageNavigation({Key? key}) : super(key: key);
@@ -32,15 +33,11 @@ class _PageNavigation extends State<PageNavigation> {
               _selectedIndex = newPage;
             });
           },
-          children: [
+          children:  [
             Container(child: HomePage()),
             Container(child: ChatPage()),
             Container(
-              child: const Text(
-                'Search Page',
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
+              child: SearchPage() 
             ),
             Container(
               child: ProfilePage(),
