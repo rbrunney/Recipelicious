@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,14 +81,15 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': "userchannels",
         'ENFORCE_SCHEMA': False,
-        # 'CLIENT': {
-        #     'host': 'host-name or ip address',
-        #     'port': port_number,
-        #     'username': 'db-username',
-        #     'password': 'password',
-        #     'authSource': 'db-name',
-        #     'authMechanism': 'SCRAM-SHA-1'
-        # },
+        #comment out for local use
+        'CLIENT': {
+            'host': os.environ.get("MONGO_HOST"),
+            'port': int(os.environ.get("MONGO_PORT")),
+            # 'username': os.environ.get("MONGO_USER"),
+            # 'password': os.environ.get("MONGO_PASS"),
+            # 'authSource': os.environ.get("MONGO_DB_NAME"),
+            # 'authMechanism': 'SCRAM-SHA-1'
+        },
         #Update with proper connection info once we get docker going.
     }
 }

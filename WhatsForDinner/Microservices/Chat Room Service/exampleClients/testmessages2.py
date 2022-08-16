@@ -23,7 +23,7 @@ def disconnectMessage():
 def messsageRecieved(data):
     print(data)
 
-sio.connect("http://localhost:8000/", wait_timeout=10)
+sio.connect("http://localhost:5001/", wait_timeout=10)
 
 
 @sio.on("room-response")
@@ -36,6 +36,7 @@ while(True):
         "groupName": "ohgod",
         "message":{
             "userID":3,
+            "name":"David",
             "content": message,
             "postTime": str(datetime.now(tz=pytz.UTC))
         }

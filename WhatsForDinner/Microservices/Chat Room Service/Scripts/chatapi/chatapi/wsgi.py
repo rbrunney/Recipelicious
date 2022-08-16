@@ -182,8 +182,12 @@ def sendLoadedMessage(sid, data):
 
         # print(userName)
 
+socketIOPort = 8000
+
+# if os.environ.get("SOCKET_IO_PORT") != None:
+#     socketIOPort = int(os.environ.get("SOCKET_IO_PORT"))
 
 
 #This just lets us run this in parallel with django on the same port.
 # eventlet.monkey_patch(socket=True)
-eventlet.wsgi.server(eventlet.listen(('', 8000)), app)
+eventlet.wsgi.server(eventlet.listen(('', socketIOPort)), app)
