@@ -116,6 +116,7 @@ class _ChatLog extends State<ChatLog> {
                                 ChatBubble(
                                   margin: const EdgeInsets.only(
                                     right: 10,
+                                    left: 10,
                                     top: 5,
                                     bottom: 5,
                                   ),
