@@ -37,6 +37,7 @@ dependencies:
   page_transition: ^2.0.9
   socket_io_client: ^2.0.0
   flutter_chat_bubble: ^2.0.0
+  font_awesome_flutter: ^10.1.0
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +56,10 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  fonts:
+      - family: CustomIcons
+        fonts:
+          - asset: fonts/CustomIcons.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

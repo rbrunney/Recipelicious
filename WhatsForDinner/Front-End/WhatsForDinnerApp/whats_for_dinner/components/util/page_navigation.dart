@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../pages/Home/home_page.dart';
 import '../pages/Account/profile_page.dart';
 import '../pages/Chat/chat_page.dart';
+import '../pages/Pantry/pantry_page.dart';
 import '../pages/Search_Meal/search_page.dart';
+import 'custom_icons.dart';
 
 class PageNavigation extends StatefulWidget {
   const PageNavigation({Key? key}) : super(key: key);
@@ -33,15 +36,12 @@ class _PageNavigation extends State<PageNavigation> {
               _selectedIndex = newPage;
             });
           },
-          children:  [
-            Container(child: HomePage()),
-            Container(child: ChatPage()),
-            Container(
-              child: SearchPage() 
-            ),
-            Container(
-              child: ProfilePage(),
-            ),
+          children: const [
+            HomePage(),
+            ChatPage(),
+            SearchPage(),
+            PantryPage(),
+            ProfilePage(),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -57,6 +57,10 @@ class _PageNavigation extends State<PageNavigation> {
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
               label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CustomIcons.carrot),
+              label: 'Pantry'
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle_outlined),
