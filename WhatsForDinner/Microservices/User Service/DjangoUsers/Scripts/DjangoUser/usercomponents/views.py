@@ -46,7 +46,7 @@ def createUser(request, *args, **kwargs):
         return JsonResponse(response, status=400)
 
     userSerializer = UserSerializer(savedUser)
-    print(personSerializer.data)
+    # print(userSerializer.data)
 
     response = {
         "message": "Account Created",
@@ -115,7 +115,16 @@ def checkPw(request, *args, **kwargs):
     username = kwargs["username"]
     password = kwargs["password"]
 
-    usertoVerify = User.objects.get(username=username)
+    usertoVerify = User()
+
+    try:
+        usertoVerify = User.objects.get(username=username)
+    except:
+        response = {
+            "message":"Nonexistent user",
+            "date-time": datetime.datetime.now()
+        }
+        return JsonResponse(response, status=404)
 
     userSerializer = UserSerializer(usertoVerify)
 
@@ -157,21 +166,41 @@ def deleteUser(request, *args, **kwargs):
                 "message": "User Account Deleted",
                 "date-time": datetime.datetime.now()
             }
-            JsonResponse(response)
+            return JsonResponse(response)
         else:
             response = {
                 "message": "Incorrect password given",
                 "date-time": datetime.datetime.now()
             }
-            JsonResponse(response, status=401)
+            return JsonResponse(response, status=401)
     except Exception as e:
         print(e.with_traceback.__str__())
         response = {
             "message": "Account not found",
             "date-time": datetime.datetime.now()
         }
-        JsonResponse(response, status=404)
+        return JsonResponse(response, status=404)
 
 
+@api_view(("GET",))
+def getUser(request, *args, **kwargs):
+    userId = kwargs["id"]
+    user = User()
 
-
+    try:
+        user = User.objects.get(id=userId)
+    except Exception as e:
+        print(e.with_traceback.__str__())
+        response = {
+            "message": "Account not found",
+            "date-time": datetime.datetime.now()
+        }
+        return JsonResponse(response, status=404)
+    userSerializer = UserSerializer(user)
+    response = {
+        'name': userSerializer.data["name"],
+        'username': userSerializer.data["username"],
+        'email': userSerializer.data["email"],
+        'birthday': userSerializer.data["birthday"]
+    }
+    return JsonResponse(response)

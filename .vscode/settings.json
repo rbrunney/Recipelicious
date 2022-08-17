@@ -1,6 +1,7 @@
 {
     "python.analysis.extraPaths": [
         "./DjangoUsers/Scripts/DjangoUser",
-        "./WhatsForDinner/Microservices/Chat Room Service/Scripts/chatapi"
+        "./WhatsForDinner/Microservices/Chat Room Service/Scripts/chatapi",
+        "./WhatsForDinner/Microservices/User Service/DjangoUsers/Scripts/DjangoUser"
     ]
 }

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,14 +76,22 @@ WSGI_APPLICATION = 'DjangoUser.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+print(os.environ.get("MYSQL_HOST"))
+print(os.environ.get("MYSQL_PORT"))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangousers',
-        'USER': 'djangologin',
-        'PASSWORD': 'abcd@12#F',
-        'HOST': 'localhost', #To be changed once dockerized.
-        'PORT': '3306',
+        # 'NAME': 'djangousers',
+        'NAME': os.environ.get("MYSQL_DBNAME"),
+        # 'USER': 'djangologin',
+        'USER': os.environ.get("MYSQL_USER"),
+        # 'PASSWORD': 'abcd@12#F',
+        'PASSWORD': os.environ.get("MYSQL_PASS"),
+        # 'HOST': 'localhost', #To be changed once dockerized.
+        'HOST': os.environ.get("MYSQL_HOST"),
+        # 'PORT': '3306',
+        'PORT': os.environ.get("MYSQL_PORT")
     }
 }
 

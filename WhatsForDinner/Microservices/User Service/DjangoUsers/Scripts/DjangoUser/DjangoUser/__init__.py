@@ -3,12 +3,18 @@ import py_eureka_client.eureka_client as eureka_client
 import os
 
 #gotta change to the target mysqlcontainer
-connection = mysql.connector.connect(user='djangologin', password='abcd@12#F', host="localhost")
+
+connection = mysql.connector.connect(user=os.environ.get("MYSQL_USER"), password=os.environ.get("MYSQL_PASS"), host=os.environ.get("MYSQL_HOST"), port=int(os.environ.get("MYSQL_PORT")))
 
 cursor = connection.cursor()
 
 cursor.execute(
     "CREATE DATABASE IF NOT EXISTS djangousers"
+)
+
+#Stopgap measure for create usercomponent's tables
+cursor.execute(
+    "USE djangousers; CREATE TABLE IF NOT EXISTS usercomponents_user ( id BIGINT NOT NULL AUTO_INCREMENT, name varchar(1024), username varchar(1024), password varchar(5000), email varchar(6000), birthday date, PRIMARY KEY(id))"
 )
 
 cursor.close()
