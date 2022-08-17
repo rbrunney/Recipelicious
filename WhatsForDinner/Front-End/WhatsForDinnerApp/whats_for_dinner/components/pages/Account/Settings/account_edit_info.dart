@@ -21,10 +21,10 @@ class _AccountEditInfoState extends State<AccountEditInfo> {
   Widget build(BuildContext context) {
     return Row(children: [
       Expanded(
-        flex: 10,
+        flex: 11,
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30),
           child: Text(
             widget.accountInfo,
             textAlign: TextAlign.center,
@@ -39,7 +39,7 @@ class _AccountEditInfoState extends State<AccountEditInfo> {
         flex: 1,
         child: IconButton(
           icon: const Icon(Icons.edit_outlined),
-          alignment: Alignment.centerRight,
+          alignment: Alignment.centerLeft,
           onPressed: () {
             Navigator.push(
               context,

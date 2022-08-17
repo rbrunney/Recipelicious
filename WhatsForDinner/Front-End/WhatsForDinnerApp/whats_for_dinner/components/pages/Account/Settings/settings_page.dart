@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Edit_pages/edit_info_page.dart';
-import 'package:page_transition/page_transition.dart';
-
 import 'account_edit_info.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -46,40 +43,49 @@ class SettingsPage extends StatelessWidget {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 AccountEditInfo(
-                    accountInfo: "Robert Brunney", editProfileInfo: "Name"),
+                    accountInfo: "Robert", editProfileInfo: "Name"),
               ],
             ),
             Column(
-              children: const [
-                Text(
-                  "Email",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 13),
+                  child: const Text(
+                    "Email",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                AccountEditInfo(
+                const AccountEditInfo(
                     accountInfo: "Rbrunney@student.neumont.edu",
                     editProfileInfo: "Email"),
               ],
             ),
             Column(
-              children: const [
-                Text(
-                  "Password",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 13),
+                  child: const Text(
+                    "Password",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                AccountEditInfo(
+                const AccountEditInfo(
                     accountInfo: "***********", editProfileInfo: "Password"),
               ],
             ),
             Column(
-              children: const [
-                Text(
-                  "Birthday",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 13),
+                  child: const Text(
+                    "Birthday",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                AccountEditInfo(
+                const AccountEditInfo(
                     accountInfo: "10/1/2001", editProfileInfo: "Birthday"),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'edit_info_page_password.dart';
 
 class EditInfoPage extends StatefulWidget {
   const EditInfoPage({Key? key, this.editProfileInfo = "peepee"})
@@ -13,62 +14,70 @@ class EditInfoPage extends StatefulWidget {
 class _EditInfoPageState extends State<EditInfoPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_outlined),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Column(
-              children: [
-                Center(
-                  heightFactor: 5,
-                  child: Text(
-                    "Edit ${widget.editProfileInfo}",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
+    TextEditingController messageController = TextEditingController();
+    if (!widget.editProfileInfo.contains("Password")) {
+      return SafeArea(
+        child: Scaffold(
+          body: Column(
+            children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_outlined),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: 'Edit ${widget.editProfileInfo}'),
-                    onSubmitted: (String value) async {
-                      await showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Name has been Edited'),
-                            content: Text(
-                                'Your name now has been changed to $value'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
+              ),
+              Column(
+                children: [
+                  Center(
+                    heightFactor: 5,
+                    child: Text(
+                      "Edit ${widget.editProfileInfo}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                )
-              ],
-            ),
-          ],
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextField(
+                      controller: messageController,
+                      decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: 'Edit ${widget.editProfileInfo}'),
+                      onSubmitted: (String value) async {
+                        messageController.clear();
+                        await showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(
+                                  '${widget.editProfileInfo} has been Edited'),
+                              content: Text(
+                                  'Your ${widget.editProfileInfo} now has been changed to $value'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
+      return const EditInfoPagePassword();
   }
 }
