@@ -11,6 +11,7 @@
 	<groupId>com.whatsfordinner</groupId>
 	<artifactId>Fridge_Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>Fridge_Service</name>
 	<description>Fridge_Service</description>
 	<properties>
@@ -35,6 +36,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
 	</dependencies>
 

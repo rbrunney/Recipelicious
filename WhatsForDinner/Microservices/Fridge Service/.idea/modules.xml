@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Fridge Service.iml" filepath="$PROJECT_DIR$/.idea/Fridge Service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fridge_Service/Fridge_Service.iml" filepath="$PROJECT_DIR$/Fridge_Service/Fridge_Service.iml" />
     </modules>
   </component>
 </project>

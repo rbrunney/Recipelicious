@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Fridge_Service:war">
+    <output-path>$PROJECT_DIR$/Fridge_Service/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Fridge_Service</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Fridge_Service-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Fridge_Service:war exploded" />
+    </root>
+  </artifact>
+</component>
