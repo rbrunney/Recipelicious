@@ -1,0 +1,16 @@
+{
+  "name": "CustomIcons",
+  "css_prefix_text": "",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "8dcb8470160dc08a8fd81b37ce3c04ec",
+      "css": "carrot",
+      "code": 59740,
+      "src": "rpgawesome"
+    }
+  ]
+}
