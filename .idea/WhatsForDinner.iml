@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/WhatsForDinner/Microservices/Fridge Service/Fridge_Service/src/main" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/WhatsForDinner/Microservices/Fridge Service/Fridge_Service/src/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/WhatsForDinner/Microservices/Meal Service/MealService/src/main" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/WhatsForDinner/Microservices/Meal Service/MealService/src/test" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
