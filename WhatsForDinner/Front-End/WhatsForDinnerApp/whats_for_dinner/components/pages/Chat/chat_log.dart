@@ -68,9 +68,9 @@ class _ChatLog extends State<ChatLog> {
             child: Row(
               children: [
                 Expanded(
-                  child: TextFormField(
+                  child: TextField(
                     controller: _messageController,
-                    onFieldSubmitted: (value) {
+                    onSubmitted: (value) {
                       if (_messageController.text != '') {
                         setState(() {
                           chatLog.insert(
@@ -126,8 +126,7 @@ class _ChatLog extends State<ChatLog> {
                                   backGroundColor: Colors.tealAccent,
                                   child: Text(
                                     _messageController.text,
-                                    style: const TextStyle(
-                                        color: Colors.black, fontSize: 18),
+                                    style: const TextStyle(color: Colors.black, fontSize: 18),
                                   ),
                                 ),
                               );

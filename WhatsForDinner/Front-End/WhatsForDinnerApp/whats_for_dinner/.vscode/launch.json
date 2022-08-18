@@ -11,6 +11,12 @@
             "type": "dart",
             "request": "launch",
             "program": "components\\main.dart"
+        },
+        {
+            "name": "Flutter (components\\main.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "components\\main.dart"
         }
     ]
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../Home/Meal Cards/Front/meal_card.dart';
+import '../create_meal_page.dart';
 import 'add_floating_button.dart';
 
 class MealAppBar extends StatelessWidget {
@@ -24,7 +25,7 @@ class MealAppBar extends StatelessWidget {
                 ],
               ),
             ),
-            floatingActionButton: AddFloatingButton(),
+            floatingActionButton: AddFloatingButton(widgetPage: CreateMeal(),),
             body: TabBarView(
               children: [
                 Container(

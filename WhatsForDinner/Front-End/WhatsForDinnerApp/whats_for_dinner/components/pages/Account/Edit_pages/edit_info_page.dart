@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'edit_info_page_password.dart';
+import '../../../util/to_prev_page.dart';
 
 class EditInfoPage extends StatefulWidget {
   const EditInfoPage({Key? key, this.editProfileInfo = "peepee"})
@@ -20,15 +21,7 @@ class _EditInfoPageState extends State<EditInfoPage> {
         child: Scaffold(
           body: Column(
             children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_outlined),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
+              const ToPrevPage(),
               Column(
                 children: [
                   Center(

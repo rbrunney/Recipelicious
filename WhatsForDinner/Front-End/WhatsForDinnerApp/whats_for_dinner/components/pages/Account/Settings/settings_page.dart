@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'account_edit_info.dart';
+import '../../../util/to_prev_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -10,15 +11,7 @@ class SettingsPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_outlined),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
+            const ToPrevPage(),
             const Text(
               "Settings",
               textAlign: TextAlign.center,

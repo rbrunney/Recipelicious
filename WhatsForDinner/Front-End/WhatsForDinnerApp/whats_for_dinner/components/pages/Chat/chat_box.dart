@@ -23,7 +23,10 @@ class ChatBox extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: Text(chatBoxName, style: const TextStyle(fontSize: 20)),
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(chatBoxName, style: const TextStyle(fontSize: 20)),
+              ) 
             ),
             const Expanded(
                 flex: 1,

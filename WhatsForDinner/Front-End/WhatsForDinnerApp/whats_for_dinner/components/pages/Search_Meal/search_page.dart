@@ -16,13 +16,14 @@ class _SearchPageState extends State<SearchPage> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Column(children: const [
-            SearchBar(),
-            MealCard(),
-            MealCard(),
-            MealCard(),
-            MealCard(),
-            MealCard(),
+          child: Column(children: [
+            const SearchBar(),
+            Container(alignment: Alignment.center,child: const Text('Recommended', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),),),
+            const MealCard(),
+            const MealCard(),
+            const MealCard(),
+            const MealCard(),
+            const MealCard(),
         
           ]),
         ),
