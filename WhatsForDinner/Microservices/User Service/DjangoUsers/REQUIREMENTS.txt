@@ -4,3 +4,4 @@ mysql-connector-python
 mysqlclient
 bcrypt
 py-eureka-client
+pika
