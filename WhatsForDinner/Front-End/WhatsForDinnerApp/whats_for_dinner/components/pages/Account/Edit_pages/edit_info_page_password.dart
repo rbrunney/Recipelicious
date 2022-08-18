@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../util/to_prev_page.dart';
 
 class EditInfoPagePassword extends StatelessWidget {
   const EditInfoPagePassword({Key? key}) : super(key: key);
@@ -13,15 +14,7 @@ class EditInfoPagePassword extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_outlined),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
+              const ToPrevPage(),
               Column(
                 children: [
                   const Center(
