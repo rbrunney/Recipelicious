@@ -14,7 +14,7 @@ class _MakeChatPage extends State<MakeChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _inviteUserController = TextEditingController();      
+    TextEditingController _inviteUserController = TextEditingController();
 
     return SafeArea(
         child: Scaffold(
@@ -39,6 +39,11 @@ class _MakeChatPage extends State<MakeChatPage> {
           child: Column(children: [
             TextField(
                 controller: _inviteUserController,
+                onSubmitted: (value) {
+                  setState(() {
+                    invitedUsers.insert(0, _inviteUserController.text);
+                  });
+                },
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     hintText: 'Enter Username...',
@@ -48,7 +53,8 @@ class _MakeChatPage extends State<MakeChatPage> {
                           if (_inviteUserController.text != '' &&
                               invitedUsers.length <= 9) {
                             setState(() {
-                              invitedUsers.insert(0, _inviteUserController.text);
+                              invitedUsers.insert(
+                                  0, _inviteUserController.text);
                             });
                             isBtnActive = true;
                             _inviteUserController.clear();
@@ -81,43 +87,62 @@ class _MakeChatPage extends State<MakeChatPage> {
               )),
         ),
         Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.only(top: 20, bottom: 10),
-          child: Text(
-            '${invitedUsers.length}/10 Invited Users',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
+            alignment: Alignment.center,
+            margin: const EdgeInsets.only(top: 20, bottom: 10),
+            child: Column(
+              children: [
+                Text(
+                  '${invitedUsers.length}/10 Invited Users',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                    margin: const EdgeInsets.only(top: 2, bottom: 2),
+                    child: const Text('Swipe to Remove Users'))
+              ],
+            )),
         Expanded(
             child: ListView.builder(
-              itemCount: invitedUsers.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(
-                      top: 5,
-                      bottom: 5,
-                    ),
-                    child: Row(children: [
-                      const Expanded(
-                        flex: 1,
-                        child: Icon(
-                          Icons.account_circle_outlined,
-                          size: 45,
-                        ),
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: Container(
-                              alignment: Alignment.center,
-                              child: Text(invitedUsers[index], style: const TextStyle(fontSize: 20)))),
-                    ]),
-                  ),
-                );
+          itemCount: invitedUsers.length,
+          itemBuilder: (context, index) {
+            final username = invitedUsers[index];
+            return Dismissible(
+              key: Key(username),
+              onDismissed: (direction) {
+                setState(() {
+                  invitedUsers.removeAt(index);
+                  if (invitedUsers.isEmpty) {
+                    isBtnActive = false;
+                  }
+                });
               },
-            )
-        )
+              child: ListTile(
+                title: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(
+                    top: 5,
+                    bottom: 5,
+                  ),
+                  child: Row(children: [
+                    const Expanded(
+                      flex: 1,
+                      child: Icon(
+                        Icons.account_circle_outlined,
+                        size: 45,
+                      ),
+                    ),
+                    Expanded(
+                        flex: 4,
+                        child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(invitedUsers[index],
+                                style: const TextStyle(fontSize: 20)))),
+                  ]),
+                ),
+              ),
+            );
+          },
+        ))
       ],
     ))));
   }
