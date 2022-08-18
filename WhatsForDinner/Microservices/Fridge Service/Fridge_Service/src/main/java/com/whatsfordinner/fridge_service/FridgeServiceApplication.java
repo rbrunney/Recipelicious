@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
-@EnableDiscoveryClient
+@EnableEurekaClient
 public class FridgeServiceApplication extends SpringBootServletInitializer {
 
 	@Override
