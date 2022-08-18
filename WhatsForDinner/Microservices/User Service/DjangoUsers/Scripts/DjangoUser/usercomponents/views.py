@@ -1,10 +1,65 @@
-import email
 from django.shortcuts import render
 from django.http.response import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from usercomponents.models import UserSerializer, User
 import bcrypt
 import datetime
+import pika
+import os
+import json
+
+
+rabbitMQHostString = "localhost"
+
+if os.environ.get("RABBITMQ_HOST") != None:
+    rabbitMQHostString = os.environ.get("RABBITMQ_HOST")
+
+rabbitMQServerPort = 5672
+
+if os.environ.get("RABBITMQ_PORT") != None:
+    rabbitMQServerPort = int(os.environ.get("RABBITMQ_PORT"))
+
+rabbitMQVirtualHost = '/'
+
+if os.environ.get("RABBITMQ_VIRTUAL_HOST") != None:
+    rabbitMQVirtualHost = os.environ.get("RABBITMQ_VIRTUAL_HOST")
+
+rabbitUser = "guest"
+
+if os.environ.get("RABBITMQ_USER") != None:
+    rabbitUser = os.environ.get("RABBITMQ_USER")
+
+rabbitPass = "guest"
+
+if os.environ.get("RABBITMQ_PASS") != None:
+    rabbitPass = os.environ.get("RABBITMQ_PASS")
+
+
+rabbitMQCredentialParams = pika.PlainCredentials(rabbitUser,rabbitPass)
+rabbitMQServerParams = pika.ConnectionParameters(rabbitMQHostString,
+                                                rabbitMQServerPort,
+                                                rabbitMQVirtualHost,
+                                                rabbitMQCredentialParams,
+                                                heartbeat=200)
+
+rabbitMQSyncConnection = pika.BlockingConnection(rabbitMQServerParams)
+
+connection_free = True
+
+def blockedConnectionFlag():
+    connection_free = False
+
+def unblockedConnectionFlag():
+    connection_free = True
+
+rabbitMQSyncConnection.add_on_connection_blocked_callback(blockedConnectionFlag)
+rabbitMQSyncConnection.add_on_connection_unblocked_callback(unblockedConnectionFlag)
+
+publishingChannel = rabbitMQSyncConnection.channel()
+
+publishingChannel.exchange_declare("usercreation", durable=True)
+
+
 
 # Create your views here.
 @api_view(('GET',))
@@ -47,6 +102,42 @@ def createUser(request, *args, **kwargs):
 
     userSerializer = UserSerializer(savedUser)
     # print(userSerializer.data)
+
+
+
+    if(connection_free):
+        if(os.path.exists("emailsToSend.json")):
+            with open('emailsToSend.json','r') as jsonFile:
+                users = json.load(jsonFile)
+                for user in users:
+                    userDetails = {
+                        "name": user["name"],
+                        "username": user["username"],
+                        "email": user["email"],
+                        "birthday": user["birthday"],
+                    }
+                    publishingChannel.basic_publish("usercreation", routing_key="email", body=userDetails)
+
+        userDetails ={
+            "name": userSerializer.data["name"],
+            "username": userSerializer.data["username"],
+            "email": userSerializer.data["email"],
+            "birthday": userSerializer.data["birthday"],
+        }
+        publishingChannel.basic_publish("usercreation", routing_key="email", body=json.dumps(userDetails))
+    else:
+        #store the users that can't be sent off right away and send them off later.
+        userDetails ={
+            "name": userSerializer.data["name"],
+            "username": userSerializer.data["username"],
+            "email": userSerializer.data["email"],
+            "birthday": userSerializer.data["birthday"],
+        }
+        with open('emailsToSend.json', 'a') as jsonFile:
+            json.dump(userDetails, jsonFile, indent=4)
+
+
+
 
     response = {
         "message": "Account Created",
