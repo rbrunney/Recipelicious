@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../util/to_prev_page.dart';
 import 'ingredient_list.dart';
 import 'recipe.dart';
 
@@ -14,15 +15,7 @@ class MealInfo extends StatelessWidget {
         body: Container(
           child: SingleChildScrollView(
               child: Column(children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_outlined),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
+            const ToPrevPage(),
             const Text('Name of Meal Here',
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
             Card(
