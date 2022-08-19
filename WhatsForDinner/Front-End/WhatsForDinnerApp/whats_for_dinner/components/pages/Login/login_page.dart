@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../util/page_navigation.dart';
-import '../Home/home_page.dart';
 import 'create_account.dart';
 import 'forgot_password_page.dart';
 
@@ -30,26 +29,37 @@ class LoginPage extends StatelessWidget {
                 child: TextField(
                   controller: _usernameController,
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.account_circle_outlined),
-                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.tealAccent),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey)
+                      ),
                       hintText: 'Enter Username...',
-                      labelText: 'Enter Username'),
+                      labelText: 'Enter Username',
+                      labelStyle: TextStyle(color: Colors.grey)),
                 )),
             Container(
                 margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
                 child: TextField(
                   controller: _passwordController,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock_outline),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.tealAccent),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey)
+                      ),
+                      prefixIcon: Icon(Icons.lock_outline, color: Colors.grey),
                       hintText: 'Enter Password...',
-                      labelText: 'Enter Password'),
+                      labelText: 'Enter Password',
+                      labelStyle: TextStyle(color: Colors.grey)),
                 )),
             Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(
-                  top: 10,
-                  bottom: 10,
+                  top: 15,
                 ),
                 child: Row(
                   children: [
@@ -69,12 +79,13 @@ class LoginPage extends StatelessWidget {
                                 child: const Text(
                                   'Forgot Password?',
                                   style: TextStyle(
+                                    color: Colors.tealAccent,
                                       decoration: TextDecoration.underline),
                                 ))))
                   ],
                 )),
             Container(
-                margin: const EdgeInsets.only(top: 35, bottom: 35),
+                margin: const EdgeInsets.only(top: 25, bottom: 25),
                 child: Row(
                   children: [
                     Expanded(
@@ -82,13 +93,16 @@ class LoginPage extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.center,
                         child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.tealAccent, // background
+                            ),
                             onPressed: () {
                               Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: const PageNavigation(),
-                                      ));
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: const PageNavigation(),
+                                  ));
                               FocusScopeNode currentFocus =
                                   FocusScope.of(context);
                               if (!currentFocus.hasPrimaryFocus) {
@@ -97,7 +111,10 @@ class LoginPage extends StatelessWidget {
                               print(
                                   '${_usernameController.text} ${_passwordController.text}');
                             },
-                            child: const Text('Log In')),
+                            child: const Text(
+                              'Log In',
+                              style: TextStyle(color: Colors.black),
+                            )),
                       ),
                     ),
                     Expanded(
@@ -105,6 +122,9 @@ class LoginPage extends StatelessWidget {
                         child: Container(
                             alignment: Alignment.center,
                             child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.tealAccent, // background
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -113,7 +133,8 @@ class LoginPage extends StatelessWidget {
                                         child: const CreateAccount(),
                                       ));
                                 },
-                                child: const Text('Sign Up'))))
+                                child: const Text('Sign Up',
+                                    style: TextStyle(color: Colors.black)))))
                   ],
                 )),
           ],
