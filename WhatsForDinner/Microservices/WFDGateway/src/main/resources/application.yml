@@ -1,0 +1,36 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      #defaultZone: http://eureka:8761/eureka
+
+
+spring:
+  application:
+    name: gateway-service-wfd
+  cloud:
+    gateway:
+      routes:
+        - id: meal_service
+          uri: lb://meal_service
+          predicates:
+            - Path=/meals/**
+        - id: fridge_service
+          uri: lb://fridge_service
+          predicates:
+            - Path=/fridge/**
+        - id: shopping_list_service
+          uri: lb://shopping_list_service
+          predicates:
+            - Path=/shopping-list/**
+        - id: django-users
+          uri: lb://django-users
+          predicates:
+            - Path=/users/**
+        - id: django-chat
+          uri: lb://django-chat
+          predicates:
+            - Path=/chat/**,  /**
