@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../util/requests.dart';
 import '../../util/to_prev_page.dart';
+import 'alert_pop_up.dart';
 import 'login_page.dart';
 
 class CreateAccount extends StatelessWidget {
@@ -7,6 +9,13 @@ class CreateAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _nameController = TextEditingController();
+    TextEditingController _usernameController = TextEditingController();
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _birthdayController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+    TextEditingController _confirmPasswordController = TextEditingController();
+
     return SafeArea(
         child: Scaffold(
             body: Column(children: [
@@ -24,8 +33,9 @@ class CreateAccount extends StatelessWidget {
         child: Column(children: [
           Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(
                     prefixIcon:
                         Icon(Icons.account_circle_outlined, color: Colors.grey),
                     focusedBorder: OutlineInputBorder(
@@ -39,8 +49,9 @@ class CreateAccount extends StatelessWidget {
               )),
           Container(
               margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
                     prefixIcon:
                         Icon(Icons.account_circle_outlined, color: Colors.grey),
                     focusedBorder: OutlineInputBorder(
@@ -54,8 +65,9 @@ class CreateAccount extends StatelessWidget {
               )),
           Container(
               margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email, color: Colors.grey),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.tealAccent),
@@ -68,8 +80,9 @@ class CreateAccount extends StatelessWidget {
               )),
           Container(
               margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _birthdayController,
+                decoration: const InputDecoration(
                     prefixIcon:
                         Icon(Icons.calendar_today_outlined, color: Colors.grey),
                     focusedBorder: OutlineInputBorder(
@@ -83,8 +96,9 @@ class CreateAccount extends StatelessWidget {
               )),
           Container(
               margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _passwordController,
+                decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.tealAccent),
                     ),
@@ -97,8 +111,9 @@ class CreateAccount extends StatelessWidget {
               )),
           Container(
               margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: _confirmPasswordController,
+                decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.tealAccent),
                     ),
@@ -110,17 +125,57 @@ class CreateAccount extends StatelessWidget {
                     labelStyle: TextStyle(color: Colors.grey)),
               )),
           Container(
-            margin: const EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.center,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.tealAccent, // background
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                        (Route<dynamic> route) => false);
+                    // Checking to see if form is complete
+                    if (_nameController.text.isEmpty ||
+                        _usernameController.text.isEmpty ||
+                        _emailController.text.isEmpty ||
+                        _birthdayController.text.isEmpty ||
+                        _passwordController.text.isEmpty ||
+                        _confirmPasswordController.text.isEmpty) {
+                      showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertPopUp(
+                              title: 'Incomplete Form',
+                              content:
+                                  'Please check all fields have been filled out correctly',
+                            );
+                          });
+                    } else {
+                      if (_passwordController.text !=
+                          _confirmPasswordController.text) {
+                        showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertPopUp(
+                                title: 'Passwords Do Not Match',
+                                content:
+                                    'Please check that password and confirm password match',
+                              );
+                            });
+                      } else {
+                        Map<String, dynamic> newUser = {
+                          "name": _nameController.text,
+                          "username": _usernameController.text,
+                          "password": _passwordController.text,
+                          "email": _emailController.text,
+                          "birthday": _birthdayController.text
+                        };
+                        Requests().makePostRequest(
+                            "http://10.0.2.2:8000/createUser/", newUser);
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                            (Route<dynamic> route) => false);
+                      }
+                    }
                   },
                   child: const Text('Sign Up',
                       style: TextStyle(color: Colors.black))))
