@@ -4,6 +4,9 @@ import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_4.dart';
 
+import '../Home/Meal Cards/Front/meal_card.dart';
+import 'chat_meal_card.dart';
+
 class ChatLog extends StatefulWidget {
   String chatName;
   ChatLog({Key? key, this.chatName = ""}) : super(key: key);
@@ -106,6 +109,14 @@ class _ChatLog extends State<ChatLog> {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       hintText: 'Type Message...',
+                      prefixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            chatLog.insert(0, const ChatMealCard());
+                          });
+                        },
+                        icon: const Icon(Icons.dining_outlined),
+                      ),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.send_rounded),
                         onPressed: () {
@@ -126,7 +137,8 @@ class _ChatLog extends State<ChatLog> {
                                   backGroundColor: Colors.tealAccent,
                                   child: Text(
                                     _messageController.text,
-                                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 18),
                                   ),
                                 ),
                               );
