@@ -25,7 +25,7 @@ class MealAppBar extends StatelessWidget {
                 ],
               ),
             ),
-            floatingActionButton: AddFloatingButton(widgetPage: CreateMeal(),),
+            floatingActionButton: AddFloatingButton(widgetPage: const CreateMeal(),),
             body: TabBarView(
               children: [
                 Container(

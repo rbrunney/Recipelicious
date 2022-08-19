@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Chat/search_bar.dart';
 import '../Home/Meal Cards/Front/meal_card.dart';
+import 'search_filter.dart';
 
 
 class SearchPage extends StatefulWidget {
