@@ -35,7 +35,7 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
                 child: Container(
                     height: 50,
                     width: 50,
-                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    margin: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: const Color.fromARGB(255, 90, 90, 90),
