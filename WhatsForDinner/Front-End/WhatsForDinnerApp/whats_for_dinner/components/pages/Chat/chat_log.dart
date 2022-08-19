@@ -55,6 +55,7 @@ class _ChatLog extends State<ChatLog> {
       Expanded(
         flex: 7,
         child: Container(
+            margin: const EdgeInsets.only(left: 10, right: 10),
             alignment: Alignment.bottomRight,
             child: ListView.builder(
               reverse: true,
@@ -112,7 +113,7 @@ class _ChatLog extends State<ChatLog> {
                       prefixIcon: IconButton(
                         onPressed: () {
                           setState(() {
-                            chatLog.insert(0, const ChatMealCard());
+                            chatLog.insert(0, ChatMealCard());
                           });
                         },
                         icon: const Icon(Icons.dining_outlined),
