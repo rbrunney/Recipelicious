@@ -43,6 +43,8 @@ class _MakeChatPage extends State<MakeChatPage> {
                   setState(() {
                     invitedUsers.insert(0, _inviteUserController.text);
                   });
+
+                  isBtnActive = true;
                 },
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),

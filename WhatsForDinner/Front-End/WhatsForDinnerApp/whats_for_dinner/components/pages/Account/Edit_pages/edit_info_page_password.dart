@@ -22,12 +22,13 @@ class EditInfoPagePassword extends StatelessWidget {
                     child: Text(
                       "Edit password",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 30),
                     child: TextField(
                         obscureText: true,
                         controller: oldPasswordController,
@@ -46,8 +47,8 @@ class EditInfoPagePassword extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 30),
                     child: TextField(
                       obscureText: true,
                       controller: confirmNewPasswordController,
@@ -60,9 +61,10 @@ class EditInfoPagePassword extends StatelessWidget {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Old password was not correct'),
-                                content:
-                                    const Text('Your old password did not match'),
+                                title:
+                                    const Text('Old password was not correct'),
+                                content: const Text(
+                                    'Your old password did not match'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
