@@ -1,8 +1,8 @@
 FROM python
 ENV MYSQL_DBNAME 'djangousers'
 ENV MYSQL_USER 'djangologin'
-ENV MYSQL_PASS 'abcd12@#F'
-ENV MYSQL_HOST 'userSQLDB'
+ENV MYSQL_PASS 'abcd12@!F'
+ENV MYSQL_HOST 'user_sql_db'
 ENV MYSQL_PORT 3306
 ENV EUREKA_SERVER 'http://eureka:8761/'
 ENV RABBITMQ_HOST 'rabbitmq'

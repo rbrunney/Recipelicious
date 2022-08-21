@@ -4,8 +4,8 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
-      #defaultZone: http://eureka:8761/eureka
+#      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka:8761/eureka
 
 
 spring:
@@ -14,18 +14,18 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: meal_service
-          uri: lb://meal_service
+        - id: meal-service
+          uri: lb://meal-service
           predicates:
             - Path=/meals/**
-        - id: fridge_service
-          uri: lb://fridge_service
+        - id: fridge-service
+          uri: lb://fridge-service
           predicates:
             - Path=/fridge/**
-        - id: shopping_list_service
-          uri: lb://shopping_list_service
+        - id: shopping-list-service
+          uri: lb://shopping-list-service
           predicates:
-            - Path=/shopping-list/**
+            - Path=/shoppingList/**
         - id: django-users
           uri: lb://django-users
           predicates:

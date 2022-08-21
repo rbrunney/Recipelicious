@@ -1,38 +1,138 @@
 version: "3.9"
 services:
 
-  shopping_list_service:
+  chat_room_service: 
     build: 
-      context: ./Shopping List Service
-      dockerfile: Dockerfile
-    environment:
-      - DB_HOST=shopping_list_db
+      context: ./Chat Room Service
+    depends_on:
+      - user_chat_information_db
+      - registration_service
+    ports:
+      - "8000"
     networks:
       - base-net
     deploy:
-      replicas: 3
+      replicas: 1
+  
+  fridge_service:
+    build:
+      context: ./Fridge Service
+    depends_on:
+      - registration_service
+      - meal_information_db
+    ports: 
+      - "8080"
+    networks:
+      - base-net
+    deploy:
+      replicas: 1
 
-  shopping_list_db:
-    image: "mongo:latest"
-    container_name: shopping_list_db
+  meal_service:
+    build:
+      context: ./Meal Service
+    depends_on:
+      - registration_service
+      - meal_information_db
+    ports: 
+      - "8080"
+    networks:
+      - base-net
+    deploy:
+      replicas: 1
+
+  user_service:
+    build: 
+      context: ./User Service/DjangoUsers
     environment:
-      - MONGO_INITDB_DATABASE=ShoppingList
+      - MYSQL_DBNAME=djangousers
+      - MYSQL_USER=djangologin
+      - MYSQL_PASS=abcd12@!f
+      - MYSQL_HOST=user-sql-db
+      - MYSQL_PORT=3306
+      - EUREKA_SERVER=http://eureka:8761/
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+    depends_on:
+      - registration_service
+      - rabbitmq
+      - django_user_db
+    ports: 
+      - "8000"
+    networks:
+      - base-net
+    deploy:
+      replicas: 1
+
+  shopping_list_service:
+    build: 
+      context: ./Shopping List Service
+    depends_on:
+      - registration_service
+      - meal_information_db
+    ports: 
+      - "8080"
+    networks:
+      - base-net
+    deploy:
+      replicas: 1
+
+  whatsfordinner_gateway:
+    build:
+      context: ./WFDGateway
+    container_name: "wfd_gateway"
+    ports:
+      - "8888:8888"
+    networks:
+      - base-net
+
+  registration_service:
+    image: "steeltoeoss/eureka-server"
+    container_name: "eureka"
+    ports:
+      - "8761:8761"
+    networks:
+    - base-net
+
+  meal_information_db:
+    image: "mongo:latest"
+    container_name: meal_info_db
+    ports:
+      - "27017"
+    environment:
+      - MONGO_INITDB_DATABASE=MealInfo
+    networks:
+      - base-net
+
+  user_chat_information_db:
+    image: "mongo:latest"
+    container_name: chat_info_db
+    ports:
+      - "27017"
     networks:
       - base-net
 
   django_user_db:
     image: "mysql:latest"
-    container_name: userSQLDB
+    container_name: user-sql-db
     environment:
       - MYSQL_DATABASE=djangousers
       - MYSQL_USER=djangologin
-      - MYSQL_PASSWORD=abcd12@#f
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=abcd12@!F
+      - MYSQL_ROOT_PASSWORD=abcd12@!F
     ports:
-      - 9000:3306
+      - "3306"
     networks:
       - base-net
-      
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - base-net
+
 networks:
   base-net:
     name: "whatsfordinner"
