@@ -39,6 +39,7 @@ dependencies:
   socket_io_client: ^2.0.0
   flutter_chat_bubble: ^2.0.0
   font_awesome_flutter: ^10.1.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

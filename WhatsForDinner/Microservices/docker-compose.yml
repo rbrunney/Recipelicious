@@ -2,8 +2,9 @@ version: "3.9"
 services:
 
   shopping_list_service:
-    build: ./Shopping List Service/ShoppingListService
-    image: "shoppinglist-service:1.0"
+    build: 
+      context: ./Shopping List Service
+      dockerfile: Dockerfile
     environment:
       - DB_HOST=shopping_list_db
     networks:
@@ -12,13 +13,26 @@ services:
       replicas: 3
 
   shopping_list_db:
-    image: "mongodb:latest"
+    image: "mongo:latest"
     container_name: shopping_list_db
     environment:
       - MONGO_INITDB_DATABASE=ShoppingList
     networks:
       - base-net
+
+  django_user_db:
+    image: "mysql:latest"
+    container_name: userSQLDB
+    environment:
+      - MYSQL_DATABASE=djangousers
+      - MYSQL_USER=djangologin
+      - MYSQL_PASSWORD=abcd12@#f
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 9000:3306
+    networks:
+      - base-net
       
 networks:
   base-net:
-    - "whatsfordinner"
+    name: "whatsfordinner"
