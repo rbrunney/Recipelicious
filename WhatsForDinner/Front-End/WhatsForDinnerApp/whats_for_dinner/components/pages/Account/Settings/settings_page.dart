@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../Login/login_page.dart';
 import 'account_edit_info.dart';
 import '../../../util/to_prev_page.dart';
 
@@ -35,8 +36,7 @@ class SettingsPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
-                AccountEditInfo(
-                    accountInfo: "Robert", editProfileInfo: "Name"),
+                AccountEditInfo(accountInfo: "Robert", editProfileInfo: "Name"),
               ],
             ),
             Column(
@@ -80,6 +80,40 @@ class SettingsPage extends StatelessWidget {
                 ),
                 const AccountEditInfo(
                     accountInfo: "10/1/2001", editProfileInfo: "Birthday"),
+                Container(
+                  margin: const EdgeInsets.only(top: 60, bottom: 5),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.tealAccent, // background
+                      ),
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                            (Route<dynamic> route) => false);
+                      }),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.tealAccent, // background
+                      ),
+                      child: const Text(
+                        'Delete Account',
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                            (Route<dynamic> route) => false);
+                      }),
+                ),
               ],
             ),
           ],
