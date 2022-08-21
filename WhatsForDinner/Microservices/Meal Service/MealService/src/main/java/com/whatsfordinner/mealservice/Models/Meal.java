@@ -28,4 +28,10 @@ public class Meal {
 
     private int likes;
 
+    @Override
+    public String toString(){
+        String meal = id + " " + creator + " " + name + " " + servingSize + " " + recipe + " " + likes + "\n";
+
+        return meal;
+    }
 }

@@ -11,10 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MealBll {
@@ -28,6 +26,27 @@ public class MealBll {
 
         response.put("message", "meals retrieved");
         response.put("results", mealRepo.findAll());
+        response.put("Date-Time", LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> returnSortedMeals(int offset){
+        Map<String, Object> response = new HashMap<>();
+
+        List<Meal> mealList = mealRepo.findAll();//.stream().limit(10).collect(Collectors.toList());
+
+        System.out.println(mealList.subList(offset, mealList.size()));
+
+        mealList = mealList.subList(offset, mealList.size());
+
+        mealList = mealList.stream().limit(10).collect(Collectors.toList());
+
+        //Grabs the list, sorts it by highest, and returns it.
+        mealList = mealList.stream().sorted(Comparator.comparingInt(Meal::getLikes).reversed()).collect(Collectors.toList());
+
+        response.put("message","meals sorted");
+        response.put("results", mealList);
         response.put("Date-Time", LocalDateTime.now());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -205,5 +224,24 @@ public class MealBll {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    //There's more to a reversed insertion sort than at first glance - unneeded and too much time for purpose of project.
+//    private void sortMeals(List<Meal> mealList){
+//
+//        for(int i = mealList.size() - 1; i >= 0; i--){
+//            Meal tempMeal = mealList.get(i);
+//            int tempLikes = tempMeal.getLikes();
+//            for(int j = 0; j <= i; j++){
+//                if(tempLikes > mealList.get(j).getLikes()){
+//                    if(!(j - 1 < 0)){
+//                        mealList.set(j-1, mealList.get(j));
+//                    }
+//                    mealList.set(j, tempMeal);
+//                }else if(tempLikes <= mealList.get(j).getLikes()){
+//                    break;
+//                }
+//            }
+//        }
+//    }
 
 }
