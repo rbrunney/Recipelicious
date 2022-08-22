@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../util/requests.dart';
 import '../../util/to_prev_page.dart';
 import '../Account/Account_util/add_floating_button.dart';
 import 'chat_box.dart';
@@ -16,13 +17,11 @@ class ChatPage extends StatefulWidget {
 class _ChatPage extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
-
     // Call Davids Api Here so we can get the list of all chat groups they are in and then
     // Make the list from there
 
     List<Widget> chatBoxs = [
       const SearchBar(),
-      ChatBox(chatBoxName: "David Ngo",)
     ];
 
     return SafeArea(

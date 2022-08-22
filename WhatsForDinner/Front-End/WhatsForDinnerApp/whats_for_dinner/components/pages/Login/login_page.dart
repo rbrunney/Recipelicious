@@ -108,8 +108,6 @@ class LoginPage extends StatelessWidget {
                               if (!currentFocus.hasPrimaryFocus) {
                                 currentFocus.unfocus();
                               }
-                              print(
-                                  '${_usernameController.text} ${_passwordController.text}');
                             },
                             child: const Text(
                               'Log In',
