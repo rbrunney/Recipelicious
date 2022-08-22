@@ -18,6 +18,8 @@ spring:
           uri: lb://meal-service
           predicates:
             - Path=/meal/**
+          filters:
+            - RewritePath=/meal/(?<segment>.*), /$\{segment}
         - id: fridge-service
           uri: lb://fridge-service
           predicates:
@@ -26,11 +28,18 @@ spring:
           uri: lb://shopping-list-service
           predicates:
             - Path=/shoppingList/**
+          filters:
+            - RewritePath=/shoppingList/(?<segment>.*), /$\{segment}
         - id: django-users
           uri: lb://django-users
           predicates:
             - Path=/users/**
+          filters:
+            - RewritePath=/users/(?<segment>.*), /$\{segment}
+
         - id: django-chat
           uri: lb://django-chat
           predicates:
             - Path=/chat/**,  /**
+          filters:
+            - RewritePath=/chat/(?<segment>.*), /$\{segment}
