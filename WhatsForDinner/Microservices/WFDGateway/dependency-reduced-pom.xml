@@ -16,22 +16,24 @@
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.2.4</version>
         <executions>
           <execution>
-            <phase>package</phase>
+            <id>shade-wfd-gateway</id>
             <goals>
               <goal>shade</goal>
             </goals>
+            <configuration>
+              <transformers>
+                <transformer>
+                  <manifestEntries>
+                    <Main-Class>dngo.neumont.wfdgateway.WfdGatewayApplication</Main-Class>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <artifactSet>
-            <includes>
-              <include>**</include>
-            </includes>
-          </artifactSet>
-        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -149,6 +151,5 @@
   <properties>
     <spring-cloud.version>2021.0.3</spring-cloud.version>
     <java.version>1.8</java.version>
-    <start-class>dngo.neumont.wfdgateway.WfdGatewayApplication</start-class>
   </properties>
 </project>

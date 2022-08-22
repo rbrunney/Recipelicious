@@ -35,11 +35,11 @@ spring:
           predicates:
             - Path=/users/**
           filters:
-            - RewritePath=/users/(?<segment>.*), /$\{segment}
+            - RewritePath=/users/(?<segment>.*), $\{segment}
 
         - id: django-chat
           uri: lb://django-chat
           predicates:
             - Path=/chat/**,  /**
           filters:
-            - RewritePath=/chat/(?<segment>.*), /$\{segment}
+            - RewritePath=/chat/(?<segment>.*), $\{segment}
