@@ -46,16 +46,16 @@ services:
     environment:
       - MYSQL_DBNAME=djangousers
       - MYSQL_USER=djangologin
-      - MYSQL_PASS=abcd12@!f
+      - MYSQL_PASS=abcd12@!F
       - MYSQL_HOST=user-sql-db
       - MYSQL_PORT=3306
       - EUREKA_SERVER=http://eureka:8761/
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
     depends_on:
+      - django_user_db
       - registration_service
       - rabbitmq
-      - django_user_db
     ports: 
       - "8000"
     networks:
