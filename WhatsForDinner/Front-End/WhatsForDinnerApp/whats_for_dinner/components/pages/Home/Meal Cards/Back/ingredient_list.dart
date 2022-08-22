@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'ingredient.dart';
 
 class IngredientList extends StatelessWidget {
-  List<String> ingredients;
+  List<dynamic> ingredients;
   IngredientList({Key? key, this.ingredients = const []}) : super(key: key);
 
   @override
@@ -15,13 +15,14 @@ class IngredientList extends StatelessWidget {
 
     // Making a widget for every ingredient passed through
     ingredients.forEach((ingredient) => ingredientList.add(Ingredient(
-          ingredientName: ingredient,
+        ingredientName: ingredient['name'],
+        quantity: ingredient['qty'],
     )));
 
     return Container(
       margin: const EdgeInsets.only(
-        top: 5,
-        bottom: 5,
+        top: 10,
+        bottom: 10,
       ),
       child: Column(
         children: ingredientList,

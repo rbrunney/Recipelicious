@@ -32,7 +32,7 @@ class MealAppBar extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 15),
                   child: SingleChildScrollView(
                     child: Column(
-                      children: const [
+                      children: [
                         MealCard(
                             imageUrl:
                                 "https://i.ytimg.com/vi/eX2qFMC8cFo/maxresdefault.jpg"),
@@ -53,7 +53,7 @@ class MealAppBar extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 15),
                   child: SingleChildScrollView(
                     child: Column(
-                      children: const [
+                      children: [
                         MealCard(
                             imageUrl:
                                 "https://static.india.com/wp-content/uploads/2015/10/538.jpg?impolicy=Medium_Resize&w=1200&h=800")
@@ -65,7 +65,7 @@ class MealAppBar extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 15),
                   child: SingleChildScrollView(
                     child: Column(
-                      children: const [
+                      children: [
                         MealCard(
                             imageUrl:
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ66a6A1tHGHDU8v8ObH3-62Q4AuZlCicpMbg&usqp=CAU")

@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/meal")
+@CrossOrigin()
 public class MealController {
 
     @Autowired

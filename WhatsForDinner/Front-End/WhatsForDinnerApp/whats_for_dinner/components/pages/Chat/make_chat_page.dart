@@ -77,7 +77,6 @@ class _MakeChatPage extends State<MakeChatPage> {
               onPressed: isBtnActive
                   ? () {
                       Navigator.of(context).pop();
-                      print('Call Davids Api');
                     }
                   : null,
               style: ElevatedButton.styleFrom(

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 class OrderList extends StatelessWidget {
-  List<dynamic> list;
+  Map<String, dynamic> list;
   final double textSize;
 
-  OrderList({Key? key, this.list = const [], this.textSize = 0})
+  OrderList({Key? key, this.list = const {}, this.textSize = 0})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     List<Widget> widgetList = [];
     int counter = 0;
-    for (var item in list) {
+    for (var item in list.keys) {
       counter++;
-      widgetList.add(OrderListItem(counter, item, textSize));
+      widgetList.add(OrderListItem(counter, list[item], textSize));
       widgetList.add(const SizedBox(
         height: 5,
       ));
@@ -34,7 +34,9 @@ class OrderListItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('$counter. ', style: TextStyle(fontSize: textSize)),
-        Container( margin: const EdgeInsets.only(left: 10), child: Text(item, style: TextStyle(fontSize: textSize)))
+        Container(
+            margin: const EdgeInsets.only(left: 10),
+            child: Text(item, style: TextStyle(fontSize: textSize)))
       ],
     );
   }

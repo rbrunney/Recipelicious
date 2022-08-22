@@ -5,8 +5,21 @@ import 'recipe.dart';
 
 class MealInfo extends StatelessWidget {
   String imgUrl;
+  String mealName;
+  String creator;
+  String description;
+  Map<String, dynamic> recipe;
+  List<dynamic> ingredients;
 
-  MealInfo({Key? key, this.imgUrl = ""}) : super(key: key);
+  MealInfo({
+    Key? key,
+    this.imgUrl = "",
+    this.mealName = "",
+    this.creator = "",
+    this.description = "",
+    this.recipe = const {},
+    this.ingredients = const [],
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +29,12 @@ class MealInfo extends StatelessWidget {
           child: SingleChildScrollView(
               child: Column(children: [
             const ToPrevPage(),
-            const Text('Name of Meal Here',
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+            Text(mealName,
+                style:
+                    const TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+            Text("Creator: $creator",
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             Card(
               margin: const EdgeInsets.all(10),
               elevation: 2,
@@ -35,19 +52,9 @@ class MealInfo extends StatelessWidget {
               ),
             ),
             IngredientList(
-              ingredients: const ['Cat', 'Smiles', 'Memes', 'Have a Good Day!'],
+              ingredients: ingredients,
             ),
-            Recipe(
-              recipe: const [
-                "Get Cat",
-                "Get Phone",
-                "Play Memes",
-                "Laugh At Memes",
-                "Pet Cat",
-                "Have Fun",
-                "Have a great day!"
-              ],
-            )
+            Recipe(recipe: recipe)
           ])),
         ),
       ),

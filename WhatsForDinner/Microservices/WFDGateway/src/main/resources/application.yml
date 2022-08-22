@@ -17,7 +17,7 @@ spring:
         - id: meal-service
           uri: lb://meal-service
           predicates:
-            - Path=/meals/**
+            - Path=/meal/**
         - id: fridge-service
           uri: lb://fridge-service
           predicates:
