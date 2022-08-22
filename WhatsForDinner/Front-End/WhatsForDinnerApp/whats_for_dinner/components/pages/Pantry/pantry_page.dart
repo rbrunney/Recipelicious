@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'create_ingredient_page.dart';
+import '../Account/Account_util/add_floating_button.dart';
 
 class PantryPage extends StatefulWidget {
   const PantryPage({Key? key}) : super(key: key);
@@ -9,15 +11,16 @@ class PantryPage extends StatefulWidget {
 }
 
 class _CreatePantryState extends State<PantryPage> {
+  List<Map<String, dynamic>> ingredients = [
+    {'name': 'Chocolate', 'qty': 2, 'type': 'oz'},
+    {'name': 'Tomato', 'qty': 7, 'type': 'lbs'}
+  ];
+
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> ingredients = [
-      {'name': 'Chocolate', 'qty': 2, 'type': 'oz'},
-      {'name': 'Tomato', 'qty': 7, 'type': 'lbs'}
-    ];
-
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: const AddFloatingButton(widgetPage: CreateIngredientPage(),),
         body: SingleChildScrollView(
           child: Column(children: [
             Container(
@@ -76,7 +79,6 @@ class _CreatePantryState extends State<PantryPage> {
                                             setState(() {
                                               ingredients[index]['qty']--;
                                             });
-                                            
                                           },
                                           icon: const Icon(
                                               FontAwesomeIcons.minus))),
@@ -87,16 +89,17 @@ class _CreatePantryState extends State<PantryPage> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Container(
-                                      alignment: Alignment.centerRight,
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              ingredients[index]['qty']++;
-                                            });
-                                          },
-                                          icon: const Icon(
-                                              FontAwesomeIcons.plus)))
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          ingredients[index]['qty']++;
+                                        });
+                                      },
+                                      icon: const Icon(FontAwesomeIcons.plus),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

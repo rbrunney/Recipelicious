@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AddFloatingButton extends StatelessWidget {
-  Icon btnIcon;
-  Widget widgetPage;
-  AddFloatingButton({
+  final Icon btnIcon;
+  final Widget widgetPage;
+  const AddFloatingButton({
     Key? key,
     this.btnIcon = const Icon(Icons.add),
     this.widgetPage = const SafeArea(
