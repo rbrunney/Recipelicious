@@ -32,13 +32,21 @@ public class MealBll {
     }
 
     public ResponseEntity<Map<String, Object>> returnSortedMeals(int offset){
+//        System.out.println(offset);
+
         Map<String, Object> response = new HashMap<>();
 
         List<Meal> mealList = mealRepo.findAll();//.stream().limit(10).collect(Collectors.toList());
 
-        System.out.println(mealList.subList(offset, mealList.size()));
+//        System.out.println(mealList.subList(offset, mealList.size()));
 
-        mealList = mealList.subList(offset, mealList.size());
+        if(!(offset >= mealList.size())){
+            mealList = mealList.subList(offset, mealList.size());
+        }else{
+            if(!(mealList.size() - 11 < 0)){
+                mealList = mealList.subList(mealList.size() - 11, mealList.size());
+            }
+        }
 
         mealList = mealList.stream().limit(10).collect(Collectors.toList());
 

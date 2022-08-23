@@ -124,6 +124,7 @@ def createUser(request, *args, **kwargs):
             "email": userSerializer.data["email"],
             "birthday": userSerializer.data["birthday"],
         }
+
         publishingChannel.basic_publish("usercreation", routing_key="email", body=json.dumps(userDetails))
     else:
         #store the users that can't be sent off right away and send them off later.
