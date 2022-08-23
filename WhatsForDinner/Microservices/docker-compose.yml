@@ -103,7 +103,7 @@ services:
     image: "mongo:latest"
     container_name: meal_info_db
     ports:
-      - "27017"
+      - "9000:27017"
     environment:
       - MONGO_INITDB_DATABASE=MealInfo
     networks:
