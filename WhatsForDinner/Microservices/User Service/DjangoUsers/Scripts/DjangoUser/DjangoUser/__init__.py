@@ -25,6 +25,27 @@ while(not init_sql_ran):
         cursor.execute(
             "USE djangousers; CREATE TABLE IF NOT EXISTS usercomponents_user ( id BIGINT NOT NULL AUTO_INCREMENT, name varchar(1024), username varchar(1024), password varchar(5000), email varchar(6000), birthday date, PRIMARY KEY(id))"
         )
+        
+        # cursor.close()
+
+        # connection = mysql.connector.connect(user=os.environ.get("MYSQL_USER"), password=os.environ.get("MYSQL_PASS"), host=os.environ.get("MYSQL_HOST"), port=int(os.environ.get("MYSQL_PORT")))
+
+        # cursor = connection.cursor()
+
+        # cursor.execute(
+        #     "USE djangousers; INSERT INTO usercomponents_user (name, username, password, email, birthday) VALUES ('rob', 'whatthenut123', '82198491jdadajdAJD', 'email@gobrr.com', '1991-03-01')"
+        # )
+
+        # cursor.close()
+
+        # connection = mysql.connector.connect(user=os.environ.get("MYSQL_USER"), password=os.environ.get("MYSQL_PASS"), host=os.environ.get("MYSQL_HOST"), port=int(os.environ.get("MYSQL_PORT")))
+
+        # cursor = connection.cursor()
+
+        # cursor.execute(
+        #     "USE djangousers; DELETE FROM usercomponents_user WHERE id=1"
+        # )
+
         init_sql_ran = True
         cursor.close()
         connection.close()

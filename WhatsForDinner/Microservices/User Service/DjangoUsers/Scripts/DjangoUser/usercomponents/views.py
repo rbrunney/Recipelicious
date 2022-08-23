@@ -1,3 +1,4 @@
+import traceback
 from django.shortcuts import render
 from django.http.response import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
@@ -75,20 +76,19 @@ def createUser(request, *args, **kwargs):
 
     data = User(name = requestData["name"], username = requestData["username"], password = hashedPass.decode("utf8"), email = requestData["email"], birthday = requestData["birthday"])
 
-    duplicateUsers = User()
+
+    duplicateUsers = None
 
     try:
         duplicateUsers = User.objects.get(email=data.email)
         print("User already exists, discarding")
-    except:
+    except Exception as e:
+        traceback.print_exception(e)
         print("Saving new user")
         data.save()
 
     if(duplicateUsers != None):
-        savedUser = duplicateUsers
-    else:
-        savedUser = User.objects.get(email=data.email)
-        personSerializer = UserSerializer(savedUser)
+        personSerializer = UserSerializer(duplicateUsers)
         response = {
             "message":"Account already created",
             "result":{
@@ -100,7 +100,7 @@ def createUser(request, *args, **kwargs):
         }
         return JsonResponse(response, status=400)
 
-    userSerializer = UserSerializer(savedUser)
+    userSerializer = UserSerializer(data)
     # print(userSerializer.data)
 
 
