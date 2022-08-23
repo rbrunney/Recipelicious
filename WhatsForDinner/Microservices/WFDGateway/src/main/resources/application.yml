@@ -18,8 +18,8 @@ spring:
           uri: lb://meal-service
           predicates:
             - Path=/meal/**
-          filters:
-            - RewritePath=/meal/(?<segment>.*), /$\{segment}
+#          filters:
+#            - RewritePath=/meal/(?<segment>.*), /$\{segment}
         - id: fridge-service
           uri: lb://fridge-service
           predicates:

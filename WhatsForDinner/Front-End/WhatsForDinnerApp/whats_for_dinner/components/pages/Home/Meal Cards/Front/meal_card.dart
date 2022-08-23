@@ -59,16 +59,20 @@ class _MealCard extends State<MealCard> {
             Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                    builder: (BuildContext context) => !widget.beingEdited ? MealInfo(
-                          mealName: widget.mealName,
-                          creator: widget.creator,
-                          imgUrl: widget.imageUrl,
-                          ingredients: widget.ingredients,
-                          recipe: widget.recipe,
-                        ): EditMyMealPage(nameOfMeal: widget.mealName,
-                          savedIngredients: widget.ingredients,
-                          savedRecipe: widget.recipe,
-                          imgUrl: widget.imageUrl,)));
+                    builder: (BuildContext context) => !widget.beingEdited
+                        ? MealInfo(
+                            mealName: widget.mealName,
+                            creator: widget.creator,
+                            imgUrl: widget.imageUrl,
+                            ingredients: widget.ingredients,
+                            recipe: widget.recipe,
+                          )
+                        : EditMyMealPage(
+                            nameOfMeal: widget.mealName,
+                            savedIngredients: widget.ingredients,
+                            savedRecipe: widget.recipe,
+                            imgUrl: widget.imageUrl,
+                          )));
           },
           child: Card(
             margin: const EdgeInsets.all(10),
