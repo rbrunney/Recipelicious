@@ -101,39 +101,65 @@ class LoginPage extends StatelessWidget {
                               primary: Colors.tealAccent, // background
                             ),
                             onPressed: () {
-                              requests
-                                  .makeGetRequest(
-                                      "http://10.0.2.2:8888/users/passwordCheck/${_usernameController.text}/${_passwordController.text}")
-                                  .then((value) {
-                                print(value);
-                                if (json.decode(value)["result"]) {
-                                  globals.username = _usernameController.text;
-                                  globals.password = _passwordController.text;
-                                  globals.isLoggedIn = true;
+                              if (_usernameController.text.isEmpty ||
+                                  _passwordController.text.isEmpty) {
+                                showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertPopUp(
+                                        title: 'Login Fields Empty',
+                                        content:
+                                            'Login Form is not filled out completly',
+                                      );
+                                    });
+                              } else {
+                                requests
+                                    .makeGetRequest(
+                                        "http://10.0.2.2:8888/users/passwordCheck/${_usernameController.text}/${_passwordController.text}")
+                                    .then((value) {
+                                  try {
+                                    if (json.decode(value)["result"]) {
+                                      globals.username =
+                                          _usernameController.text;
+                                      globals.password =
+                                          _passwordController.text;
+                                      globals.isLoggedIn = true;
 
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: const PageNavigation(),
-                                      ));
-                                  FocusScopeNode currentFocus =
-                                      FocusScope.of(context);
-                                  if (!currentFocus.hasPrimaryFocus) {
-                                    currentFocus.unfocus();
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: const PageNavigation(),
+                                          ));
+                                      FocusScopeNode currentFocus =
+                                          FocusScope.of(context);
+                                      if (!currentFocus.hasPrimaryFocus) {
+                                        currentFocus.unfocus();
+                                      }
+                                    } else {
+                                      showDialog<void>(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertPopUp(
+                                              title: 'Login Failed',
+                                              content:
+                                                  'Login Information was incorrect try again',
+                                            );
+                                          });
+                                    }
+                                  } catch (e) {
+                                    showDialog<void>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertPopUp(
+                                            title: 'Login Failed',
+                                            content:
+                                                'Login Information was incorrect try again',
+                                          );
+                                        });
                                   }
-                                } else {
-                                  showDialog<void>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertPopUp(
-                                          title: 'Login Failed',
-                                          content:
-                                              'Login Information was incorrect try again',
-                                        );
-                                      });
-                                }
-                              });
+                                });
+                              }
                             },
                             child: const Text(
                               'Log In',

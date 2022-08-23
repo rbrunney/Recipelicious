@@ -3,6 +3,7 @@ import '../../util/requests.dart';
 import '../../util/to_prev_page.dart';
 import 'alert_pop_up.dart';
 import 'login_page.dart';
+import 'dart:convert';
 
 class CreateAccount extends StatelessWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -172,12 +173,26 @@ class CreateAccount extends StatelessWidget {
                         };
                         requests
                             .makePostRequest(
-                                "http://10.0.2.2:8888/users/createUser/", newUser)
-                            .then((value) => print(value));
-                        // Navigator.of(context).pushAndRemoveUntil(
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const LoginPage()),
-                        //     (Route<dynamic> route) => false);
+                                "http://10.0.2.2:8888/users/createUser/",
+                                newUser)
+                            .then((value) {
+                          if (json.decode(value)["result"]["userID"] != null) {
+                           Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                            (Route<dynamic> route) => false);
+                          } else {
+                            showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertPopUp(
+                                title: 'Account Creation Failed',
+                                content:
+                                    'Currently at this time due to an error. You cannot make an account',
+                              );
+                            });
+                          }
+                        });
                       }
                     }
                   },
