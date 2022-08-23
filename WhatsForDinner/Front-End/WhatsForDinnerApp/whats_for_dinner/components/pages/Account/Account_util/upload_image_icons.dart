@@ -19,7 +19,9 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
       XFile? xFileImage = await imagePicker.pickImage(source: typeOfPhoto);
       if (xFileImage != null) {
         image = File(xFileImage.path);
-        setState(() {});
+        setState(() {
+          
+        });
       }
     }
 
@@ -43,8 +45,8 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
                     child: IconButton(
                       icon: const Icon(Icons.add_photo_alternate_outlined),
                       iconSize: 20,
-                      onPressed: () {
-                        pickImage(ImageSource.gallery);
+                      onPressed: () async {
+                        await pickImage(ImageSource.gallery);
                       },
                     )),
               ),
@@ -61,8 +63,8 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
                     child: IconButton(
                       icon: const Icon(Icons.add_a_photo_outlined),
                       iconSize: 20,
-                      onPressed: () {
-                        pickImage(ImageSource.camera);
+                      onPressed: () async {
+                        await pickImage(ImageSource.camera);
                       },
                     )),
               ),
