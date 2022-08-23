@@ -1,14 +1,15 @@
 import 'package:http/http.dart';
+import 'dart:convert';
 
 class Requests {
-  Future<void> makePostRequest(
+  Future<String> makePostRequest(
       String url, Map<String, dynamic> requestBody) async {
     final requestLink = Uri.parse(url);
     final headers = {"Content-type": "application/json"};
-    final json = requestBody.toString();
-    final response = await post(requestLink, headers: headers, body: json);
+    print(json);
+    Response response = await post(requestLink, headers: headers, body: json.encode(requestBody));
 
-    print(response);
+    return response.body;
   }
 
   Future<String> makeGetRequest(String url) async {

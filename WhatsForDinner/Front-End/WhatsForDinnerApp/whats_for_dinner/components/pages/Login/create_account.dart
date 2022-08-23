@@ -15,6 +15,7 @@ class CreateAccount extends StatelessWidget {
     TextEditingController _birthdayController = TextEditingController();
     TextEditingController _passwordController = TextEditingController();
     TextEditingController _confirmPasswordController = TextEditingController();
+    Requests requests = Requests();
 
     return SafeArea(
         child: Scaffold(
@@ -90,8 +91,8 @@ class CreateAccount extends StatelessWidget {
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey)),
-                    hintText: 'mm/dd/yyyy...',
-                    labelText: 'Enter Birthday (mm/dd/yyyy)',
+                    hintText: 'yyyy/mm/dd...',
+                    labelText: 'Enter Birthday (yyyy/mm/dd)',
                     labelStyle: TextStyle(color: Colors.grey)),
               )),
           Container(
@@ -166,14 +167,17 @@ class CreateAccount extends StatelessWidget {
                           "username": _usernameController.text,
                           "password": _passwordController.text,
                           "email": _emailController.text,
-                          "birthday": _birthdayController.text
+                          "birthday":
+                              _birthdayController.text.replaceAll("/", "-")
                         };
-                        Requests().makePostRequest(
-                            "http://10.0.2.2:8000/createUser/", newUser);
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                            (Route<dynamic> route) => false);
+                        requests
+                            .makePostRequest(
+                                "http://10.0.2.2:8888/users/createUser/", newUser)
+                            .then((value) => print(value));
+                        // Navigator.of(context).pushAndRemoveUntil(
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const LoginPage()),
+                        //     (Route<dynamic> route) => false);
                       }
                     }
                   },
