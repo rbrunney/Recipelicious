@@ -67,7 +67,8 @@ class _MealCard extends State<MealCard> {
                           recipe: widget.recipe,
                         ): EditMyMealPage(nameOfMeal: widget.mealName,
                           savedIngredients: widget.ingredients,
-                          savedRecipe: widget.recipe,)));
+                          savedRecipe: widget.recipe,
+                          imgUrl: widget.imageUrl,)));
           },
           child: Card(
             margin: const EdgeInsets.all(10),

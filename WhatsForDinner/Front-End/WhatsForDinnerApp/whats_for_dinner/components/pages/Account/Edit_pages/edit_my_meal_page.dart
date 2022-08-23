@@ -8,11 +8,12 @@ class EditMyMealPage extends StatefulWidget {
   String nameOfMeal;
   List<dynamic> savedIngredients;
   Map<String, dynamic> savedRecipe;
+  String imgUrl;
   EditMyMealPage(
       {Key? key,
       this.nameOfMeal = '',
       this.savedIngredients = const [],
-      this.savedRecipe = const {}})
+      this.savedRecipe = const {}, this.imgUrl = ''})
       : super(key: key);
 
   @override
@@ -60,7 +61,7 @@ class _EditMyMealPageState extends State<EditMyMealPage> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              const UploadImageIcons(),
+              UploadImageIcons(hasImg: true, imgUrl: widget.imgUrl,),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: const Text(

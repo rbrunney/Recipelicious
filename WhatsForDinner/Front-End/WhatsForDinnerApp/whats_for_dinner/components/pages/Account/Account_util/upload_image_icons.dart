@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class UploadImageIcons extends StatefulWidget {
-  const UploadImageIcons({Key? key}) : super(key: key);
+  String imgUrl;
+  bool hasImg;
+  UploadImageIcons({Key? key, this.hasImg = false, this.imgUrl = ''}) : super(key: key);
 
   @override
   State<UploadImageIcons> createState() => _UploadImageIconsState();
@@ -19,9 +21,7 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
       XFile? xFileImage = await imagePicker.pickImage(source: typeOfPhoto);
       if (xFileImage != null) {
         image = File(xFileImage.path);
-        setState(() {
-          
-        });
+        setState(() {});
       }
     }
 
@@ -87,7 +87,24 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
                 fit: BoxFit.cover,
               ),
             ),
-          ),
+          )
+        else if(widget.hasImg)
+        Card(
+            margin: const EdgeInsets.all(10),
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              child: Image.network(
+                widget.imgUrl,
+                width: 350,
+                height: 150,
+                fit: BoxFit.cover,
+              ),
+            ),
+          )
       ],
     );
   }

@@ -19,9 +19,6 @@ class _CreateMealState extends State<CreateMeal> {
 
   @override
   Widget build(BuildContext context) {
-    nameOfMealController.value = const TextEditingValue(
-      text: 'cool stuff',
-    );
 
     return SafeArea(
       child: Scaffold(
@@ -50,7 +47,7 @@ class _CreateMealState extends State<CreateMeal> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              const UploadImageIcons(),
+              UploadImageIcons(),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: const Text(
