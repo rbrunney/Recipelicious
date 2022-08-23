@@ -45,7 +45,7 @@ class _AccountEditInfoState extends State<AccountEditInfo> {
               context,
               PageTransition(
                   type: PageTransitionType.rightToLeft,
-                  child: EditInfoPage(editProfileInfo: widget.editProfileInfo)),
+                  child: EditInfoPage(editProfileInfo: widget.editProfileInfo, accountInfo: widget.accountInfo,)),
             );
           },
         ),

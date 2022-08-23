@@ -4,14 +4,14 @@ import 'ingredient_list.dart';
 import 'recipe.dart';
 
 class MealInfo extends StatelessWidget {
-  String imgUrl;
-  String mealName;
-  String creator;
-  String description;
-  Map<String, dynamic> recipe;
-  List<dynamic> ingredients;
+  final String imgUrl;
+  final String mealName;
+  final String creator;
+  final String description;
+  final Map<String, dynamic> recipe;
+  final List<dynamic> ingredients;
 
-  MealInfo({
+  const MealInfo({
     Key? key,
     this.imgUrl = "",
     this.mealName = "",
@@ -30,7 +30,7 @@ class MealInfo extends StatelessWidget {
               child: Column(children: [
             const ToPrevPage(),
             Text(mealName,
-                style:
+                style: 
                     const TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
             Text("Creator: $creator",
                 style:
