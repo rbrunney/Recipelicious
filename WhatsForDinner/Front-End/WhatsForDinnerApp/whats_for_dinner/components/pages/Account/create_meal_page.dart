@@ -13,6 +13,7 @@ class CreateMeal extends StatefulWidget {
 
 class _CreateMealState extends State<CreateMeal> {
   TextEditingController nameOfMealController = TextEditingController();
+  TextEditingController descriptionOfMealController = TextEditingController();
 
   List<dynamic> ingredients = [];
   Map<String, dynamic> recipe = {};
@@ -40,6 +41,24 @@ class _CreateMealState extends State<CreateMeal> {
                         hintText: "Enter Meal Name...",
                         labelText: 'Enter Meal Name')),
               ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 15),
+                child: const Text(
+                  'Description',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15),
+                child: TextField(
+                    controller: descriptionOfMealController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Enter Description...",
+                        labelText: 'Enter Description')),
+              ),
+
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: const Text(
@@ -77,14 +96,30 @@ class _CreateMealState extends State<CreateMeal> {
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(top: 5, bottom: 5),
                 child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (nameOfMealController.text != '' &&
                           ingredients.isNotEmpty &&
                           recipe.isNotEmpty) {
                         Navigator.of(context).pop();
                         print('Call Davids Api');
                       } else {
-                        null;
+                        await showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Not all the fields are used'),
+                                    content: const Text(
+                                        'Please, fill at least the fields (Name, Ingredients and Recipe) with the information of the meal.'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                });
                       }
                     },
                     style: ElevatedButton.styleFrom(

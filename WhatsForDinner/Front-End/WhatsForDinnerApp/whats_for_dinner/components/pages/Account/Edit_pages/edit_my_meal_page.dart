@@ -5,15 +5,18 @@ import '../../../util/add_bar_bullet.dart';
 import '../../../util/add_bar_ordered.dart';
 
 class EditMyMealPage extends StatefulWidget {
-  String nameOfMeal;
-  List<dynamic> savedIngredients;
-  Map<String, dynamic> savedRecipe;
-  String imgUrl;
-  EditMyMealPage(
+  final String nameOfMeal;
+  final String descriptionOfMeal;
+  final List<dynamic> savedIngredients;
+  final Map<String, dynamic> savedRecipe;
+  final String imgUrl;
+  const EditMyMealPage(
       {Key? key,
       this.nameOfMeal = '',
+      this.descriptionOfMeal = '',
       this.savedIngredients = const [],
-      this.savedRecipe = const {}, this.imgUrl = ''})
+      this.savedRecipe = const {},
+      this.imgUrl = ''})
       : super(key: key);
 
   @override
@@ -22,6 +25,7 @@ class EditMyMealPage extends StatefulWidget {
 
 class _EditMyMealPageState extends State<EditMyMealPage> {
   TextEditingController nameOfMealController = TextEditingController();
+  TextEditingController descriptionOfMealController = TextEditingController();
 
   List<dynamic> ingredients = [];
   Map<String, dynamic> recipe = {};
@@ -34,6 +38,7 @@ class _EditMyMealPageState extends State<EditMyMealPage> {
     nameOfMealController.value = TextEditingValue(
       text: widget.nameOfMeal,
     );
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -57,11 +62,30 @@ class _EditMyMealPageState extends State<EditMyMealPage> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: const Text(
+                  'Description',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: TextField(
+                    controller: descriptionOfMealController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Enter Description...",
+                        labelText: 'Enter Description')),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 15),
+                child: const Text(
                   'Upload Image',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              UploadImageIcons(hasImg: true, imgUrl: widget.imgUrl,),
+              UploadImageIcons(
+                hasImg: true,
+                imgUrl: widget.imgUrl,
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: const Text(
@@ -90,14 +114,31 @@ class _EditMyMealPageState extends State<EditMyMealPage> {
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(top: 5, bottom: 5),
                 child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (nameOfMealController.text != '' &&
                           ingredients.isNotEmpty &&
                           recipe.isNotEmpty) {
                         Navigator.of(context).pop();
                         print('Call Davids Api');
                       } else {
-                        null;
+                        await showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title:
+                                    const Text('Not all the fields are used'),
+                                content: const Text(
+                                    'Please, fill at least the fields (Name, Ingredients and Recipe) with the information of the meal.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            });
                       }
                     },
                     style: ElevatedButton.styleFrom(

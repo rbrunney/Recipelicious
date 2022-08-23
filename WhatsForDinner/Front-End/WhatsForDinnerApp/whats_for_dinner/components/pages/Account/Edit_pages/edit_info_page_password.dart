@@ -55,8 +55,14 @@ class EditInfoPagePassword extends StatelessWidget {
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Confirm password'),
-                      onSubmitted: (String value) async {
-                        if (oldPasswordController.text != "poopyhead") {
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(top: 30),
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          if (oldPasswordController.text != "poopyhead") {
                           await showDialog<void>(
                             context: context,
                             builder: (BuildContext context) {
@@ -102,8 +108,8 @@ class EditInfoPagePassword extends StatelessWidget {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: const Text('Password has been Edited'),
-                                content: Text(
-                                    'Your password now has been changed to $value'),
+                                content: const Text(
+                                    'Your password has been changed'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
@@ -119,9 +125,15 @@ class EditInfoPagePassword extends StatelessWidget {
                         oldPasswordController.clear();
                         newPasswordController.clear();
                         confirmNewPasswordController.clear();
-                      },
-                    ),
-                  )
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.tealAccent, // background
+                        ),
+                        child: const Text(
+                          'Edit Password',
+                          style: TextStyle(color: Colors.black),
+                        )),
+                  ),
                 ],
               ),
             ],
