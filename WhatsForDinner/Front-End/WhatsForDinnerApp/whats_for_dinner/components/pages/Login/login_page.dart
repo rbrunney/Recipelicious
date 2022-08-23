@@ -119,6 +119,8 @@ class LoginPage extends StatelessWidget {
                                     .then((value) {
                                   try {
                                     if (json.decode(value)["result"]) {
+                                      globals.userID =
+                                          json.decode(value)["userID"];
                                       globals.username =
                                           _usernameController.text;
                                       globals.password =

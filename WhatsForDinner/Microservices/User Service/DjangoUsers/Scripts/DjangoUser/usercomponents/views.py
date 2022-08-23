@@ -298,3 +298,24 @@ def getUser(request, *args, **kwargs):
         'birthday': userSerializer.data["birthday"]
     }
     return JsonResponse(response)
+
+@api_view(("GET",))
+def getUserByUsername(request, *args, **kwargs):
+    userUsername = kwargs["username"]
+    user = User()
+
+    try:
+        user = User.objects.get(username=userUsername)
+    except Exception as e:
+        print(e.with_traceback.__str__())
+        response = {
+            'result': False,
+        }
+        return JsonResponse(response, status=404)
+    userSerializer = UserSerializer(user)
+    response = {
+        'result': True,
+        'userID': userSerializer.data["id"],
+        'name': userSerializer.data["name"],
+    }
+    return JsonResponse(response)
