@@ -227,6 +227,7 @@ def checkPw(request, *args, **kwargs):
         print("passwords do not match!")        
         response = {
             "message":"Login credentials incorrect",
+            "userID": userSerializer.data["id"],
             "result": bcrypt.checkpw(password.encode('utf8'),userSerializer.data["password"].encode('utf8')),
             "date-time": datetime.datetime.now()
         }
@@ -236,6 +237,7 @@ def checkPw(request, *args, **kwargs):
 
     response = {
         "message":"Login credentials correct",
+        "userID": userSerializer.data["id"],
         "result": bcrypt.checkpw(password.encode('utf8'),userSerializer.data["password"].encode('utf8')),
         "date-time": datetime.datetime.now()
     }
