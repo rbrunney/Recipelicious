@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../util/requests.dart';
 import '../Back/meal_info.dart';
 import 'dart:convert';
+import '../../../Account/Edit_pages/edit_my_meal_page.dart';
 
 class MealCard extends StatefulWidget {
   MealCard(
@@ -15,7 +16,8 @@ class MealCard extends StatefulWidget {
       this.likes = 0,
       this.creator = "",
       this.ingredients = const [],
-      this.recipe = const {}})
+      this.recipe = const {},
+      this.beingEdited = false})
       : super(key: key);
 
   final bool liked;
@@ -27,6 +29,7 @@ class MealCard extends StatefulWidget {
   final String mealID;
   final List<dynamic> ingredients;
   final Map<String, dynamic> recipe;
+  final bool beingEdited;
 
   @override
   _MealCard createState() => _MealCard();
@@ -56,13 +59,15 @@ class _MealCard extends State<MealCard> {
             Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                    builder: (BuildContext context) => MealInfo(
+                    builder: (BuildContext context) => !widget.beingEdited ? MealInfo(
                           mealName: widget.mealName,
                           creator: widget.creator,
                           imgUrl: widget.imageUrl,
                           ingredients: widget.ingredients,
                           recipe: widget.recipe,
-                        )));
+                        ): EditMyMealPage(nameOfMeal: widget.mealName,
+                          savedIngredients: widget.ingredients,
+                          savedRecipe: widget.recipe,)));
           },
           child: Card(
             margin: const EdgeInsets.all(10),

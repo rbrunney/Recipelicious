@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'ordered_recipe.dart';
 
 class AddBarOrdered extends StatefulWidget {
   final String hintText;
   final String labelText;
-  final List<String> information;
+  final Map<String, dynamic> information;
 
   const AddBarOrdered(
       {Key? key,
       this.hintText = '',
       this.labelText = '',
-      this.information = const []})
+      this.information = const {}})
       : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class AddBarOrdered extends StatefulWidget {
 class _AddBarOrderedState extends State<AddBarOrdered> {
   @override
   Widget build(BuildContext context) {
-        TextEditingController addBarController = TextEditingController();
+    TextEditingController addBarController = TextEditingController();
 
     return Column(
       children: [
@@ -29,7 +30,17 @@ class _AddBarOrderedState extends State<AddBarOrdered> {
               controller: addBarController,
               onSubmitted: (value) {
                 setState(() {
-                  widget.information.insert(0, addBarController.text);
+                  if (widget.information.isEmpty) {
+                    widget.information["${widget.information.length + 1}."] =
+                        addBarController.text;
+                  } else if (!widget.information.keys
+                      .contains("${widget.information.length}.")) {
+                    widget.information["${widget.information.length}."] =
+                        addBarController.text;
+                  } else {
+                    widget.information["${widget.information.length + 1}."] =
+                        addBarController.text;
+                  }
                 });
               },
               decoration: InputDecoration(
@@ -40,7 +51,20 @@ class _AddBarOrderedState extends State<AddBarOrdered> {
                       onPressed: () {
                         if (addBarController.text != '') {
                           setState(() {
-                            widget.information.insert(0, addBarController.text);
+                            if (widget.information.isEmpty) {
+                              widget.information[
+                                      "${widget.information.length + 1}."] =
+                                  addBarController.text;
+                            } else if (!widget.information.keys
+                                .contains("${widget.information.length}.")) {
+                              widget.information[
+                                      "${widget.information.length}."] =
+                                  addBarController.text;
+                            } else {
+                              widget.information[
+                                      "${widget.information.length + 1}."] =
+                                  addBarController.text;
+                            }
                           });
                           addBarController.clear();
                         }
@@ -58,23 +82,18 @@ class _AddBarOrderedState extends State<AddBarOrdered> {
             shrinkWrap: true,
             itemCount: widget.information.length,
             itemBuilder: (context, index) {
-              final String ingredient = widget.information[index];
+              index += 1;
+              final String ingredient = widget.information["$index."];
 
               return Dismissible(
-                key: Key(ingredient),
-                onDismissed: (direction) {
-                  widget.information.removeAt(index);
-                },
-                child: Row(
-                  children: [
-                    Text("${index + 1}.", style: const TextStyle(fontSize: 20),),
-                    Text(
-                      '  $ingredient',
-                      style: const TextStyle(fontSize: 20),
-                    )
-                  ],
-                ),
-              );
+                  key: Key(ingredient),
+                  onDismissed: (direction) {
+                    widget.information.remove("$index.");
+                  },
+                  child: OrderedRecipe(
+                    index: index,
+                    ingredient: ingredient,
+                  ));
             },
           ),
         ),
