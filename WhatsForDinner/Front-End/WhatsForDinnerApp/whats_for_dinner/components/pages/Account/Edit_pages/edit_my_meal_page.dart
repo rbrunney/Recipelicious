@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
-import '../../util/to_prev_page.dart';
-import 'Account_util/upload_image_icons.dart';
-import '../../util/add_bar_bullet.dart';
-import '../../util/add_bar_ordered.dart';
+import '../../../util/to_prev_page.dart';
+import '../Account_util/upload_image_icons.dart';
+import '../../../util/add_bar_bullet.dart';
+import '../../../util/add_bar_ordered.dart';
 
-class CreateMeal extends StatefulWidget {
-  const CreateMeal({Key? key}) : super(key: key);
+class EditMyMealPage extends StatefulWidget {
+  String nameOfMeal;
+  List<dynamic> savedIngredients;
+  Map<String, dynamic> savedRecipe;
+  String imgUrl;
+  EditMyMealPage(
+      {Key? key,
+      this.nameOfMeal = '',
+      this.savedIngredients = const [],
+      this.savedRecipe = const {}, this.imgUrl = ''})
+      : super(key: key);
 
   @override
-  State<CreateMeal> createState() => _CreateMealState();
+  State<EditMyMealPage> createState() => _EditMyMealPageState();
 }
 
-class _CreateMealState extends State<CreateMeal> {
+class _EditMyMealPageState extends State<EditMyMealPage> {
   TextEditingController nameOfMealController = TextEditingController();
 
   List<dynamic> ingredients = [];
@@ -19,7 +28,12 @@ class _CreateMealState extends State<CreateMeal> {
 
   @override
   Widget build(BuildContext context) {
+    ingredients.addAll(widget.savedIngredients);
+    recipe.addAll(widget.savedRecipe);
 
+    nameOfMealController.value = TextEditingValue(
+      text: widget.nameOfMeal,
+    );
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -27,7 +41,7 @@ class _CreateMealState extends State<CreateMeal> {
             children: [
               const ToPrevPage(),
               const Text(
-                'Create Meal',
+                'Edit Meal',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
               Container(
@@ -47,7 +61,7 @@ class _CreateMealState extends State<CreateMeal> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              UploadImageIcons(),
+              UploadImageIcons(hasImg: true, imgUrl: widget.imgUrl,),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: const Text(
@@ -72,7 +86,6 @@ class _CreateMealState extends State<CreateMeal> {
                 labelText: "Enter Recipe",
                 information: recipe,
               ),
-              
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(top: 5, bottom: 5),
@@ -91,7 +104,7 @@ class _CreateMealState extends State<CreateMeal> {
                       primary: Colors.tealAccent, // background
                     ),
                     child: const Text(
-                      'Create Meal',
+                      'Edit Meal',
                       style: TextStyle(color: Colors.black),
                     )),
               ),

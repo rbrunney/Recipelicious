@@ -4,7 +4,7 @@ import '../pages/Home/Meal Cards/Back/bullet_point.dart';
 class AddBarBullet extends StatefulWidget {
   final String hintText;
   final String labelText;
-  final List<String> information;
+  final List<dynamic> information;
 
   const AddBarBullet(
       {Key? key,

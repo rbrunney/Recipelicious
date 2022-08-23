@@ -34,8 +34,15 @@ class MealAppBar extends StatelessWidget {
                     child: Column(
                       children: [
                         MealCard(
+                            mealName: 'your momm woooo',
                             imageUrl:
-                                "https://i.ytimg.com/vi/eX2qFMC8cFo/maxresdefault.jpg"),
+                                "https://i.ytimg.com/vi/eX2qFMC8cFo/maxresdefault.jpg",
+                            ingredients: const ['skiirt', 'sheeesh'],
+                            recipe: const {'1.': 'bitches', '2.' : 'batman'},
+                            beingEdited: true,
+                            ),
+                            
+
                         MealCard(
                             imageUrl:
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9MRJ2PkWvRNLyk1BZU5kDBfHvvzi-2W72rw&usqp=CAU"),

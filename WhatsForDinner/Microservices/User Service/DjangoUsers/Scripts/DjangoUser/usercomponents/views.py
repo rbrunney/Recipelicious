@@ -105,37 +105,37 @@ def createUser(request, *args, **kwargs):
 
 
 
-    if(connection_free):
-        if(os.path.exists("emailsToSend.json")):
-            with open('emailsToSend.json','r') as jsonFile:
-                users = json.load(jsonFile)
-                for user in users:
-                    userDetails = {
-                        "name": user["name"],
-                        "username": user["username"],
-                        "email": user["email"],
-                        "birthday": user["birthday"],
-                    }
-                    publishingChannel.basic_publish("usercreation", routing_key="email", body=userDetails)
+    # if(connection_free):
+    #     if(os.path.exists("emailsToSend.json")):
+    #         with open('emailsToSend.json','r') as jsonFile:
+    #             users = json.load(jsonFile)
+    #             for user in users:
+    #                 userDetails = {
+    #                     "name": user["name"],
+    #                     "username": user["username"],
+    #                     "email": user["email"],
+    #                     "birthday": user["birthday"],
+    #                 }
+    #                 publishingChannel.basic_publish("usercreation", routing_key="email", body=userDetails)
 
-        userDetails ={
-            "name": userSerializer.data["name"],
-            "username": userSerializer.data["username"],
-            "email": userSerializer.data["email"],
-            "birthday": userSerializer.data["birthday"],
-        }
+    #     userDetails ={
+    #         "name": userSerializer.data["name"],
+    #         "username": userSerializer.data["username"],
+    #         "email": userSerializer.data["email"],
+    #         "birthday": userSerializer.data["birthday"],
+    #     }
 
-        publishingChannel.basic_publish("usercreation", routing_key="email", body=json.dumps(userDetails))
-    else:
-        #store the users that can't be sent off right away and send them off later.
-        userDetails ={
-            "name": userSerializer.data["name"],
-            "username": userSerializer.data["username"],
-            "email": userSerializer.data["email"],
-            "birthday": userSerializer.data["birthday"],
-        }
-        with open('emailsToSend.json', 'a') as jsonFile:
-            json.dump(userDetails, jsonFile, indent=4)
+    #     publishingChannel.basic_publish("usercreation", routing_key="email", body=json.dumps(userDetails))
+    # else:
+    #     #store the users that can't be sent off right away and send them off later.
+    #     userDetails ={
+    #         "name": userSerializer.data["name"],
+    #         "username": userSerializer.data["username"],
+    #         "email": userSerializer.data["email"],
+    #         "birthday": userSerializer.data["birthday"],
+    #     }
+    #     with open('emailsToSend.json', 'a') as jsonFile:
+    #         json.dump(userDetails, jsonFile, indent=4)
 
 
 
