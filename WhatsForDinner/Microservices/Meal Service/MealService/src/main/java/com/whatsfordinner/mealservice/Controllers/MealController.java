@@ -39,6 +39,11 @@ public class MealController {
     @GetMapping("/findByMostLikes/{offset}")
     public ResponseEntity<Map<String, Object>> getByMostLiked(@PathVariable int offset){return mealBll.returnSortedMeals(offset);}
 
+    @GetMapping("/findByLeastLikes/{offset}")
+    public ResponseEntity<Map<String, Object>> getByLeastLiked(@PathVariable int offset){
+        return mealBll.returnLowestLikedFirst(offset);
+    }
+
     @PostMapping("/findByIngredients")
     public ResponseEntity<Map<String, Object>> findByIngredients(@RequestBody List<Ingredient> ingredients){
         return mealBll.findByIngredient(ingredients);

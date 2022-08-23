@@ -31,11 +31,7 @@ public class MealBll {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public ResponseEntity<Map<String, Object>> returnSortedMeals(int offset){
-//        System.out.println(offset);
-
-        Map<String, Object> response = new HashMap<>();
-
+    private List<Meal> getMealListFromDB(int offset){
         List<Meal> mealList = mealRepo.findAll();//.stream().limit(10).collect(Collectors.toList());
 
 //        System.out.println(mealList.subList(offset, mealList.size()));
@@ -49,6 +45,15 @@ public class MealBll {
         }
 
         mealList = mealList.stream().limit(10).collect(Collectors.toList());
+        return mealList;
+    }
+
+    public ResponseEntity<Map<String, Object>> returnSortedMeals(int offset){
+//        System.out.println(offset);
+
+        Map<String, Object> response = new HashMap<>();
+
+        List<Meal> mealList = getMealListFromDB(offset);
 
         //Grabs the list, sorts it by highest, and returns it.
         mealList = mealList.stream().sorted(Comparator.comparingInt(Meal::getLikes).reversed()).collect(Collectors.toList());
@@ -59,6 +64,21 @@ public class MealBll {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    public ResponseEntity<Map<String, Object>> returnLowestLikedFirst(int offset){
+        Map<String, Object> response = new HashMap<>();
+
+        List<Meal> mealList = getMealListFromDB(offset);
+
+        mealList = mealList.stream().sorted(Comparator.comparingInt(Meal::getLikes)).collect(Collectors.toList());
+
+        response.put("message", "meals sorted");
+        response.put("results", mealList);
+        response.put("Date-Time", LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
     public ResponseEntity<Map<String, Object>> findByIngredient(List<Ingredient> ingredients){
 
