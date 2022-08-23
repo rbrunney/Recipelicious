@@ -89,6 +89,7 @@ def createUser(request, *args, **kwargs):
     else:
         savedUser = User.objects.get(email=data.email)
         personSerializer = UserSerializer(savedUser)
+        print(personSerializer.errors)
         response = {
             "message":"Account already created",
             "result":{
@@ -102,6 +103,8 @@ def createUser(request, *args, **kwargs):
 
     userSerializer = UserSerializer(savedUser)
     # print(userSerializer.data)
+
+    print(userSerializer.errors)
 
 
 
@@ -124,6 +127,8 @@ def createUser(request, *args, **kwargs):
             "email": userSerializer.data["email"],
             "birthday": userSerializer.data["birthday"],
         }
+
+        print(userSerializer.errors)
         publishingChannel.basic_publish("usercreation", routing_key="email", body=json.dumps(userDetails))
     else:
         #store the users that can't be sent off right away and send them off later.
@@ -133,6 +138,7 @@ def createUser(request, *args, **kwargs):
             "email": userSerializer.data["email"],
             "birthday": userSerializer.data["birthday"],
         }
+        print(userSerializer.errors)
         with open('emailsToSend.json', 'a') as jsonFile:
             json.dump(userDetails, jsonFile, indent=4)
 
@@ -148,6 +154,7 @@ def createUser(request, *args, **kwargs):
         },
         "date-time": datetime.datetime.now()
     }
+    print(userSerializer.errors)
 
     return JsonResponse(response, status=201)
 
