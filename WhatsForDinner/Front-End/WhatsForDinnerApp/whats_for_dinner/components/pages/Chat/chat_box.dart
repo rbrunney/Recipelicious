@@ -36,6 +36,9 @@ class ChatBox extends StatelessWidget {
                 ))
           ])),
       onTap: () {
+
+        
+
         Navigator.push(
             context,
             PageTransition(

@@ -14,13 +14,13 @@ class WhatsForDinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // if (!globals.isLoggedIn) {
-    //   return MaterialApp(
-    //     title: 'Whats For Dinner',
-    //     theme: ThemeData.dark(),
-    //     home: const LoginPage(),
-    //   );
-    // }
+    if (!globals.isLoggedIn) {
+      return MaterialApp(
+        title: 'Whats For Dinner',
+        theme: ThemeData.dark(),
+        home: const LoginPage(),
+      );
+    }
 
     return MaterialApp(
       title: 'Whats For Dinner',

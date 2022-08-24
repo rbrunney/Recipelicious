@@ -21,6 +21,7 @@ class _MakeChatPage extends State<MakeChatPage> {
   @override
   Widget build(BuildContext context) {
     TextEditingController _inviteUserController = TextEditingController();
+    TextEditingController _groupNameController = TextEditingController();
 
     return SafeArea(
         child: Scaffold(
@@ -43,6 +44,18 @@ class _MakeChatPage extends State<MakeChatPage> {
             left: 10,
           ),
           child: Column(children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 25),
+              child: TextField(
+              controller: _groupNameController,
+              decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter Group Name...',
+                    labelText: 'Create Group Name',
+                    prefixIcon: Icon(Icons.edit_note_outlined)
+              )
+            ),
+            ),
             TextField(
                 controller: _inviteUserController,
                 onSubmitted: (value) {
@@ -167,7 +180,16 @@ class _MakeChatPage extends State<MakeChatPage> {
           child: ElevatedButton(
               onPressed: isBtnActive
                   ? () {
-                      Navigator.of(context).pop();
+                      invitedUsers.add(
+                          {"userID": globals.userID, "name": globals.username});
+
+                      requests.makePostRequest(
+                          "http://10.0.2.2:8888/chat/createRoom/", {
+                        "groupName": _groupNameController.text,
+                        "invitedPeople": invitedUsers
+                      }).then((value) {
+                        Navigator.of(context).pop();
+                      });
                     }
                   : null,
               style: ElevatedButton.styleFrom(

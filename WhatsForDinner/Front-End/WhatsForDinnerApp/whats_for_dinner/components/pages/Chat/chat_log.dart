@@ -17,7 +17,7 @@ class ChatLog extends StatefulWidget {
 
 class _ChatLog extends State<ChatLog> {
   IO.Socket socket = IO.io(
-      'http://10.0.2.2:8000',
+      'http://10.0.2.2:8888',
       IO.OptionBuilder()
           .setTransports(['websocket']) // for Flutter or Dart VM
           .disableAutoConnect() // disable auto-connection
