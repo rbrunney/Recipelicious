@@ -30,6 +30,11 @@ class _ChatLog extends State<ChatLog> {
   List<Widget> chatLog = [];
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     socket.connect();
@@ -38,11 +43,64 @@ class _ChatLog extends State<ChatLog> {
       "userID": globals.userID,
       "invitedPeople": widget.invitedUsers,
     });
+
+    socket.emit("getPrevMessages",
+        {"groupName": widget.chatName, "userID": globals.userID});
   }
 
   @override
   Widget build(BuildContext context) {
     TextEditingController _messageController = TextEditingController();
+
+    socket.on('room-response', (data) {
+      for (var chatInfo in data) {
+        if (globals.userID == int.parse(chatInfo['userID'])) {
+          if (!mounted) {
+            return;
+          }
+          setState(() {
+            chatLog.add(
+              ChatBubble(
+                margin: const EdgeInsets.only(
+                  right: 10,
+                  top: 5,
+                  bottom: 5,
+                ),
+                alignment: Alignment.centerRight,
+                clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                backGroundColor: Colors.tealAccent,
+                child: Text(
+                  chatInfo["content"],
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
+                ),
+              ),
+            );
+          });
+        } else {
+          if (!mounted) {
+            return;
+          }
+          setState(() {
+            chatLog.add(
+              ChatBubble(
+                margin: const EdgeInsets.only(
+                  right: 10,
+                  top: 5,
+                  bottom: 5,
+                ),
+                alignment: Alignment.centerLeft,
+                clipper: ChatBubbleClipper4(type: BubbleType.receiverBubble),
+                backGroundColor: Colors.grey,
+                child: Text(
+                  chatInfo["content"],
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
+                ),
+              ),
+            );
+          });
+        }
+      }
+    });
 
     return SafeArea(
         child: Scaffold(
