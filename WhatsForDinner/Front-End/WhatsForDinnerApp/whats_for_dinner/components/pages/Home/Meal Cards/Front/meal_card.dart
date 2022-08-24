@@ -13,6 +13,7 @@ class MealCard extends StatefulWidget {
           "https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg",
       this.mealID = "",
       this.mealName = "",
+      this.description = '',
       this.likes = 0,
       this.creator = "",
       this.ingredients = const [],
@@ -24,6 +25,7 @@ class MealCard extends StatefulWidget {
   final bool bookMarked;
   final String imageUrl;
   final String mealName;
+  final String description;
   int likes;
   final String creator;
   final String mealID;
@@ -69,6 +71,7 @@ class _MealCard extends State<MealCard> {
                           )
                         : EditMyMealPage(
                             nameOfMeal: widget.mealName,
+                            descriptionOfMeal: widget.description,
                             savedIngredients: widget.ingredients,
                             savedRecipe: widget.recipe,
                             imgUrl: widget.imageUrl,
