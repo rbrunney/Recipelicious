@@ -5,7 +5,12 @@ import '../Chat/chat_log.dart';
 class ChatBox extends StatelessWidget {
   String chatBoxName;
   bool isGroup;
-  ChatBox({Key? key, this.chatBoxName = "", this.isGroup = false})
+  List<dynamic> usersInGroup;
+  ChatBox(
+      {Key? key,
+      this.chatBoxName = "",
+      this.isGroup = false,
+      this.usersInGroup = const []})
       : super(key: key);
 
   @override
@@ -22,12 +27,12 @@ class ChatBox extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(chatBoxName, style: const TextStyle(fontSize: 20)),
-              ) 
-            ),
+                flex: 1,
+                child: Container(
+                  alignment: Alignment.center,
+                  child:
+                      Text(chatBoxName, style: const TextStyle(fontSize: 20)),
+                )),
             const Expanded(
                 flex: 1,
                 child: Icon(
@@ -36,14 +41,14 @@ class ChatBox extends StatelessWidget {
                 ))
           ])),
       onTap: () {
-
-        
-
         Navigator.push(
             context,
             PageTransition(
               type: PageTransitionType.rightToLeft,
-              child: ChatLog(chatName: chatBoxName,),
+              child: ChatLog(
+                chatName: chatBoxName,
+                invitedUsers: usersInGroup,
+              ),
             ));
       },
     );

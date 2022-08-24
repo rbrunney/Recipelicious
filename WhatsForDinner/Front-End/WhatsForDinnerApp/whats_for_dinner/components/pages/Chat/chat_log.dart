@@ -6,10 +6,14 @@ import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_4.dart';
 
 import '../Home/Meal Cards/Front/meal_card.dart';
 import 'chat_meal_card.dart';
+import '../../util/globals.dart' as globals;
+import 'dart:core';
 
 class ChatLog extends StatefulWidget {
   String chatName;
-  ChatLog({Key? key, this.chatName = ""}) : super(key: key);
+  List<dynamic> invitedUsers;
+  ChatLog({Key? key, this.chatName = "", this.invitedUsers = const []})
+      : super(key: key);
 
   @override
   _ChatLog createState() => _ChatLog();
@@ -29,6 +33,11 @@ class _ChatLog extends State<ChatLog> {
   void initState() {
     super.initState();
     socket.connect();
+    socket.emit("connectToRoom", {
+      "groupName": widget.chatName,
+      "userID": globals.userID,
+      "invitedPeople": widget.invitedUsers,
+    });
   }
 
   @override
@@ -43,6 +52,7 @@ class _ChatLog extends State<ChatLog> {
         child: IconButton(
           icon: const Icon(Icons.arrow_back_outlined),
           onPressed: () {
+            socket.emit("disconnectFromRoom", {"groupName": widget.chatName});
             socket.disconnect();
             Navigator.pop(context);
           },
@@ -98,7 +108,13 @@ class _ChatLog extends State<ChatLog> {
                           );
                         });
 
-                        socket.emit("chat message", _messageController.text);
+                        socket.emit("roommessage", {
+                          "groupName": widget.chatName,
+                          "message": {
+                            "userID": globals.userID,
+                            "message": _messageController.text
+                          }
+                        });
                       }
                       FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -145,8 +161,15 @@ class _ChatLog extends State<ChatLog> {
                               );
                             });
 
-                            socket.emit(
-                                "chat message", _messageController.text);
+                            socket.emit("roommessage", {
+                              "groupName": widget.chatName,
+                              "message": {
+                                "userID": globals.userID,
+                                "name": globals.username,
+                                "content": _messageController.text,
+                                "postTime": DateTime.now().toString()
+                              }
+                            });
                           }
                           FocusScopeNode currentFocus = FocusScope.of(context);
 

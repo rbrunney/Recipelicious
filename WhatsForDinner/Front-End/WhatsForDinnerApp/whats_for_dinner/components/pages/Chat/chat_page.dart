@@ -32,34 +32,36 @@ class _ChatPage extends State<ChatPage> {
               widgetPage: MakeChatPage(),
             ),
             body: SingleChildScrollView(
-              child: FutureBuilder<String> (
-                future: futureChatGroups,
-                builder: ((context, snapshot) {
-                  if (snapshot.hasData) {
-              List<dynamic> chats =
-                  json.decode(snapshot.data!);
+                child: FutureBuilder<String>(
+              future: futureChatGroups,
+              builder: ((context, snapshot) {
+                if (snapshot.hasData) {
+                  List<dynamic> chats = json.decode(snapshot.data!);
 
-              for (var chat in chats) {
-                chatBoxs.add(
-                  ChatBox(chatBoxName: chat["groupName"], isGroup: chat["invitedPeople"].length > 2,));
-              }
+                  for (var chat in chats) {
+                    chatBoxs.add(ChatBox(
+                      chatBoxName: chat["groupName"],
+                      isGroup: chat["invitedPeople"].length > 2,
+                      usersInGroup: chat["invitedPeople"],
+                    ));
+                  }
 
-              return Column(
-                children: chatBoxs,
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
+                  return Column(
+                    children: chatBoxs,
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
 
-            return Center(
-                heightFactor: 20,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: const CircularProgressIndicator(
-                    color: Colors.tealAccent,
-                  ),
-                ));
-                }),
-              ))));
+                return Center(
+                    heightFactor: 20,
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(
+                        color: Colors.tealAccent,
+                      ),
+                    ));
+              }),
+            ))));
   }
 }
