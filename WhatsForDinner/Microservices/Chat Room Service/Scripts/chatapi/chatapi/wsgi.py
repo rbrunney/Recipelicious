@@ -12,6 +12,7 @@ import os
 import socketio
 import eventlet
 import eventlet.wsgi
+import pytz
 # import redis
 from chatcomponents.models import Person, Channels, ChannelSerializer, ChatMessages
 import djongo.database
@@ -127,7 +128,6 @@ def messageRoom(sid, data):
     userList = json.loads(channelSerializer.data["invitedPeople"])
     for user in userList:
         if(message["userID"] == int(user["userID"])):
-            sendingUser = user["name"]
             isValidUser = True
             break
     # Just better to pull the channel from the message itself. Working through roomlist is a pain in the ass.
@@ -142,6 +142,12 @@ def messageRoom(sid, data):
 
         # print(message)
         # print(messageList)
+
+        unlocalDatetime = message["postTime"]
+
+        localDatetime = pytz.utc.localize(unlocalDatetime)
+
+        message["postTime"] = localDatetime
 
         messageList.append(message)
 
