@@ -6,8 +6,8 @@ class Requests {
       String url, Map<String, dynamic> requestBody) async {
     final requestLink = Uri.parse(url);
     final headers = {"Content-type": "application/json"};
-    print(json);
-    Response response = await post(requestLink, headers: headers, body: json.encode(requestBody));
+    Response response = await post(requestLink,
+        headers: headers, body: json.encode(requestBody));
 
     return response.body;
   }

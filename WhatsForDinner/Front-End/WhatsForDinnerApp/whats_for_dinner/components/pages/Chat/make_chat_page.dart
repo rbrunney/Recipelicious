@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import '../../util/requests.dart';
 import '../../util/to_prev_page.dart';
+import '../Login/alert_pop_up.dart';
+import '../../util/globals.dart' as globals;
 
 class MakeChatPage extends StatefulWidget {
   const MakeChatPage({Key? key}) : super(key: key);
@@ -9,7 +14,8 @@ class MakeChatPage extends StatefulWidget {
 }
 
 class _MakeChatPage extends State<MakeChatPage> {
-  List<String> invitedUsers = [];
+  Requests requests = Requests();
+  List<Map<String, dynamic>> invitedUsers = [];
   bool isBtnActive = false;
 
   @override
@@ -40,11 +46,59 @@ class _MakeChatPage extends State<MakeChatPage> {
             TextField(
                 controller: _inviteUserController,
                 onSubmitted: (value) {
-                  setState(() {
-                    invitedUsers.insert(0, _inviteUserController.text);
-                  });
+                  requests
+                      .makeGetRequest(
+                          "http://10.0.2.2:8888/users/getUser/${_inviteUserController.text}")
+                      .then(
+                    (value) {
+                      if (json.decode(value)["result"]) {
+                        if (_inviteUserController.text != '' &&
+                            invitedUsers.length <= 9 &&
+                            _inviteUserController.text != globals.username) {
+                          Map<String, dynamic> userInfo = {
+                            "userID": json.decode(value)["userID"],
+                            "name": json.decode(value)["name"]
+                          };
 
-                  isBtnActive = true;
+                          if (!invitedUsers.contains(userInfo)) {
+                            setState(() {
+                              invitedUsers.insert(0, userInfo);
+                            });
+                          } else {
+                            showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertPopUp(
+                                    title: 'User Already in Group',
+                                    content:
+                                        'The user you tried to enter was already part of the group',
+                                  );
+                                });
+                          }
+
+                          isBtnActive = true;
+                          _inviteUserController.clear();
+                        }
+
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
+
+                        isBtnActive = true;
+                      } else {
+                        showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertPopUp(
+                                title: 'User Does Not Exist',
+                                content:
+                                    'The user currently does not exists in the database, please try another user',
+                              );
+                            });
+                      }
+                    },
+                  );
                 },
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -52,20 +106,57 @@ class _MakeChatPage extends State<MakeChatPage> {
                     labelText: 'Invite Users',
                     suffixIcon: IconButton(
                         onPressed: () {
-                          if (_inviteUserController.text != '' &&
-                              invitedUsers.length <= 9) {
-                            setState(() {
-                              invitedUsers.insert(
-                                  0, _inviteUserController.text);
-                            });
-                            isBtnActive = true;
-                            _inviteUserController.clear();
-                          }
+                          requests
+                              .makeGetRequest(
+                                  "http://10.0.2.2:8888/users/getUser/${_inviteUserController.text}")
+                              .then(
+                            (value) {
+                              if (json.decode(value)["result"]) {
+                                if (_inviteUserController.text != '' &&
+                                    invitedUsers.length <= 9 &&
+                                    _inviteUserController.text !=
+                                        globals.username) {
+                                  setState(() {
+                                    invitedUsers.insert(0, {
+                                      "userID": json.decode(value)["userID"],
+                                      "name": json.decode(value)["name"]
+                                    });
+                                  });
+                                  isBtnActive = true;
+                                  _inviteUserController.clear();
+                                }
 
-                          FocusScopeNode currentFocus = FocusScope.of(context);
-                          if (!currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
+                                if (_inviteUserController.text ==
+                                    globals.username) {
+                                  showDialog<void>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertPopUp(
+                                          title: 'Cant Add Yourself',
+                                          content:
+                                              'You cannot add yourself again to the group',
+                                        );
+                                      });
+                                }
+
+                                FocusScopeNode currentFocus =
+                                    FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus) {
+                                  currentFocus.unfocus();
+                                }
+                              } else {
+                                showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertPopUp(
+                                        title: 'User Does Not Exist',
+                                        content:
+                                            'The user currently does not exists in the database, please try another user',
+                                      );
+                                    });
+                              }
+                            },
+                          );
                         },
                         icon: const Icon(Icons.add)))),
           ]),
@@ -106,7 +197,7 @@ class _MakeChatPage extends State<MakeChatPage> {
             child: ListView.builder(
           itemCount: invitedUsers.length,
           itemBuilder: (context, index) {
-            final username = invitedUsers[index];
+            final username = invitedUsers[index]["name"];
             return Dismissible(
               key: Key(username),
               onDismissed: (direction) {
@@ -136,7 +227,7 @@ class _MakeChatPage extends State<MakeChatPage> {
                         flex: 4,
                         child: Container(
                             alignment: Alignment.centerLeft,
-                            child: Text(invitedUsers[index],
+                            child: Text(username,
                                 style: const TextStyle(fontSize: 20)))),
                   ]),
                 ),
