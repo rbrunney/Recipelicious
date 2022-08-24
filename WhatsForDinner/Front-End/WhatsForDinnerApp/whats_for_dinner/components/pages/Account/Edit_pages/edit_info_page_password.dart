@@ -11,12 +11,9 @@ class EditInfoPagePassword extends StatelessWidget {
         TextEditingController();
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
+        body: Column(
             children: [
               const ToPrevPage(),
-              Column(
-                children: [
                   const Center(
                     heightFactor: 5,
                     child: Text(
@@ -33,6 +30,7 @@ class EditInfoPagePassword extends StatelessWidget {
                         obscureText: true,
                         controller: oldPasswordController,
                         decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.lock_outline, color: Colors.grey),
                             border: OutlineInputBorder(),
                             labelText: 'Old password')),
                   ),
@@ -42,6 +40,7 @@ class EditInfoPagePassword extends StatelessWidget {
                       obscureText: true,
                       controller: newPasswordController,
                       decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.lock_outline, color: Colors.grey),
                           border: OutlineInputBorder(),
                           labelText: 'New password'),
                     ),
@@ -53,6 +52,7 @@ class EditInfoPagePassword extends StatelessWidget {
                       obscureText: true,
                       controller: confirmNewPasswordController,
                       decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.lock_outline, color: Colors.grey),
                           border: OutlineInputBorder(),
                           labelText: 'Confirm password'),
                     ),
@@ -62,69 +62,94 @@ class EditInfoPagePassword extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 30),
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (oldPasswordController.text != "poopyhead") {
-                          await showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title:
-                                    const Text('Old password was not correct'),
-                                content: const Text(
-                                    'Your old password did not match'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ],
+                          if (oldPasswordController.text.isNotEmpty &&
+                              newPasswordController.text.isNotEmpty &&
+                              confirmNewPasswordController.text.isNotEmpty) {
+                            if (oldPasswordController.text != "poopyhead") {
+                              await showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                        'Old password was not correct'),
+                                    content: const Text(
+                                        'Your old password did not match'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
-                            },
-                          );
-                        } else if (newPasswordController.text !=
-                            confirmNewPasswordController.text) {
-                          await showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('New password did not match'),
-                                content: const Text(
-                                    'Your new password did not matched with the confirm password'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ],
+                            } else if (newPasswordController.text !=
+                                confirmNewPasswordController.text) {
+                              await showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                        'New password did not match'),
+                                    content: const Text(
+                                        'Your new password did not matched with the confirm password'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
-                            },
-                          );
-                        } else {
-                          await showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Password has been Edited'),
-                                content: const Text(
-                                    'Your password has been changed'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ],
+                            } else {
+                              await showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title:
+                                        const Text('Password has been Edited'),
+                                    content: const Text(
+                                        'Your password has been changed'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
-                            },
-                          );
-                        }
-                        oldPasswordController.clear();
-                        newPasswordController.clear();
-                        confirmNewPasswordController.clear();
+                            }
+                            oldPasswordController.clear();
+                            newPasswordController.clear();
+                            confirmNewPasswordController.clear();
+                          } else {
+                            await showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                        'Not all the fields are used'),
+                                    content: const Text(
+                                        'Please, fill all the fields with information.'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.tealAccent, // background
@@ -135,11 +160,8 @@ class EditInfoPagePassword extends StatelessWidget {
                         )),
                   ),
                 ],
-              ),
-            ],
           ),
         ),
-      ),
     );
   }
 }
