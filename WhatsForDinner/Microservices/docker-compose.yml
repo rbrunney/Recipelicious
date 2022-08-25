@@ -99,6 +99,14 @@ services:
     networks:
     - base-net
 
+  email-consumer:
+    build: 
+      context: ./EmailConsumer
+    deploy:
+      replicas: 1
+    networks:
+      - base-net
+
   meal-information-db:
     image: "mongo:latest"
     container_name: meal_info_db
