@@ -36,34 +36,20 @@ if os.environ.get("RABBITMQ_PASS") != None:
     rabbitPass = os.environ.get("RABBITMQ_PASS")
 
 
-rabbitMQCredentialParams = pika.PlainCredentials(rabbitUser,rabbitPass)
-rabbitMQServerParams = pika.ConnectionParameters(rabbitMQHostString,
-                                                rabbitMQServerPort,
-                                                rabbitMQVirtualHost,
-                                                rabbitMQCredentialParams,
-                                                heartbeat=200)
-
-rabbitMQSyncConnection = pika.BlockingConnection(rabbitMQServerParams)
 
 
-def blockedConnectionFlag():
-    global connection_free
-    connection_free = False
 
-def unblockedConnectionFlag():
+# def blockedConnectionFlag():
+#     connection_free = False
+
+# def unblockedConnectionFlag():
     global connection_free
     connection_free = True
 
-connection_free = True
+# connection_free = True
 
-rabbitMQSyncConnection.add_on_connection_blocked_callback(blockedConnectionFlag)
-rabbitMQSyncConnection.add_on_connection_unblocked_callback(unblockedConnectionFlag)
-
-publishingChannel = rabbitMQSyncConnection.channel()
-
-publishingChannel.exchange_declare("usercreation", durable=True)
-
-
+# rabbitMQSyncConnection.add_on_connection_blocked_callback(blockedConnectionFlag)
+# rabbitMQSyncConnection.add_on_connection_unblocked_callback(unblockedConnectionFlag)
 
 # Create your views here.
 @api_view(('GET',))
@@ -105,43 +91,31 @@ def createUser(request, *args, **kwargs):
 
     userSerializer = UserSerializer(data)
     # print(userSerializer.data)
+    userDetails ={
+        "name": userSerializer.data["name"],
+        "username": userSerializer.data["username"],
+        "email": userSerializer.data["email"],
+        "birthday": userSerializer.data["birthday"],
+    }
+
+    
+    rabbitMQCredentialParams = pika.PlainCredentials(rabbitUser,rabbitPass)
+    rabbitMQServerParams = pika.ConnectionParameters(rabbitMQHostString,
+                                                    rabbitMQServerPort,
+                                                    rabbitMQVirtualHost,
+                                                    rabbitMQCredentialParams,
+                                                    heartbeat=200)
+
+    rabbitMQSyncConnection = pika.BlockingConnection(rabbitMQServerParams)
+
+    publishingChannel = rabbitMQSyncConnection.channel()
+
+    publishingChannel.queue_declare("usercreation", durable=True)
 
 
+    publishingChannel.basic_publish(exchange='', routing_key="usercreation", body=json.dumps(userDetails))
 
-    # if(connection_free):
-    #     if(os.path.exists("emailsToSend.json")):
-    #         with open('emailsToSend.json','r') as jsonFile:
-    #             users = json.load(jsonFile)
-    #             for user in users:
-    #                 userDetails = {
-    #                     "name": user["name"],
-    #                     "username": user["username"],
-    #                     "email": user["email"],
-    #                     "birthday": user["birthday"],
-    #                 }
-    #                 publishingChannel.basic_publish("usercreation", routing_key="email", body=userDetails)
-
-    #     userDetails ={
-    #         "name": userSerializer.data["name"],
-    #         "username": userSerializer.data["username"],
-    #         "email": userSerializer.data["email"],
-    #         "birthday": userSerializer.data["birthday"],
-    #     }
-
-    #     publishingChannel.basic_publish("usercreation", routing_key="email", body=json.dumps(userDetails))
-    # else:
-    #     #store the users that can't be sent off right away and send them off later.
-    #     userDetails ={
-    #         "name": userSerializer.data["name"],
-    #         "username": userSerializer.data["username"],
-    #         "email": userSerializer.data["email"],
-    #         "birthday": userSerializer.data["birthday"],
-    #     }
-    #     with open('emailsToSend.json', 'a') as jsonFile:
-    #         json.dump(userDetails, jsonFile, indent=4)
-
-
-
+    publishingChannel.close()
 
     response = {
         "message": "Account Created",

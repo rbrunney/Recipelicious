@@ -6,10 +6,14 @@ import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_4.dart';
 
 import '../Home/Meal Cards/Front/meal_card.dart';
 import 'chat_meal_card.dart';
+import '../../util/globals.dart' as globals;
+import 'dart:core';
 
 class ChatLog extends StatefulWidget {
   String chatName;
-  ChatLog({Key? key, this.chatName = ""}) : super(key: key);
+  List<dynamic> invitedUsers;
+  ChatLog({Key? key, this.chatName = "", this.invitedUsers = const []})
+      : super(key: key);
 
   @override
   _ChatLog createState() => _ChatLog();
@@ -26,14 +30,83 @@ class _ChatLog extends State<ChatLog> {
   List<Widget> chatLog = [];
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     socket.connect();
+    socket.emit("connectToRoom", {
+      "groupName": widget.chatName,
+      "userID": globals.userID,
+      "invitedPeople": widget.invitedUsers,
+    });
+
+    socket.emit("getPrevMessages",
+        {"groupName": widget.chatName, "userID": globals.userID});
   }
 
   @override
   Widget build(BuildContext context) {
     TextEditingController _messageController = TextEditingController();
+
+    socket.on('room-response', (data) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        chatLog.clear();
+      });
+      for (var chatInfo in data) {
+        if (globals.userID == int.parse(chatInfo['userID'])) {
+          if (!mounted) {
+            return;
+          }
+          setState(() {
+            chatLog.add(
+              ChatBubble(
+                margin: const EdgeInsets.only(
+                  right: 10,
+                  top: 5,
+                  bottom: 5,
+                ),
+                alignment: Alignment.centerRight,
+                clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                backGroundColor: Colors.tealAccent,
+                child: Text(
+                  chatInfo["content"],
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
+                ),
+              ),
+            );
+          });
+        } else {
+          if (!mounted) {
+            return;
+          }
+          setState(() {
+            chatLog.add(
+              ChatBubble(
+                margin: const EdgeInsets.only(
+                  right: 10,
+                  top: 5,
+                  bottom: 5,
+                ),
+                alignment: Alignment.centerLeft,
+                clipper: ChatBubbleClipper4(type: BubbleType.receiverBubble),
+                backGroundColor: Colors.grey,
+                child: Text(
+                  chatInfo["content"],
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
+                ),
+              ),
+            );
+          });
+        }
+      }
+    });
 
     return SafeArea(
         child: Scaffold(
@@ -43,6 +116,7 @@ class _ChatLog extends State<ChatLog> {
         child: IconButton(
           icon: const Icon(Icons.arrow_back_outlined),
           onPressed: () {
+            socket.emit("disconnectFromRoom", {"groupName": widget.chatName});
             socket.disconnect();
             Navigator.pop(context);
           },
@@ -98,7 +172,13 @@ class _ChatLog extends State<ChatLog> {
                           );
                         });
 
-                        socket.emit("chat message", _messageController.text);
+                        socket.emit("roommessage", {
+                          "groupName": widget.chatName,
+                          "message": {
+                            "userID": globals.userID,
+                            "message": _messageController.text
+                          }
+                        });
                       }
                       FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -145,8 +225,15 @@ class _ChatLog extends State<ChatLog> {
                               );
                             });
 
-                            socket.emit(
-                                "chat message", _messageController.text);
+                            socket.emit("roommessage", {
+                              "groupName": widget.chatName,
+                              "message": {
+                                "userID": globals.userID,
+                                "name": globals.username,
+                                "content": _messageController.text,
+                                "postTime": DateTime.now().toString()
+                              }
+                            });
                           }
                           FocusScopeNode currentFocus = FocusScope.of(context);
 

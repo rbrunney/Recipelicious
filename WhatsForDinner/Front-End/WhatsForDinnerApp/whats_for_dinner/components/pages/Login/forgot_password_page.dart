@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../util/to_prev_page.dart';
 import 'code_authentication_page.dart';
+import 'dart:math';
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +47,9 @@ class ForgotPasswordPage extends StatelessWidget {
                   primary: Colors.tealAccent, // background
                 ),
                 onPressed: () {
+                  Random random = new Random();
                   Navigator.push(context,
-                    PageTransition(child: const CodeAuthentication(), type: PageTransitionType.bottomToTop));
-                  print('Send email here wait and then move to new page');
+                    PageTransition(child: CodeAuthentication(generatedCode: random.nextInt(900000) + 100000), type: PageTransitionType.bottomToTop));
                 },
                 child: const Text('Submit', style: TextStyle(color: Colors.black))))
       ],
