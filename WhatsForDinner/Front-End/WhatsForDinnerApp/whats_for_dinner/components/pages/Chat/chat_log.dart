@@ -53,6 +53,12 @@ class _ChatLog extends State<ChatLog> {
     TextEditingController _messageController = TextEditingController();
 
     socket.on('room-response', (data) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        chatLog.clear();
+      });
       for (var chatInfo in data) {
         if (globals.userID == int.parse(chatInfo['userID'])) {
           if (!mounted) {

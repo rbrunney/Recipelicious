@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import '../../util/requests.dart';
 import '../../util/to_prev_page.dart';
+import 'alert_pop_up.dart';
 import 'login_page.dart';
 
 class ChangePassPage extends StatelessWidget {
-  const ChangePassPage({Key? key}) : super(key: key);
+  String userEmail;
+  ChangePassPage({Key? key, this.userEmail = ''}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController newPassController = TextEditingController();
+    TextEditingController confirmNewPassController = TextEditingController();
+    Requests requests = Requests();
+
     return SafeArea(
         child: Scaffold(
             body: Column(children: [
@@ -21,8 +28,9 @@ class ChangePassPage extends StatelessWidget {
       ),
       Container(
           margin: const EdgeInsets.symmetric(horizontal: 15),
-          child: const TextField(
-            decoration: InputDecoration(
+          child: TextField(
+            controller: newPassController,
+            decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.lock_outline, color: Colors.grey),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.tealAccent),
@@ -35,8 +43,9 @@ class ChangePassPage extends StatelessWidget {
           )),
       Container(
           margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
-          child: const TextField(
-            decoration: InputDecoration(
+          child: TextField(
+            controller: confirmNewPassController,
+            decoration: const InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.tealAccent),
                 ),
@@ -54,9 +63,39 @@ class ChangePassPage extends StatelessWidget {
                 primary: Colors.tealAccent, // background
               ),
               onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                    (Route<dynamic> route) => false);
+                if (newPassController.text.isEmpty ||
+                    confirmNewPassController.text.isEmpty) {
+                  showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertPopUp(
+                          title: 'Empty Fields',
+                          content:
+                              'Please double check all text fields have been filled out',
+                        );
+                      });
+                } else if (newPassController.text !=
+                    confirmNewPassController.text) {
+                  showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertPopUp(
+                          title: 'Mis-Matched Password',
+                          content:
+                              'Please double check your ew password and confirm password match!',
+                        );
+                      });
+                } else {
+
+                  // Make request here one to get user information
+                  // And then make one from there
+                  
+
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                      (Route<dynamic> route) => false);
+                }
               },
               child:
                   const Text('Submit', style: TextStyle(color: Colors.black))))
