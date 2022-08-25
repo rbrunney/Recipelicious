@@ -3,6 +3,7 @@ import '../../../util/to_prev_page.dart';
 import '../Account_util/upload_image_icons.dart';
 import '../../../util/add_bar_bullet.dart';
 import '../../../util/add_bar_ordered.dart';
+import '../../../util/requests.dart';
 
 class EditMyMealPage extends StatefulWidget {
   final String nameOfMeal;
@@ -115,11 +116,12 @@ class _EditMyMealPageState extends State<EditMyMealPage> {
                 margin: const EdgeInsets.only(top: 5, bottom: 5),
                 child: ElevatedButton(
                     onPressed: () async {
-                      if (nameOfMealController.text != '' &&
+                      if (nameOfMealController.text.isNotEmpty &&
                           ingredients.isNotEmpty &&
                           recipe.isNotEmpty) {
-                        Navigator.of(context).pop();
                         print('Call Davids Api');
+                      
+                        Navigator.of(context).pop();
                       } else {
                         await showDialog<void>(
                             context: context,

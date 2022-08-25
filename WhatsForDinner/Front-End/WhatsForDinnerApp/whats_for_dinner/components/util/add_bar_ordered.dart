@@ -31,14 +31,14 @@ class _AddBarOrderedState extends State<AddBarOrdered> {
               onSubmitted: (value) {
                 setState(() {
                   if (widget.information.isEmpty) {
-                    widget.information["${widget.information.length + 1}."] =
+                    widget.information["${widget.information.length + 1}"] =
                         addBarController.text;
                   } else if (!widget.information.keys
-                      .contains("${widget.information.length}.")) {
-                    widget.information["${widget.information.length}."] =
+                      .contains("${widget.information.length}")) {
+                    widget.information["${widget.information.length}"] =
                         addBarController.text;
                   } else {
-                    widget.information["${widget.information.length + 1}."] =
+                    widget.information["${widget.information.length + 1}"] =
                         addBarController.text;
                   }
                 });
@@ -49,20 +49,20 @@ class _AddBarOrderedState extends State<AddBarOrdered> {
                   labelText: widget.labelText,
                   suffixIcon: IconButton(
                       onPressed: () {
-                        if (addBarController.text != '') {
+                        if (addBarController.text.isNotEmpty) {
                           setState(() {
                             if (widget.information.isEmpty) {
                               widget.information[
-                                      "${widget.information.length + 1}."] =
+                                      "${widget.information.length + 1}"] =
                                   addBarController.text;
                             } else if (!widget.information.keys
-                                .contains("${widget.information.length}.")) {
+                                .contains("${widget.information.length}")) {
                               widget.information[
-                                      "${widget.information.length}."] =
+                                      "${widget.information.length}"] =
                                   addBarController.text;
                             } else {
                               widget.information[
-                                      "${widget.information.length + 1}."] =
+                                      "${widget.information.length + 1}"] =
                                   addBarController.text;
                             }
                           });
@@ -83,12 +83,12 @@ class _AddBarOrderedState extends State<AddBarOrdered> {
             itemCount: widget.information.length,
             itemBuilder: (context, index) {
               index += 1;
-              final String ingredient = widget.information["$index."];
+              final String ingredient = widget.information["$index"];
 
               return Dismissible(
                   key: Key(ingredient),
                   onDismissed: (direction) {
-                    widget.information.remove("$index.");
+                    widget.information.remove("$index");
                   },
                   child: OrderedRecipe(
                     index: index,

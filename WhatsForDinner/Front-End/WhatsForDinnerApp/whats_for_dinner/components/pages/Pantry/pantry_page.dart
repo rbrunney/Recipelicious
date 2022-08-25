@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'create_ingredient_page.dart';
 import '../Account/Account_util/add_floating_button.dart';
-import 'create_ingredient_page.dart';
 import 'ingredient_card.dart';
 
 class PantryPage extends StatefulWidget {

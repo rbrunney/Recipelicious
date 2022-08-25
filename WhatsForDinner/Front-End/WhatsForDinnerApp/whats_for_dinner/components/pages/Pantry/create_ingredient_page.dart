@@ -13,7 +13,7 @@ class _CreateIngredientState extends State<CreateIngredientPage> {
   @override
   Widget build(BuildContext context) {
     TextEditingController nameOfIngredientController = TextEditingController();
-    TextEditingController nameOfQuantityController = TextEditingController();
+    TextEditingController quantityController = TextEditingController();
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -55,7 +55,7 @@ class _CreateIngredientState extends State<CreateIngredientPage> {
               height: 60,
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               child: TextField(
-                  controller: nameOfQuantityController,
+                  controller: quantityController,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: "Qty...",
