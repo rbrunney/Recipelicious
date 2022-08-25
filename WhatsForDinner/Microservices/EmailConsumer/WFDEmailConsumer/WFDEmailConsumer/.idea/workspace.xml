@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2eb289ff-82d2-42ee-a2c5-24977c5363e6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Chat/chat_log.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Chat/chat_log.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Login/change_pass_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Login/change_pass_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Login/code_authentication_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Login/code_authentication_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Login/forgot_password_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Login/forgot_password_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../User Service/DjangoUsers/Scripts/DjangoUser/usercomponents/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../User Service/DjangoUsers/Scripts/DjangoUser/usercomponents/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/util/add_bar_bullet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Front-End/WhatsForDinnerApp/whats_for_dinner/components/util/add_bar_bullet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Meal Service/MealService/src/main/java/com/whatsfordinner/mealservice/Models/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Meal Service/MealService/src/main/java/com/whatsfordinner/mealservice/Models/Ingredient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +40,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/rbrunney/OneDrive - Neumont College of Computer Science/Desktop/WhatsForDinner/WhatsForDinner/Microservices/EmailConsumer/WFDEmailConsumer",
+    "last_opened_file_path": "C:/Users/aturro/OneDrive - Neumont College of Computer Science/Desktop/WhatsForDinner/WhatsForDinner/Microservices/EmailConsumer/WFDEmailConsumer",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,6 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1661396876644</updated>
       <workItem from="1661396878268" duration="1617000" />
+      <workItem from="1661439227496" duration="22000" />
     </task>
     <servers />
   </component>

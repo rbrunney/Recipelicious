@@ -85,8 +85,8 @@ class _CreateMealState extends State<CreateMeal> {
                     controller: servingSizeController,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Qty...",
-                        labelText: 'Serving Size')),
+                        hintText: "SS...",
+                        labelText: 'SS')),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
@@ -121,11 +121,12 @@ class _CreateMealState extends State<CreateMeal> {
                           ingredients.isNotEmpty &&
                           recipe.isNotEmpty) {
                         print('Call Davids Api');
+                        print(recipe);
 
                         Map<String, dynamic> newMeal = {
                           "creator": globals.username,
                           "name": nameOfMealController.text,
-                          "servingSize": double.parse(servingSizeController.text),
+                          "servingSize": int.parse(servingSizeController.text),
                           "ingredients": ingredients,
                           "recipe": json.encode(recipe)
                         };

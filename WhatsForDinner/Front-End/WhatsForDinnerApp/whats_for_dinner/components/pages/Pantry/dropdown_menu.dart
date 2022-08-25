@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../util/globals.dart' as globals;
 
 class DropdownMenu extends StatefulWidget {
   const DropdownMenu({Key? key}) : super(key: key);
@@ -8,27 +9,24 @@ class DropdownMenu extends StatefulWidget {
 }
 
 class _DropdownMenuState extends State<DropdownMenu> {
-
-
-
 // Initial Selected Value
   String selectedValue = 'oz';
 
 // List of items in our dropdown menu
-  List<DropdownMenuItem<String>> get dropdownItems{
-  List<DropdownMenuItem<String>> menuItems = [
-    const DropdownMenuItem(value: "oz", child: Text("oz")),
-    const DropdownMenuItem(value: "fl oz", child: Text("fl oz")),
-    const DropdownMenuItem(value: "lbs", child: Text("lbs")),
-    const DropdownMenuItem(value: "tsp", child: Text("tsp")),
-    const DropdownMenuItem(value: "tbsp", child: Text("tbsp")),
-    const DropdownMenuItem(value: "cup", child: Text("cup")),
-    const DropdownMenuItem(value: "pt", child: Text("pt")),
-    const DropdownMenuItem(value: "qt", child: Text("qt")),
-    const DropdownMenuItem(value: "gal", child: Text("gal")),
-  ];
-  return menuItems;
-}
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(value: "oz", child: Text("oz")),
+      const DropdownMenuItem(value: "fl oz", child: Text("fl oz")),
+      const DropdownMenuItem(value: "lbs", child: Text("lbs")),
+      const DropdownMenuItem(value: "tsp", child: Text("tsp")),
+      const DropdownMenuItem(value: "tbsp", child: Text("tbsp")),
+      const DropdownMenuItem(value: "cup", child: Text("cup")),
+      const DropdownMenuItem(value: "pt", child: Text("pt")),
+      const DropdownMenuItem(value: "qt", child: Text("qt")),
+      const DropdownMenuItem(value: "gal", child: Text("gal")),
+    ];
+    return menuItems;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +48,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
         onChanged: (String? newValue) {
           setState(() {
             selectedValue = newValue!;
+            globals.dropdownValue = selectedValue;
           });
         },
         items: dropdownItems);
