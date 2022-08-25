@@ -45,13 +45,16 @@ rabbitMQServerParams = pika.ConnectionParameters(rabbitMQHostString,
 
 rabbitMQSyncConnection = pika.BlockingConnection(rabbitMQServerParams)
 
-connection_free = True
 
 def blockedConnectionFlag():
+    global connection_free
     connection_free = False
 
 def unblockedConnectionFlag():
+    global connection_free
     connection_free = True
+
+connection_free = True
 
 rabbitMQSyncConnection.add_on_connection_blocked_callback(blockedConnectionFlag)
 rabbitMQSyncConnection.add_on_connection_unblocked_callback(unblockedConnectionFlag)
@@ -83,7 +86,7 @@ def createUser(request, *args, **kwargs):
         duplicateUsers = User.objects.get(email=data.email)
         print("User already exists, discarding")
     except Exception as e:
-        traceback.print_exception(e)
+        # traceback.print_exception(e)
         print("Saving new user")
         data.save()
 
@@ -278,11 +281,11 @@ def deleteUser(request, *args, **kwargs):
 
 @api_view(("GET",))
 def getUser(request, *args, **kwargs):
-    userId = kwargs["id"]
+    userID = kwargs["id"]
     user = User()
 
     try:
-        user = User.objects.get(id=userId)
+        user = User.objects.get(id=userID)
     except Exception as e:
         print(e.with_traceback.__str__())
         response = {

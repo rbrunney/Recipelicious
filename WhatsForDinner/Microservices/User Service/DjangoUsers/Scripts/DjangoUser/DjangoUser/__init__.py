@@ -6,26 +6,29 @@ import os
 
 #gotta change to the target mysqlcontainer
 
-print(os.environ.get("MYSQL_PASS"))
 
 init_sql_ran = False
 
 while(not init_sql_ran):
 
     try:
-        connection = mysql.connector.connect(user=os.environ.get("MYSQL_USER"), password=os.environ.get("MYSQL_PASS"), host=os.environ.get("MYSQL_HOST"), port=int(os.environ.get("MYSQL_PORT")))
+        # connection = mysql.connector.connect(user=os.environ.get("MYSQL_USER"), password=os.environ.get("MYSQL_PASS"), host=os.environ.get("MYSQL_HOST"), port=int(os.environ.get("MYSQL_PORT")))
 
-        cursor = connection.cursor()
+        # This is the testing connection.
+        # connection = mysql.connector.connect(user="djangologin", password="abcd12!@F", host="localhost", port=3306)
+
+        # cursor = connection.cursor()
         
-        cursor.execute(
-            "CREATE DATABASE IF NOT EXISTS djangousers"
-        )
+        # cursor.execute(
+        #     "CREATE DATABASE IF NOT EXISTS djangousers"
+        # )
+
 
         #Stopgap measure for create usercomponent's tables
-        cursor.execute(
-            "USE djangousers; CREATE TABLE IF NOT EXISTS usercomponents_user ( id BIGINT NOT NULL AUTO_INCREMENT, name varchar(1024), username varchar(1024), password varchar(5000), email varchar(6000), birthday date, PRIMARY KEY(id))"
-        )
-        
+        # cursor.execute(
+        #     "USE djangousers; CREATE TABLE IF NOT EXISTS usercomponents_user ( id BIGINT NOT NULL AUTO_INCREMENT, name varchar(1024), username varchar(1024), password varchar(5000), email varchar(6000), birthday date, PRIMARY KEY(id))"
+        # )
+
         # cursor.close()
 
         # connection = mysql.connector.connect(user=os.environ.get("MYSQL_USER"), password=os.environ.get("MYSQL_PASS"), host=os.environ.get("MYSQL_HOST"), port=int(os.environ.get("MYSQL_PORT")))
@@ -47,8 +50,8 @@ while(not init_sql_ran):
         # )
 
         init_sql_ran = True
-        cursor.close()
-        connection.close()
+        # cursor.close()
+        # connection.close()
     except Exception as e:
         print("Error with sql init: ")
         traceback.print_exc(limit=20)

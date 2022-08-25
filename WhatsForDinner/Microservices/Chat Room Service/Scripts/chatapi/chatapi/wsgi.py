@@ -39,6 +39,7 @@ app = socketio.WSGIApp(sio, application)
 #If you want to add a new @event decorator, be sure to do it before you actually run the socketIO server
 #other wise you'll have none of them loaded in the actual server object.
 
+roomListWithUsers = []
 
 @sio.on("chat message")
 def handleMessage(sid, data):
@@ -97,6 +98,21 @@ def checkRoom(sid, data):
         # print(user)
         #The int conversion is because apparently json doesn't read back numbers as raw numbers. THANKS, JSON.
         if(requestingUser == int(user["userID"])):
+
+            existingChatroom = None
+
+            for room in roomListWithUsers:
+                if(room["groupName"] == chatroom):
+                    existingChatroom = room
+                    roomListWithUsers.remove(room)
+                    break
+
+            if(existingChatroom != None):
+                userList = list(existingChatroom["userList"])
+                userList.append(sid)
+                existingChatroom["userList"] = userList
+                roomListWithUsers.append(existingChatroom)
+
             sio.enter_room(sid, chatroom)
             print("room entered")
             sio.emit("chatmessage",f"connected to chatroom {chatroom}")
@@ -105,6 +121,21 @@ def checkRoom(sid, data):
 @sio.on("disconnectFromRoom")
 def leaveRoom(sid, data):
     chatroom = data["groupName"]
+
+    existingChatroom = None
+
+    for room in roomListWithUsers:
+        if(room["groupName"] == chatroom):
+            existingChatroom = room
+            roomListWithUsers.remove(room)
+            break
+
+    if(existingChatroom != None):
+        userList = list(existingChatroom["userList"])
+        userList.remove(sid)
+        existingChatroom["userList"] = userList
+        roomListWithUsers.append(existingChatroom)
+
     #Again, to be replaced by objectIDs
     sio.leave_room(sid, chatroom)
 
@@ -173,12 +204,26 @@ def sendLoadedMessage(sid, data):
     validUser = False
     # print(channelSerializer.data)
 
+
+
     for user in users:
         if(requestingUser == int(user["userID"])):
             validUser = True
             break
     if(validUser):
-        sio.emit('room-response', messages, room=groupName )
+        
+        userList = []
+
+        for room in roomListWithUsers:
+            if(room["groupName"]==groupName):
+                userList = room["userList"]
+                break
+        
+        for user in userList:
+            if(sid == user):
+                userList.remove(sid)
+
+        sio.emit('room-response', messages, room=groupName, skip_sid=userList)
     else:
         sio.emit('unauthorized',"You are not allowed to access this room", room = sid)
         #grab users
