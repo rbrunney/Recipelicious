@@ -2,6 +2,7 @@ package com.whatsfordinner.mealservice.Models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,12 +21,14 @@ public class Meal {
 
     private String name;
 
+    @Value("${servingSize: 0}")
     private double servingSize;
 
     private List<Ingredient> ingredients;
 
     private Map<Integer, String> recipe;
 
+    @Value("${likes: 0}")
     private int likes;
 
     @Override

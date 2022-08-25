@@ -38,7 +38,7 @@ class MealAppBar extends StatelessWidget {
                             imageUrl:
                                 "https://i.ytimg.com/vi/eX2qFMC8cFo/maxresdefault.jpg",
                             ingredients: const ['skiirt', 'sheeesh'],
-                            recipe: const {'1.': 'bitches', '2.' : 'batman'},
+                            recipe: const {'1': 'bitches', '2' : 'batman'},
                             beingEdited: true,
                             ),
                             

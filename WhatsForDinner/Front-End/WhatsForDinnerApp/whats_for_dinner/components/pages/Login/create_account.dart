@@ -100,6 +100,7 @@ class CreateAccount extends StatelessWidget {
               margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
               child: TextField(
                 controller: _passwordController,
+                obscureText: true,
                 decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.tealAccent),
@@ -107,6 +108,7 @@ class CreateAccount extends StatelessWidget {
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey)),
                     prefixIcon: Icon(Icons.lock_outline, color: Colors.grey),
+                    
                     hintText: 'Enter Password...',
                     labelText: 'Enter Password',
                     labelStyle: TextStyle(color: Colors.grey)),
@@ -114,6 +116,7 @@ class CreateAccount extends StatelessWidget {
           Container(
               margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
               child: TextField(
+                obscureText: true,
                 controller: _confirmPasswordController,
                 decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -177,7 +180,7 @@ class CreateAccount extends StatelessWidget {
                                 newUser)
                             .then((value) {
                           if (json.decode(value)["result"]["userID"] != null) {
-                           Navigator.of(context).pushAndRemoveUntil(
+                            Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
                                 builder: (context) => const LoginPage()),
                             (Route<dynamic> route) => false);
