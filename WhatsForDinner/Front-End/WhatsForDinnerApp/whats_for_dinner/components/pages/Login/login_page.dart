@@ -49,6 +49,7 @@ class LoginPage extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 35, left: 15, right: 15),
                 child: TextField(
                   controller: _passwordController,
+                  obscureText: true,
                   decoration: const InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.tealAccent),
