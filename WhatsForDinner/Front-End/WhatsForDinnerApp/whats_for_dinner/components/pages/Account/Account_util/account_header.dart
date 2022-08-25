@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AccountHeader extends StatelessWidget {
-  const AccountHeader({Key? key}) : super(key: key);
+  String usersName;
+  AccountHeader({Key? key, this.usersName = ""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +37,10 @@ class AccountHeader extends StatelessWidget {
                   ),
                   Container(
                     alignment: Alignment.bottomLeft,
-                    child: const Text(
-                      'ROBERT BRUNNEY',
+                    child: Text(
+                      usersName.toUpperCase(),
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
                       ),

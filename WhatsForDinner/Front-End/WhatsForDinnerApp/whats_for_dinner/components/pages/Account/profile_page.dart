@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../util/requests.dart';
 import 'Account_util/account_header.dart';
 import 'Account_util/meal_tab_bar.dart';
 import 'Settings/settings_page.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../util/globals.dart' as globals;
+import 'dart:convert';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -13,6 +16,10 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePage extends State<ProfilePage> {
   bool isSwitched = false;
+  Requests requests = Requests();
+  String name = "";
+  String email = "";
+  String birthday = "";
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,9 @@ class _ProfilePage extends State<ProfilePage> {
             },
           ),
         ),
-        const AccountHeader(),
+        AccountHeader(
+          usersName: globals.name,
+        ),
         const MealAppBar(),
       ]),
     );

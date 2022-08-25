@@ -85,18 +85,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'djangousers',
-        # 'NAME': os.environ.get("MYSQL_DBNAME"),
-        'USER': 'djangologin',
-        # 'USER': os.environ.get("MYSQL_USER"),
-        'PASSWORD': 'abcd12!@F',
-        # 'PASSWORD': os.environ.get("MYSQL_PASS"),
-        'HOST': 'localhost', #To be changed once dockerized.
-        # 'HOST': os.environ.get("MYSQL_HOST"),
-        'PORT': '3306',
-        # 'PORT': os.environ.get("MYSQL_PORT")
-        'TEST':{
-            'NAME':'testdjangouser'
-        }
+        'NAME': os.environ.get("MYSQL_DBNAME"),
+        # 'USER': 'djangologin',
+        'USER': os.environ.get("MYSQL_USER"),
+        # 'PASSWORD': 'abcd12!@F',
+        'PASSWORD': os.environ.get("MYSQL_PASS"),
+        # 'HOST': 'localhost', #To be changed once dockerized.
+        'HOST': os.environ.get("MYSQL_HOST"),
+        # 'PORT': '3306',
+        'PORT': os.environ.get("MYSQL_PORT")
+        # 'TEST':{
+        #     'NAME':'testdjangouser'
+        # }
     }
 }
 
