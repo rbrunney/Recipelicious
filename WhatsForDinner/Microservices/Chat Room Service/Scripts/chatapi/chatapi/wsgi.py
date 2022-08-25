@@ -7,6 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
 """
 
+import datetime
 import json
 import os
 import socketio
@@ -174,7 +175,9 @@ def messageRoom(sid, data):
         # print(message)
         # print(messageList)
 
-        unlocalDatetime = message["postTime"]
+        unlocalDatetime = datetime.datetime.strptime(message["postTime"], "%a %b %d %H %M %S %Y %Z")
+
+        unlocalDatetime = datetime.datetime(unlocalDatetime)
 
         localDatetime = pytz.utc.localize(unlocalDatetime)
 

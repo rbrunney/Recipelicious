@@ -128,6 +128,18 @@ class LoginPage extends StatelessWidget {
                                           _passwordController.text;
                                       globals.isLoggedIn = true;
 
+                                      requests
+                                          .makeGetRequest(
+                                              "http://10.0.2.2:8888/users/getUser/${globals.userID}")
+                                          .then((value) {
+                                        globals.name =
+                                            json.decode(value)["name"];
+                                        globals.email =
+                                            json.decode(value)["email"];
+                                        globals.birthday =
+                                            json.decode(value)["birthday"];
+                                      });
+
                                       Navigator.push(
                                           context,
                                           PageTransition(
