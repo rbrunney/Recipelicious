@@ -23,7 +23,7 @@ urlpatterns = [
     path('createUser/', createUser),
     path('updateUser/', updateUser),
     path('passwordCheck/<str:username>/<str:password>', checkPw),
-    path('deleteUser/<str:token>', deleteUser),
+    path('deleteUser/', deleteUser),
     path('getUser/<int:id>', getUser),
     path('getUser/<str:username>', getUserByUsername)
 ]

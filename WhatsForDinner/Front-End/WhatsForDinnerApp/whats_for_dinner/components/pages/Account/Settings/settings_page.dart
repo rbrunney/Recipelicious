@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import '../../../util/requests.dart';
 import '../../Login/login_page.dart';
 import 'account_edit_info.dart';
 import '../../../util/to_prev_page.dart';
+import '../../../util/globals.dart' as globals;
+import 'dart:convert';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key})
+      : super(key: key);
+
+  @override
+  _SettingsPage createState() => _SettingsPage();
+}
+
+class _SettingsPage extends State<SettingsPage> {
+  Requests requests = Requests();
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +41,14 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             Column(
-              children: const [
-                Text(
+              children: [
+                const Text(
                   "Name",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
-                AccountEditInfo(accountInfo: "Robert", editProfileInfo: "Name"),
+                AccountEditInfo(
+                    accountInfo: globals.name, editProfileInfo: "Name"),
               ],
             ),
             Column(
@@ -49,9 +61,8 @@ class SettingsPage extends StatelessWidget {
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
-                const AccountEditInfo(
-                    accountInfo: "Rbrunney@student.neumont.edu",
-                    editProfileInfo: "Email"),
+                AccountEditInfo(
+                    accountInfo: globals.email, editProfileInfo: "Email"),
               ],
             ),
             Column(
@@ -78,8 +89,8 @@ class SettingsPage extends StatelessWidget {
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
-                const AccountEditInfo(
-                    accountInfo: "10/1/2001", editProfileInfo: "Birthday"),
+                AccountEditInfo(
+                    accountInfo: globals.birthday, editProfileInfo: "Birthday"),
                 Container(
                   margin: const EdgeInsets.only(top: 60, bottom: 5),
                   child: ElevatedButton(
@@ -108,10 +119,17 @@ class SettingsPage extends StatelessWidget {
                         style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                            (Route<dynamic> route) => false);
+                        requests.makeDeleteRequest(
+                            "http://10.0.2.2:8888/users/deleteUser", {
+                          "username": globals.username,
+                          "password": globals.password
+                        }).then((value) {
+                          print(value);
+                          // Navigator.of(context).pushAndRemoveUntil(
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const LoginPage()),
+                          //     (Route<dynamic> route) => false);
+                        });
                       }),
                 ),
               ],

@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import '../pages/Home/Meal Cards/Back/bullet_point.dart';
+import '../pages/Pantry/dropdown_menu.dart';
+import '../util/globals.dart' as globals;
 
 class AddBarBullet extends StatefulWidget {
   final String hintText;
   final String labelText;
   final List<dynamic> information;
+  final double qty;
+  final String measurement;
 
   const AddBarBullet(
       {Key? key,
       this.hintText = '',
       this.labelText = '',
-      this.information = const []})
+      this.information = const [],
+      this.qty = 0,
+      this.measurement = ''})
       : super(key: key);
 
   @override
@@ -20,38 +26,60 @@ class AddBarBullet extends StatefulWidget {
 class _AddBarState extends State<AddBarBullet> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController addBarController = TextEditingController();
+    TextEditingController addNameController = TextEditingController();
+    TextEditingController addQtyController = TextEditingController();
 
     return Column(
       children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15),
-          child: TextField(
-              controller: addBarController,
-              onSubmitted: (value) {
-                setState(() {
-                  widget.information.insert(0, addBarController.text);
-                });
-              },
-              decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: widget.hintText,
-                  labelText: widget.labelText,
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        if (addBarController.text != '') {
-                          setState(() {
-                            widget.information.insert(0, addBarController.text);
-                          });
-                          addBarController.clear();
-                        }
+        Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: TextField(
+                  controller: addNameController,
+                  onSubmitted: (value) {
+                    setState(() {
+                      widget.information.insert(0, {
+                        "name": addNameController.text,
+                        "qty": int.parse(addQtyController.text),
+                        "measurement": globals.dropdownValue
+                      });
+                    });
+                  },
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: widget.hintText,
+                      labelText: widget.labelText,
+                      prefixIcon: IconButton(
+                          onPressed: () {
+                            if (addNameController.text.isNotEmpty &&
+                                addQtyController.text.isNotEmpty) {
+                              setState(() {
+                                widget.information.insert(0, {
+                                  "name": addNameController.text,
+                                  "qty": int.parse(addQtyController.text),
+                                  "measurement": globals.dropdownValue
+                                });
+                              });
+                              addNameController.clear();
+                            }
 
-                        FocusScopeNode currentFocus = FocusScope.of(context);
-                        if (!currentFocus.hasPrimaryFocus) {
-                          currentFocus.unfocus();
-                        }
-                      },
-                      icon: const Icon(Icons.add)))),
+                            
+                          },
+                          icon: const Icon(Icons.add)))),
+            ),
+            Expanded(
+              flex: 1,
+              child: TextField(
+                controller: addQtyController,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "Qty...",
+                    labelText: 'Qty'),
+              ),
+            ),
+            const Expanded(flex: 1, child: DropdownMenu())
+          ],
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
@@ -59,10 +87,13 @@ class _AddBarState extends State<AddBarBullet> {
             shrinkWrap: true,
             itemCount: widget.information.length,
             itemBuilder: (context, index) {
-              final String ingredient = widget.information[index];
+              final String ingredientName = widget.information[index]["name"];
+              final int ingredientQty = widget.information[index]["qty"];
+              final String ingredientMeasurement = widget.information[index]["measurement"];
+
 
               return Dismissible(
-                key: Key(ingredient),
+                key: Key(ingredientName),
                 onDismissed: (direction) {
                   widget.information.removeAt(index);
                 },
@@ -70,7 +101,7 @@ class _AddBarState extends State<AddBarBullet> {
                   children: [
                     const BulletPoint(),
                     Text(
-                      '  $ingredient',
+                      '  $ingredientName $ingredientQty($ingredientMeasurement)',
                       style: const TextStyle(fontSize: 20),
                     )
                   ],

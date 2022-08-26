@@ -11,6 +11,8 @@ public class Ingredient {
 
     private String name;
 
-    private String qty;
+    private int qty;
+
+    private String measurement;
 
 }

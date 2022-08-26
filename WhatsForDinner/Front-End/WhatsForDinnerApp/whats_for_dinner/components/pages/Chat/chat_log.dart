@@ -46,13 +46,8 @@ class _ChatLog extends State<ChatLog> {
 
     socket.emit("getPrevMessages",
         {"groupName": widget.chatName, "userID": globals.userID});
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    TextEditingController _messageController = TextEditingController();
-
-    socket.on('room-response', (data) {
+           socket.on('room-response', (data) {
       if (!mounted) {
         return;
       }
@@ -107,6 +102,11 @@ class _ChatLog extends State<ChatLog> {
         }
       }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController _messageController = TextEditingController();
 
     return SafeArea(
         child: Scaffold(

@@ -102,6 +102,8 @@ services:
   email-consumer:
     build: 
       context: ./EmailConsumer
+    depends_on:
+      - rabbitmq
     deploy:
       replicas: 1
     networks:

@@ -22,7 +22,7 @@ public class Meal {
     private String name;
 
     @Value("${servingSize: 0}")
-    private double servingSize;
+    private int servingSize;
 
     private List<Ingredient> ingredients;
 
