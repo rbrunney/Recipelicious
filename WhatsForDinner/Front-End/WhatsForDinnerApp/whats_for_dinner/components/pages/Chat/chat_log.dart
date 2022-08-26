@@ -47,58 +47,71 @@ class _ChatLog extends State<ChatLog> {
     socket.emit("getPrevMessages",
         {"groupName": widget.chatName, "userID": globals.userID});
 
-           socket.on('room-response', (data) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        chatLog.clear();
-      });
-      for (var chatInfo in data) {
-        if (globals.userID == int.parse(chatInfo['userID'])) {
-          if (!mounted) {
-            return;
-          }
-          setState(() {
-            chatLog.add(
-              ChatBubble(
-                margin: const EdgeInsets.only(
-                  right: 10,
-                  top: 5,
-                  bottom: 5,
-                ),
-                alignment: Alignment.centerRight,
-                clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
-                backGroundColor: Colors.tealAccent,
-                child: Text(
-                  chatInfo["content"],
-                  style: const TextStyle(color: Colors.black, fontSize: 18),
-                ),
+    socket.on('room-response', (data) {
+      print(data);
+      if (data.runtimeType != List<dynamic>) {
+        setState(() {
+          chatLog.insert(
+            0,
+            ChatBubble(
+              margin: const EdgeInsets.only(
+                right: 10,
+                top: 5,
+                bottom: 5,
               ),
-            );
-          });
-        } else {
-          if (!mounted) {
-            return;
-          }
-          setState(() {
-            chatLog.add(
-              ChatBubble(
-                margin: const EdgeInsets.only(
-                  right: 10,
-                  top: 5,
-                  bottom: 5,
-                ),
-                alignment: Alignment.centerLeft,
-                clipper: ChatBubbleClipper4(type: BubbleType.receiverBubble),
-                backGroundColor: Colors.grey,
-                child: Text(
-                  chatInfo["content"],
-                  style: const TextStyle(color: Colors.black, fontSize: 18),
-                ),
+              alignment: Alignment.centerLeft,
+              clipper: ChatBubbleClipper4(type: BubbleType.receiverBubble),
+              backGroundColor: Colors.grey,
+              child: Text(
+                data['content'],
+                style: const TextStyle(color: Colors.black, fontSize: 18),
               ),
-            );
-          });
+            ),
+          );
+        });
+      } else {
+        for (var chatMsg in data) {
+          if (globals.userID == int.parse(chatMsg['userID'])) {
+            setState(() {
+              chatLog.insert(
+                0,
+                ChatBubble(
+                  margin: const EdgeInsets.only(
+                    right: 10,
+                    top: 5,
+                    bottom: 5,
+                  ),
+                  alignment: Alignment.centerRight,
+                  clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                  backGroundColor: Colors.tealAccent,
+                  child: Text(
+                    chatMsg['content'],
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                ),
+              );
+            });
+          } else {
+            setState(() {
+              chatLog.insert(
+                0,
+                ChatBubble(
+                  margin: const EdgeInsets.only(
+                    right: 10,
+                    top: 5,
+                    bottom: 5,
+                  ),
+                  alignment: Alignment.centerLeft,
+                  clipper: ChatBubbleClipper4(type: BubbleType.receiverBubble),
+                  backGroundColor: Colors.grey,
+                  child: Text(
+                    chatMsg['content'],
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                ),
+              );
+            });
+          }
         }
       }
     });
