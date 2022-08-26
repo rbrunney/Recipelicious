@@ -151,7 +151,6 @@ def messageRoom(sid, data):
     channel = Channels.objects.get(groupName = channelName)
 
     channelSerializer = ChannelSerializer(channel)
-    sendingUser = ""
     #Message isn't just a simple text string but a dictionary.
     message = data["message"]
     isValidUser = False
@@ -170,30 +169,34 @@ def messageRoom(sid, data):
     # print(roomlist)
     #grab the message list and append the new message, then save it back to the database.
     if(isValidUser):
-        messageList = json.loads(channelSerializer["messages"].value)
+        messageList = list(json.loads(channelSerializer["messages"].value))
 
         # print(message)
         # print(messageList)
 
-        unlocalDatetime = datetime.datetime.strptime(message["postTime"], "%a %b %d %H %M %S %Y %Z")
+        unlocalDatetime = datetime.datetime.strptime(message["postTime"], "%Y-%m-%d %H:%M:%S.%f")
 
-        unlocalDatetime = datetime.datetime(unlocalDatetime)
+        print(unlocalDatetime)
 
         localDatetime = pytz.utc.localize(unlocalDatetime)
 
-        message["postTime"] = localDatetime
+        message["postTime"] = localDatetime.strftime("%Y-%m-%d %H:%M:%S.%f")
 
         messageList.append(message)
 
         setattr(channel, "messages", messageList)
 
-        channel.save()
+
         #finally make the response and send it off. 
         #change this up to send back the raw json for use
         # roomResponse = f"{sendingUser}: {message['content']}"
 
         sio.emit("room-response", message, room=channelName, skip_sid=sid)
+
+        channel.save()
+        
     else:
+        print("hit unauthorized")
         sio.emit("unauthorized", "You are not allowed to access this room", room=sid)
 
 @sio.on("getPrevMessages")

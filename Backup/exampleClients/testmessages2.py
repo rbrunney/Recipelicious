@@ -9,7 +9,7 @@ sio = socketio.Client()
 def connectionMessage():
     print("connected to server")
     response = {
-        "groupName":"ohgod",
+        "groupName":"test",
         "userID":3
     }
 
@@ -23,7 +23,7 @@ def disconnectMessage():
 def messsageRecieved(data):
     print(data)
 
-sio.connect("http://localhost:5001/", wait_timeout=10)
+sio.connect("http://localhost:8888/", wait_timeout=10)
 
 
 @sio.on("room-response")
@@ -33,7 +33,7 @@ def roomResponseReceived(data):
 while(True):
     message = input("Enter a message: ")
     response = {
-        "groupName": "ohgod",
+        "groupName": "test",
         "message":{
             "userID":3,
             "name":"David",
