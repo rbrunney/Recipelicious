@@ -21,6 +21,9 @@ public class Meal {
 
     private String name;
 
+    @Value("${description: ''}")
+    private String description;
+
     @Value("${servingSize: 0}")
     private int servingSize;
 

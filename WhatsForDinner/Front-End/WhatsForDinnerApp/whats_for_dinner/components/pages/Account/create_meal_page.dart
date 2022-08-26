@@ -121,14 +121,14 @@ class _CreateMealState extends State<CreateMeal> {
                           ingredients.isNotEmpty &&
                           recipe.isNotEmpty) {
                         print('Call Davids Api');
-                        print(recipe);
 
                         Map<String, dynamic> newMeal = {
                           "creator": globals.username,
                           "name": nameOfMealController.text,
+                          "description": descriptionOfMealController.text,
                           "servingSize": int.parse(servingSizeController.text),
                           "ingredients": ingredients,
-                          "recipe": json.encode(recipe)
+                          "recipe": recipe
                         };
                         request
                             .makePostRequest(
