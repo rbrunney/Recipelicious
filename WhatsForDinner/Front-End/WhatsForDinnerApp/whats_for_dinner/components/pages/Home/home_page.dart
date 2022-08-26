@@ -27,7 +27,6 @@ class _HomePage extends State<HomePage> {
           future: futureMealInfo,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(snapshot.data);
               List<dynamic> mealInformation =
                   json.decode(snapshot.data!)["results"];
 

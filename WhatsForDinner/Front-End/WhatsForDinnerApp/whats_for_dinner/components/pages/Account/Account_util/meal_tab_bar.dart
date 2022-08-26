@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
+import '../../../util/requests.dart';
 import '../../Home/Meal Cards/Front/meal_card.dart';
 import '../create_meal_page.dart';
 import 'add_floating_button.dart';
+import '../../../util/globals.dart' as globals;
+import 'dart:convert';
 
-class MealAppBar extends StatelessWidget {
+class MealAppBar extends StatefulWidget {
   const MealAppBar({Key? key}) : super(key: key);
 
   @override
+  _MealAppBar createState() => _MealAppBar();
+}
+
+class _MealAppBar extends State<MealAppBar> {
+  Requests requests = Requests();
+  List<MealCard> usersCreatedMeals = [];
+
+  @override
   Widget build(BuildContext context) {
+    Future<String> getMadeMeals = requests.makeGetRequest(
+        "http://10.0.2.2:8888/meal//findByCreator/${globals.username}");
+
     return Expanded(
       child: Container(
         margin: const EdgeInsets.only(top: 25),
@@ -25,35 +39,50 @@ class MealAppBar extends StatelessWidget {
                 ],
               ),
             ),
-            floatingActionButton: const AddFloatingButton(widgetPage: CreateMeal(),),
+            floatingActionButton: const AddFloatingButton(
+              widgetPage: CreateMeal(),
+            ),
             body: TabBarView(
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 15),
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        MealCard(
-                            mealName: 'your momm woooo',
-                            imageUrl:
-                                "https://i.ytimg.com/vi/eX2qFMC8cFo/maxresdefault.jpg",
-                            ingredients: const [{'name': "BEEAAANSS", 'qty': 1, 'measurement' : "lbs"}, {'name': "Rob", 'qty': 1, 'measurement' : "oz"}],
-                            recipe: const {'1': 'bitches', '2' : 'batman'},
-                            beingEdited: true,
-                            ),
-                            
+                    child: FutureBuilder<String>(
+                        future: getMadeMeals,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            usersCreatedMeals.clear();
+                            List<dynamic> mealInformation =
+                                json.decode(snapshot.data!)["results"];
 
-                        MealCard(
-                            imageUrl:
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9MRJ2PkWvRNLyk1BZU5kDBfHvvzi-2W72rw&usqp=CAU"),
-                        MealCard(
-                            imageUrl:
-                                "https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg"),
-                        MealCard(
-                            imageUrl:
-                                "https://www.boredpanda.com/blog/wp-content/uploads/2014/02/funny-wet-cats-coverimage.jpg"),
-                      ],
-                    ),
+                            for (var meal in mealInformation) {
+                              usersCreatedMeals.add(MealCard(
+                                beingEdited: true,
+                                mealID: meal["id"],
+                                mealName: meal["name"],
+                                creator: meal["creator"],
+                                likes: meal["likes"],
+                                ingredients: meal["ingredients"],
+                                recipe: meal["recipe"],
+                              ));
+                            }
+
+                            return Column(
+                              children: usersCreatedMeals,
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('${snapshot.error}');
+                          }
+
+                          return Center(
+                              heightFactor: 20,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.tealAccent,
+                                ),
+                              ));
+                        }),
                   ),
                 ),
                 Container(
