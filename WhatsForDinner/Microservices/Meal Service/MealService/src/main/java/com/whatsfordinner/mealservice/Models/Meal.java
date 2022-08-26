@@ -21,17 +21,14 @@ public class Meal {
 
     private String name;
 
-    @Value("${description: ''}")
     private String description;
 
-    @Value("${servingSize: 0}")
     private int servingSize;
 
     private List<Ingredient> ingredients;
 
     private Map<Integer, String> recipe;
 
-    @Value("${likes: 0}")
     private int likes;
 
     @Override

@@ -14,19 +14,22 @@ class IngredientList extends StatelessWidget {
     ];
 
     // Making a widget for every ingredient passed through
-    ingredients.forEach((ingredient) => ingredientList.add(Ingredient(
+    ingredients.forEach((ingredient) {
+      print(ingredient);
+      ingredientList.add(Ingredient(
         ingredientName: ingredient['name'],
         quantity: ingredient['qty'],
-    )));
+        // measurement: ingredient['measurement'],
+      ));
+    });
 
     return Container(
-      margin: const EdgeInsets.only(
-        top: 10,
-        bottom: 10,
-      ),
-      child: Column(
-        children: ingredientList,
-      )
-    );
+        margin: const EdgeInsets.only(
+          top: 10,
+          bottom: 10,
+        ),
+        child: Column(
+          children: ingredientList,
+        ));
   }
 }

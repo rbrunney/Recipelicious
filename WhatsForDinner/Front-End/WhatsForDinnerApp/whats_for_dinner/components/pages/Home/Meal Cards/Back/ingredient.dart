@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'bullet_point.dart';
 
 class Ingredient extends StatelessWidget {
-  Ingredient({Key? key, this.ingredientName = '', this.quantity = ''})
+  Ingredient(
+      {Key? key,
+      this.ingredientName = '',
+      this.quantity = 0,
+      this.measurement = ''})
       : super(key: key);
 
   String ingredientName;
-  String quantity;
+  int quantity;
+  String measurement;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,13 @@ class Ingredient extends StatelessWidget {
                   Container(
                       margin: const EdgeInsets.only(left: 15),
                       child: Text(
-                        quantity,
+                        quantity.toString(),
+                        style: const TextStyle(fontSize: 20),
+                      )),
+                  Container(
+                      margin: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        measurement,
                         style: const TextStyle(fontSize: 20),
                       ))
                 ],

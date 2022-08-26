@@ -48,7 +48,6 @@ class _ChatLog extends State<ChatLog> {
         {"groupName": widget.chatName, "userID": globals.userID});
 
     socket.on('room-response', (data) {
-      print(data);
       if (data.runtimeType != List<dynamic>) {
         setState(() {
           chatLog.insert(
