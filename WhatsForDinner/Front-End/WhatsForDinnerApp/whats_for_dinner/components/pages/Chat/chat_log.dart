@@ -176,7 +176,9 @@ class _ChatLog extends State<ChatLog> {
                           "groupName": widget.chatName,
                           "message": {
                             "userID": globals.userID,
-                            "message": _messageController.text
+                            "name": globals.username,
+                            "content": _messageController.text,
+                            "postTime": DateTime.now().toString()
                           }
                         });
                       }
