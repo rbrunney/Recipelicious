@@ -31,3 +31,28 @@ Lib
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+WhatsForDinner/Front-End/WhatsForDinnerApp/whats_for_dinner/components/pages/Chat/chat_log.dart
+WhatsForDinner/Microservices/Chat Room Service/Placeholder.txt
+WhatsForDinner/Microservices/Chat Room Service/pyvenv.cfg
+WhatsForDinner/Microservices/Chat Room Service/Scripts/activate
+WhatsForDinner/Microservices/Chat Room Service/Scripts/activate.bat
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Activate.ps1
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Dependencies.txt
+WhatsForDinner/Microservices/Chat Room Service/Scripts/django-admin.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/pip.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/pip3.9.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/pip3.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/python.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/pythonw.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/pyvenv.cfg
+WhatsForDinner/Microservices/Chat Room Service/Scripts/sqlformat.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/activate
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/activate.bat
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/Activate.ps1
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/deactivate.bat
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/pip.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/pip3.9.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/pip3.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/python.exe
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Scripts/pythonw.exe
+WhatsForDinner/Microservices/User Service/DjangoUsers/pyvenv.cfg
