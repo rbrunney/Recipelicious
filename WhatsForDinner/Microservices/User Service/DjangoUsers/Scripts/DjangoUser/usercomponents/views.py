@@ -1,5 +1,6 @@
 import traceback
 from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 from usercomponents.models import UserSerializer, User
@@ -133,33 +134,60 @@ def createUser(request, *args, **kwargs):
 def updateUser(request, *args, **kwargs):
     requestData = request.data
 
-    hashedPass = bcrypt.hashpw(requestData["password"].encode('utf8'),bcrypt.gensalt(10))
-
     userToUpdate = User()
-    try:
-        userToUpdate = User.objects.get(email=requestData["email"])
 
-        setattr(userToUpdate, "name",requestData["name"])
-        setattr(userToUpdate, "username",requestData["username"])
-        setattr(userToUpdate, "password",hashedPass.decode('utf8'))
-        setattr(userToUpdate, "email",requestData["email"])
-        setattr(userToUpdate, "birthday",requestData["birthday"])
+    salt = bcrypt.gensalt(10)
+
+    email = requestData["email"]
+
+    print(email)
+
+    try:
+        userToUpdate = User.objects.get(email=email)
+        
+        updateDict = dict(requestData["updateFields"])
+
+        keyList = list(updateDict.keys())
+
+        for key in keyList:
+            if(key == "password"):
+                hashedPassword = bcrypt.hashpw(updateDict["password"].encode("utf8"), salt)
+                setattr(userToUpdate, "password", hashedPassword.decode("utf8"))
+            elif(key == "name"):
+                setattr(userToUpdate, "name", updateDict["name"])
+            elif(key == "username"):
+                setattr(userToUpdate, "username", updateDict["username"])
+            elif(key == "email"):
+                setattr(userToUpdate, "email", updateDict["email"])
+            elif(key == "birthday"):
+                setattr(userToUpdate, "birthday", updateDict["birthday"])
+
+        # hashedPass = bcrypt.hashpw(requestData["password"].encode('utf8'),bcrypt.gensalt(10))
+
+        # setattr(userToUpdate, "name",requestData["name"])
+        # setattr(userToUpdate, "username",requestData["username"])
+        # setattr(userToUpdate, "password",hashedPass.decode('utf8'))
+        # setattr(userToUpdate, "email",requestData["newEmail"])
+        # setattr(userToUpdate, "birthday",requestData["birthday"])
 
         userToUpdate.save()
-    except:
+    except ObjectDoesNotExist as objNotExist:
+        traceback.print_exception(etype=ObjectDoesNotExist, value=objNotExist, tb=objNotExist.__traceback__)
         response = {
             "message": "Account not found",
-            "result": {
-                "username": requestData["username"],
-                "name": requestData["name"],
-                "email": requestData["email"]
-            },
+            "date-time": datetime.datetime.now()
+        }
+        return JsonResponse(response, status=400)
+    except KeyError as e:
+        traceback.print_exception(etype=KeyError, value=e, tb=e.__traceback__)
+        response ={
+            "message": "Missing update fields",
+            "result": json.dumps(request.data),
             "date-time": datetime.datetime.now()
         }
         return JsonResponse(response, status=400)
 
-    updatedUser = User.objects.get(email=requestData["email"])
-    userSerializer = UserSerializer(updatedUser)
+    userSerializer = UserSerializer(userToUpdate)
     
     print(userSerializer.data)
 
