@@ -22,8 +22,23 @@ class Requests {
   Future<String> makeDeleteRequest(
       String url, Map<String, dynamic> requestBody) async {
     final requestLink = Uri.parse(url);
-    final headers = {"Content-type": "application/json", "Accept": "application/json"};
+    final headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json"
+    };
     Response response = await delete(requestLink,
+        headers: headers, body: json.encode(requestBody));
+
+    return response.body;
+  }
+
+  Future<String> makePutRequest(String url, Map<String, dynamic> requestBody) async{
+    final requestLink = Uri.parse(url);
+    final headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json"
+    };
+    Response response = await put(requestLink,
         headers: headers, body: json.encode(requestBody));
 
     return response.body;

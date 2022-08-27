@@ -3,6 +3,7 @@ import '../../util/requests.dart';
 import '../../util/to_prev_page.dart';
 import 'alert_pop_up.dart';
 import 'login_page.dart';
+import '../../util/globals.dart' as globals;
 
 class ChangePassPage extends StatelessWidget {
   String userEmail;
@@ -86,10 +87,17 @@ class ChangePassPage extends StatelessWidget {
                         );
                       });
                 } else {
-
-                  // Make request here one to get user information
-                  // And then make one from there
-                  
+                  requests
+                      .makePutRequest("http://10.0.2.2:8888/users/updateUser/", {
+                    "id": globals.userID,
+                    "name": globals.name,
+                    "username": globals.username,
+                    "password": newPassController.text,
+                    "birthday": globals.birthday,
+                    "email": globals.email
+                  }).then((value) {
+                    print(value);
+                  });
 
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(

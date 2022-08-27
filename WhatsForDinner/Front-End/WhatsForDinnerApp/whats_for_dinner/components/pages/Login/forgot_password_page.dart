@@ -4,6 +4,8 @@ import '../../util/requests.dart';
 import '../../util/to_prev_page.dart';
 import 'code_authentication_page.dart';
 import 'dart:math';
+import '../../util/globals.dart' as globals;
+import 'dart:convert';
 
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -51,11 +53,16 @@ class ForgotPasswordPage extends StatelessWidget {
                   Random random = new Random();
                   int authenticationCode = random.nextInt(900000) + 100000;
 
-                  requests.makePostRequest("http://10.0.2.2:8888/users/forgotPassword", {
+                  requests.makePostRequest(
+                      "http://10.0.2.2:8888/users/forgotPassword", {
                     "email": usersEmail.text,
                     "authCode": authenticationCode
                   }).then((value) {
-                    print(value);
+                    globals.userID = json.decode(value)["id"];
+                    globals.name = json.decode(value)["name"];
+                    globals.username = json.decode(value)["username"];
+                    globals.email = json.decode(value)["email"];
+                    globals.birthday = json.decode(value)["birthday"];
                   });
 
                   Navigator.push(
