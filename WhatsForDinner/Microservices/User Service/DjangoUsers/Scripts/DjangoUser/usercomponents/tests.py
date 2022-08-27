@@ -175,7 +175,7 @@ class testAPIcalls(TestCase):
         userEmail = "testyemailmk3@email.com"
 
         updateData = {
-            "email": "testyemailmk3@email.com",
+            "email": userEmail,
             "updateFields":{
                 "name": "dingus",
                 "username": "blandness",
@@ -187,10 +187,24 @@ class testAPIcalls(TestCase):
 
         print(updateResponse.json())
 
+        self.assertEqual(updateResponse.json()["message"], "Account Updated")
+        self.assertEqual(updateResponse.json()["result"]["userID"], userId)
+        self.assertEqual(updateResponse.json()["result"]["name"], "dingus")
+        self.assertEqual(updateResponse.json()["result"]["email"], "testyouremail@email.com")
+        self.assertNotEqual(updateResponse.json()["date-time"], None)
+
         userId = updateResponse.json()["result"]["userID"]
 
         getResponse = djangoClient.get(f"/getUser/{userId}")
 
         print(getResponse.json())
 
+        self.assertEqual(getResponse.json()["name"],"dingus")
+        self.assertEqual(getResponse.json()["username"],"blandness")
+        self.assertEqual(getResponse.json()["email"], "testyouremail@email.com")
+        self.assertEqual(getResponse.json()["birthday"], "2004-12-03")
 
+    def testCheckPw(self):
+        userData = {
+            "":""
+        }
