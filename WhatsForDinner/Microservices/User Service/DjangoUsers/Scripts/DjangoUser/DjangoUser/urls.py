@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from usercomponents.views import testView, createUser, updateUser, checkPw, deleteUser, getUser, getUserByUsername
+from usercomponents.views import testView, createUser, updateUser, checkPw, deleteUser, getUser, getUserByUsername, forgotPassword
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
@@ -25,5 +25,6 @@ urlpatterns = [
     path('passwordCheck/<str:username>/<str:password>', checkPw),
     path('deleteUser/', deleteUser),
     path('getUser/<int:id>', getUser),
-    path('getUser/<str:username>', getUserByUsername)
+    path('getUser/<str:username>', getUserByUsername),
+    path('forgotPassword', forgotPassword)
 ]
