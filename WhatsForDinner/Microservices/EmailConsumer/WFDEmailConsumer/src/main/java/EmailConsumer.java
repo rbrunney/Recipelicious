@@ -1,9 +1,8 @@
 import com.rabbitmq.client.*;
+import email.SendMail;
+import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.nio.charset.StandardCharsets;
 
 public class EmailConsumer {
     public static void main(String[] args) {
@@ -21,27 +20,34 @@ public class EmailConsumer {
             DefaultConsumer consumer = new DefaultConsumer(channel) {
                 @Override
                 public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) {
-                    HashMap<String, String> message = new HashMap<>();
-                    String subject = "";
-                    String emailBody = "";
+                    JSONObject message = new JSONObject();
 
                     try {
-                        System.out.println(Arrays.toString(body));
-                        ByteArrayInputStream bais = new ByteArrayInputStream(body);
-                        ObjectInputStream ois = new ObjectInputStream(bais);
-
-                        message = (HashMap<String, String>) ois.readObject();
-
-                        bais.close();
-                        ois.close();
+                        String rabbitmqMessage = new String(body, StandardCharsets.UTF_8);
+                        message = new JSONObject(rabbitmqMessage);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                    System.out.println(message.toString());
+                    switch (message.getString("type")) {
+                        case "accountCreation":
+                            new SendMail(message.getString("email"), "Account Created",
+                                    "Welcome to 'Whats for dinner?'\n" +
+                                            "Username: " + message.getString("username") + "\n" +
+                                            "Email: " + message.getString("email") + "\n" +
+                                            "Have fun and enjoy browsing all sorts of meals");
+                            break;
+                        case "forgotPassword":
+                            new SendMail(message.getString("email"), "Forgot Password", "Here is your code to reset password: " + message.getInt("authCode"));
+                            break;
+                    }
+
+
                 }
             };
             channel.basicConsume("usercreation", true, consumer);
+
+            System.out.println("Email has been sent successfully :)");
         } catch (Exception e) {
             e.printStackTrace();
         }

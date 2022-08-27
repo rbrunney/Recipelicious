@@ -13,8 +13,7 @@ class CodeAuthentication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController codeController = TextEditingController();
-
-    print(generatedCode);
+    
     return SafeArea(
         child: Scaffold(
             body: Column(children: [

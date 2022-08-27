@@ -108,7 +108,6 @@ class CreateAccount extends StatelessWidget {
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey)),
                     prefixIcon: Icon(Icons.lock_outline, color: Colors.grey),
-                    
                     hintText: 'Enter Password...',
                     labelText: 'Enter Password',
                     labelStyle: TextStyle(color: Colors.grey)),
@@ -179,21 +178,22 @@ class CreateAccount extends StatelessWidget {
                                 "http://10.0.2.2:8888/users/createUser/",
                                 newUser)
                             .then((value) {
+                          print(json.decode(value));
                           if (json.decode(value)["result"]["userID"] != null) {
                             Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
-                            (Route<dynamic> route) => false);
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()),
+                                (Route<dynamic> route) => false);
                           } else {
                             showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertPopUp(
-                                title: 'Account Creation Failed',
-                                content:
-                                    'Currently at this time due to an error. You cannot make an account',
-                              );
-                            });
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertPopUp(
+                                    title: 'Account Creation Failed',
+                                    content:
+                                        'Currently at this time due to an error. You cannot make an account',
+                                  );
+                                });
                           }
                         });
                       }

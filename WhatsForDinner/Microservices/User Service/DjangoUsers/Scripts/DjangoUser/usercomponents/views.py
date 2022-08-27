@@ -9,42 +9,57 @@ import pika
 import os
 import json
 
-
+global rabbitMQHostString
 rabbitMQHostString = "localhost"
 
 if os.environ.get("RABBITMQ_HOST") != None:
     rabbitMQHostString = os.environ.get("RABBITMQ_HOST")
 
+global rabbitMQServerPort
 rabbitMQServerPort = 5672
 
 if os.environ.get("RABBITMQ_PORT") != None:
     rabbitMQServerPort = int(os.environ.get("RABBITMQ_PORT"))
 
+global rabbitMQVirtualHost
 rabbitMQVirtualHost = '/'
 
 if os.environ.get("RABBITMQ_VIRTUAL_HOST") != None:
     rabbitMQVirtualHost = os.environ.get("RABBITMQ_VIRTUAL_HOST")
 
+global rabbitUser
 rabbitUser = "guest"
 
 if os.environ.get("RABBITMQ_USER") != None:
     rabbitUser = os.environ.get("RABBITMQ_USER")
 
+global rabbitPass
 rabbitPass = "guest"
 
 if os.environ.get("RABBITMQ_PASS") != None:
     rabbitPass = os.environ.get("RABBITMQ_PASS")
 
+def send_message_to_queue(message_details: dict):
 
-
-
+    rabbitMQCredentialParams = pika.PlainCredentials(rabbitUser,rabbitPass)
+    rabbitMQServerParams = pika.ConnectionParameters(rabbitMQHostString,
+                                                    rabbitMQServerPort,
+                                                    rabbitMQVirtualHost,
+                                                    rabbitMQCredentialParams,
+                                                    heartbeat=200)
+    rabbitMQSyncConnection = pika.BlockingConnection(rabbitMQServerParams)
+    publishingChannel = rabbitMQSyncConnection.channel()
+    publishingChannel.queue_declare(queue="usercreation", durable=True)
+    publishingChannel.basic_publish(exchange='', routing_key="usercreation", body=json.dumps(message_details))
+    
+    publishingChannel.close()
 
 # def blockedConnectionFlag():
 #     connection_free = False
 
 # def unblockedConnectionFlag():
-    global connection_free
-    connection_free = True
+global connection_free
+connection_free = True
 
 # connection_free = True
 
@@ -56,6 +71,40 @@ if os.environ.get("RABBITMQ_PASS") != None:
 def testView(request, *args, **kwargs):
     return HttpResponse('OK')
 
+@api_view(('POST',))
+def forgotPassword(request, *args, **kwargs):
+    requestData = request.data
+    user = User()
+
+    try:
+        user = User.objects.get(email=requestData["email"])
+    except Exception as e:
+        print(e.with_traceback.__str__())
+        response = {
+            "message": "Account not found",
+            "date-time": datetime.datetime.now()
+        }
+        return JsonResponse(response, status=404)
+    
+    userSerializer = UserSerializer(user)
+
+    messageDetails = {
+        "type": "forgotPassword",
+        "email": requestData["email"],
+        "authCode" : requestData["authCode"]
+    }
+
+    send_message_to_queue(messageDetails)
+
+    response = {
+        'id': userSerializer.data["id"],
+        'name': userSerializer.data["name"],
+        'username': userSerializer.data["username"],
+        'email': userSerializer.data["email"],
+        'birthday': userSerializer.data["birthday"]
+    }
+    return JsonResponse(response)
+    
 
 @api_view(('POST',))
 def createUser(request, *args, **kwargs):
@@ -92,30 +141,15 @@ def createUser(request, *args, **kwargs):
     userSerializer = UserSerializer(data)
     # print(userSerializer.data)
     userDetails ={
+        "type": "accountCreation",
         "name": userSerializer.data["name"],
         "username": userSerializer.data["username"],
         "email": userSerializer.data["email"],
         "birthday": userSerializer.data["birthday"],
     }
 
-    
-    rabbitMQCredentialParams = pika.PlainCredentials(rabbitUser,rabbitPass)
-    rabbitMQServerParams = pika.ConnectionParameters(rabbitMQHostString,
-                                                    rabbitMQServerPort,
-                                                    rabbitMQVirtualHost,
-                                                    rabbitMQCredentialParams,
-                                                    heartbeat=200)
+    send_message_to_queue(userDetails)
 
-    rabbitMQSyncConnection = pika.BlockingConnection(rabbitMQServerParams)
-
-    publishingChannel = rabbitMQSyncConnection.channel()
-
-    publishingChannel.queue_declare("usercreation", durable=True)
-
-
-    publishingChannel.basic_publish(exchange='', routing_key="usercreation", body=json.dumps(userDetails))
-
-    publishingChannel.close()
 
     response = {
         "message": "Account Created",
