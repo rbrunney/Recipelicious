@@ -83,5 +83,114 @@ class testAPIcalls(TestCase):
         response = djangoClient.post("/createUser/", userData)
 
         print(response.json())
+
+        userId = response.json()["result"]["userID"]
+
+        getResponse = djangoClient.get(f"/getUser/{userId}")
+
+        print(getResponse.json())
+
         self.assertNotEqual(response, None)
+        self.assertEqual(response.json()["message"],"Account Created")
+        self.assertEqual(response.json()["result"]["userID"], 8)
+        self.assertEqual(response.json()["result"]["name"], "testymctest")
+        self.assertEqual(response.json()["result"]["email"], "testyemail@email.com")
+        self.assertNotEqual(response.json()["date-time"], None)
+
+        self.assertEqual(getResponse.json()["name"], "testymctest")
+        self.assertEqual(getResponse.json()["username"], "blah0214")
+        self.assertEqual(getResponse.json()["email"], "testyemail@email.com")
+        self.assertEqual(getResponse.json()["birthday"], "2004-12-03")
+
+    def testCreateAndBlockDuplicateUser(self):
+        #man, I hate non sequential testing.
+        #checking userIDs is mildly annoying
+        userData = {
+            "name": "testymctest04",
+            "username": "blah02145",
+            "password": "defoAPassword",
+            "email":"testyemailmk2@email.com",
+            "birthday":"2004-12-03"
+        }
+
+        djangoClient = Client()
+        response = djangoClient.post("/createUser/", userData)
+
+        print(response.json())
+
+        self.assertNotEqual(response, None)
+        self.assertEqual(response.json()["message"],"Account Created")
+        self.assertEqual(response.json()["result"]["userID"], 6)
+        self.assertEqual(response.json()["result"]["name"], "testymctest04")
+        self.assertEqual(response.json()["result"]["email"], "testyemailmk2@email.com")
+        self.assertNotEqual(response.json()["date-time"], None)
+
+        duplicateResponse = djangoClient.post("/createUser/", userData)
+
+        print(duplicateResponse.json())
+
+        self.assertNotEqual(duplicateResponse, None)
+        self.assertEqual(duplicateResponse.json()["message"],"Account already created")
+        self.assertEqual(duplicateResponse.json()["result"]["userID"], 6)
+        self.assertEqual(duplicateResponse.json()["result"]["name"], "testymctest04")
+        self.assertEqual(duplicateResponse.json()["result"]["email"],"testyemailmk2@email.com")
+
+    def testUpdateOnNonexistentUser(self):
+        nonexistentUser = "whothef@email.com"
+
+        data = {
+            "email": nonexistentUser,
+            "updateFields":{
+                "name":"dingus",
+                "username":"newguy"
+            }
+        }
+
+        djangoClient = Client()
+        response = djangoClient.put("/updateUser/", data, content_type="application/json")
+
+        print(response.json())
+
+        self.assertNotEqual(response, None)
+        self.assertEqual(response.json()["message"], "Account not found")
+        self.assertNotEqual(response.json()["date-time"], None)
+
+    def testUpdateUser(self):
+        userData = {
+            "name": "testymctest05",
+            "username": "blah02146",
+            "password": "defoAPassword",
+            "email":"testyemailmk3@email.com",
+            "birthday":"2004-12-03"
+        }
+
+        djangoClient = Client()
+        response = djangoClient.post("/createUser/", userData)
+
+        print(response.json())
+
+        userId = response.json()["result"]["userID"]
+        userEmail = response.json()["result"]["email"]
+
+        userEmail = "testyemailmk3@email.com"
+
+        updateData = {
+            "email": "testyemailmk3@email.com",
+            "updateFields":{
+                "name": "dingus",
+                "username": "blandness",
+                "email": "testyouremail@email.com"
+            }
+        }
+
+        updateResponse = djangoClient.put("/updateUser/", updateData, content_type="application/json")
+
+        print(updateResponse.json())
+
+        userId = updateResponse.json()["result"]["userID"]
+
+        getResponse = djangoClient.get(f"/getUser/{userId}")
+
+        print(getResponse.json())
+
 
