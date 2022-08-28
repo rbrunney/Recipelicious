@@ -87,15 +87,20 @@ class ChangePassPage extends StatelessWidget {
                         );
                       });
                 } else {
-                  requests
-                      .makePutRequest("http://10.0.2.2:8888/users/updateUser/", {
-                    "id": globals.userID,
-                    "name": globals.name,
-                    "username": globals.username,
-                    "password": newPassController.text,
-                    "birthday": globals.birthday,
-                    "email": globals.email
-                  }).then((value) {
+
+                  Map<String, dynamic> requestBody = {
+                    "email": userEmail,
+                    "updateFields": {
+                          "id": globals.userID,
+                          "name": globals.name,
+                          "username": globals.username,
+                          "password": globals.password,
+                          "birthday": globals.birthday,
+                          "email": globals.email
+                        }
+                  };
+                  requests.makePutRequest(
+                      "http://10.0.2.2:8888/users/updateUser/",requestBody).then((value) {
                     print(value);
                   });
 

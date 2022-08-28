@@ -17,7 +17,7 @@ class EditInfoPagePassword extends StatelessWidget {
                   const Center(
                     heightFactor: 5,
                     child: Text(
-                      "Edit password",
+                      "Edit Password",
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
