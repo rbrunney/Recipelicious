@@ -4,11 +4,14 @@ import '../../Login/login_page.dart';
 import 'account_edit_info.dart';
 import '../../../util/to_prev_page.dart';
 import '../../../util/globals.dart' as globals;
-import 'dart:convert';
+import '../../Login/code_authentication_page.dart';
+import 'dart:math';
+import 'package:page_transition/page_transition.dart';
+
+import 'delete_message_page.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key})
-      : super(key: key);
+  const SettingsPage({Key? key}) : super(key: key);
 
   @override
   _SettingsPage createState() => _SettingsPage();
@@ -119,16 +122,25 @@ class _SettingsPage extends State<SettingsPage> {
                         style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                       onPressed: () {
-                        requests.makeDeleteRequest(
-                            "http://10.0.2.2:8888/users/deleteUser", {
-                          "username": globals.username,
-                          "password": globals.password
+                        Random random = Random();
+                        int authenticationCode =
+                            random.nextInt(900000) + 100000;
+                        requests.makePostRequest(
+                            "http://10.0.2.2:8888/users/forgotPassword", {
+                          "email": globals.email,
+                          "authCode": authenticationCode
                         }).then((value) {
-                          print(value);
-                          // Navigator.of(context).pushAndRemoveUntil(
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const LoginPage()),
-                          //     (Route<dynamic> route) => false);
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: CodeAuthentication(
+                                    generatedCode: authenticationCode,
+                                    userEmail: globals.email,
+                                    isDeleteCode: true,
+                                    pageAfterAuthenticated:
+                                        const DeleteMessagePage(),
+                                  ),
+                                  type: PageTransitionType.bottomToTop));
                         });
                       }),
                 ),

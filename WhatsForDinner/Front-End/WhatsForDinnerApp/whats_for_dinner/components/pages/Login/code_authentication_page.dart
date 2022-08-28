@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../util/requests.dart';
 import '../../util/to_prev_page.dart';
 import 'alert_pop_up.dart';
+import '../../util/globals.dart' as globals;
 import 'change_pass_page.dart';
 
 class CodeAuthentication extends StatelessWidget {
   int generatedCode;
   String userEmail;
-  CodeAuthentication({Key? key, this.generatedCode = 0, this.userEmail = ''}) : super(key: key);
+  Widget pageAfterAuthenticated;
+  bool isDeleteCode;
+  CodeAuthentication({
+    Key? key,
+    this.generatedCode = 0,
+    this.userEmail = '',
+    this.pageAfterAuthenticated = const Text('No Content'),
+    this.isDeleteCode = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     TextEditingController codeController = TextEditingController();
-    
+    Requests requests = Requests();
+
     return SafeArea(
         child: Scaffold(
             body: Column(children: [
@@ -51,11 +62,21 @@ class CodeAuthentication extends StatelessWidget {
                 primary: Colors.tealAccent, // background
               ),
               onPressed: () {
+                if (isDeleteCode) {
+                  requests.makeDeleteRequest(
+                      "http://10.0.2.2:8888/users/deleteUser/", {
+                    "username": globals.username,
+                    "password": globals.password
+                  }).then((value) {
+                    print(value);
+                  });
+                }
+
                 if (generatedCode == int.parse(codeController.text)) {
                   Navigator.push(
                       context,
                       PageTransition(
-                          child: ChangePassPage(userEmail: userEmail,),
+                          child: pageAfterAuthenticated,
                           type: PageTransitionType.bottomToTop));
                 } else {
                   showDialog<void>(

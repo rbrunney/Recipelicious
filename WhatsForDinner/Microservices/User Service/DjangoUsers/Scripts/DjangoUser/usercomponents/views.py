@@ -291,7 +291,7 @@ def deleteUser(request, *args, **kwargs):
     requestData = request.data
 
     try:
-        userToDelete = User.objects.filter(username=requestData["username"])
+        userToDelete = User.objects.get(username=requestData["username"])
         userSerializer = UserSerializer(userToDelete)
         if(bcrypt.checkpw(requestData["password"].encode("utf8"),userSerializer.data["password"].encode("utf8"))):
             userToDelete.delete()
