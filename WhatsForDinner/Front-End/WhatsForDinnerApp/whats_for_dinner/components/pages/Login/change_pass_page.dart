@@ -94,7 +94,7 @@ class ChangePassPage extends StatelessWidget {
                           "id": globals.userID,
                           "name": globals.name,
                           "username": globals.username,
-                          "password": globals.password,
+                          "password": newPassController.text,
                           "birthday": globals.birthday,
                           "email": globals.email
                         }

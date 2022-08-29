@@ -55,10 +55,11 @@ class ForgotPasswordPage extends StatelessWidget {
                   int authenticationCode = random.nextInt(900000) + 100000;
 
                   requests.makePostRequest(
-                      "http://10.0.2.2:8888/users/forgotPassword", {
+                      "http://10.0.2.2:8888/users/forgotPassword/", {
                     "email": usersEmail.text,
                     "authCode": authenticationCode
                   }).then((value) {
+                    print(value);
                     globals.userID = json.decode(value)["id"];
                     globals.name = json.decode(value)["name"];
                     globals.username = json.decode(value)["username"];
