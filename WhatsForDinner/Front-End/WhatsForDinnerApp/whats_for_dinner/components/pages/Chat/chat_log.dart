@@ -3,8 +3,6 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_4.dart';
-
-import '../Home/Meal Cards/Front/meal_card.dart';
 import 'chat_meal_card.dart';
 import '../../util/globals.dart' as globals;
 import 'dart:core';
@@ -49,13 +47,12 @@ class _ChatLog extends State<ChatLog> {
 
     socket.on('room-response', (data) {
       if (data.runtimeType != List<dynamic>) {
+        print(data);
         if (!mounted) {
           return;
         }
         setState(() {
-          chatLog.insert(
-            0,
-            ChatBubble(
+          Widget currentWidget = ChatBubble(
               margin: const EdgeInsets.only(
                 right: 10,
                 top: 5,
@@ -64,12 +61,26 @@ class _ChatLog extends State<ChatLog> {
               alignment: Alignment.centerLeft,
               clipper: ChatBubbleClipper4(type: BubbleType.receiverBubble),
               backGroundColor: Colors.grey,
-              child: Text(
-                data['content'],
-                style: const TextStyle(color: Colors.black, fontSize: 18),
-              ),
-            ),
-          );
+              child: Column(
+                children: [
+                  Text(
+                    data['name'],
+                    style: const TextStyle(color: Colors.black, fontSize: 10),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    data['content'],
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                ],
+              ));
+          if (data['content'].contains("<mealCard>")) {
+            currentWidget = ChatMealCard(
+              mealId: data["content"].replaceAll("<mealCard>", ""),
+            );
+          }
+
+          chatLog.insert(0, currentWidget);
         });
       } else {
         if (!mounted) {
@@ -84,46 +95,66 @@ class _ChatLog extends State<ChatLog> {
               return;
             }
             setState(() {
-              chatLog.insert(
-                0,
-                ChatBubble(
-                  margin: const EdgeInsets.only(
-                    right: 10,
-                    top: 5,
-                    bottom: 5,
-                  ),
-                  alignment: Alignment.centerRight,
-                  clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
-                  backGroundColor: Colors.tealAccent,
-                  child: Text(
-                    chatMsg['content'],
-                    style: const TextStyle(color: Colors.black, fontSize: 18),
-                  ),
+              Widget currentWidget = ChatBubble(
+                margin: const EdgeInsets.only(
+                  right: 10,
+                  top: 5,
+                  bottom: 5,
+                ),
+                alignment: Alignment.centerRight,
+                clipper: ChatBubbleClipper4(type: BubbleType.sendBubble),
+                backGroundColor: Colors.tealAccent,
+                child: Text(
+                  chatMsg['content'],
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
                 ),
               );
+              if (chatMsg['content'].contains("<mealCard>")) {
+                currentWidget = ChatMealCard(
+                  mealId: chatMsg["content"].replaceAll("<mealCard>", ""),
+                );
+              }
+
+              chatLog.insert(0, currentWidget);
             });
           } else {
             if (!mounted) {
               return;
             }
             setState(() {
-              chatLog.insert(
-                0,
-                ChatBubble(
+              Widget currentWidget = ChatBubble(
                   margin: const EdgeInsets.only(
                     right: 10,
                     top: 5,
                     bottom: 5,
                   ),
                   alignment: Alignment.centerLeft,
-                  clipper: ChatBubbleClipper4(type: BubbleType.receiverBubble),
-                  backGroundColor: Colors.grey,
-                  child: Text(
-                    chatMsg['content'],
-                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  clipper: ChatBubbleClipper4(
+                    type: BubbleType.receiverBubble,
                   ),
-                ),
-              );
+                  backGroundColor: Colors.grey,
+                  child: Column(
+                    children: [
+                      Text(
+                        chatMsg['name'],
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 10),
+                            textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        chatMsg['content'],
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                    ],
+                  ));
+              if (chatMsg['content'].contains("<mealCard>")) {
+                currentWidget = ChatMealCard(
+                  mealId: chatMsg["content"].replaceAll("<mealCard>", ""),
+                );
+              }
+
+              chatLog.insert(0, currentWidget);
             });
           }
         }
@@ -182,24 +213,32 @@ class _ChatLog extends State<ChatLog> {
                         }
                         setState(() {
                           chatLog.insert(
-                            0,
-                            ChatBubble(
-                              margin: const EdgeInsets.only(
-                                right: 10,
-                                top: 5,
-                                bottom: 5,
-                              ),
-                              alignment: Alignment.centerRight,
-                              clipper: ChatBubbleClipper4(
-                                  type: BubbleType.sendBubble),
-                              backGroundColor: Colors.tealAccent,
-                              child: Text(
-                                _messageController.text,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                            ),
-                          );
+                              0,
+                              ChatBubble(
+                                margin: const EdgeInsets.only(
+                                  right: 10,
+                                  top: 5,
+                                  bottom: 5,
+                                ),
+                                alignment: Alignment.centerRight,
+                                clipper: ChatBubbleClipper4(
+                                    type: BubbleType.sendBubble),
+                                backGroundColor: Colors.tealAccent,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      globals.username,
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 10),
+                                    ),
+                                    Text(
+                                      _messageController.text,
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              ));
                         });
 
                         socket.emit("roommessage", {
@@ -225,6 +264,15 @@ class _ChatLog extends State<ChatLog> {
                       prefixIcon: IconButton(
                         onPressed: () {
                           setState(() {
+                            socket.emit("roommessage", {
+                              "groupName": widget.chatName,
+                              "message": {
+                                "userID": globals.userID,
+                                "name": globals.name,
+                                "content": "<mealCard>${globals.mealID}",
+                                "postTime": DateTime.now().toString()
+                              }
+                            });
                             chatLog.insert(0, ChatMealCard());
                           });
                         },
@@ -239,25 +287,29 @@ class _ChatLog extends State<ChatLog> {
                             }
                             setState(() {
                               chatLog.insert(
-                                0,
-                                ChatBubble(
-                                  margin: const EdgeInsets.only(
-                                    right: 10,
-                                    left: 10,
-                                    top: 5,
-                                    bottom: 5,
-                                  ),
-                                  alignment: Alignment.centerRight,
-                                  clipper: ChatBubbleClipper4(
-                                      type: BubbleType.sendBubble),
-                                  backGroundColor: Colors.tealAccent,
-                                  child: Text(
-                                    _messageController.text,
-                                    style: const TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                  ),
-                                ),
-                              );
+                                  0,
+                                  ChatBubble(
+                                    margin: const EdgeInsets.only(
+                                      right: 10,
+                                      left: 10,
+                                      top: 5,
+                                      bottom: 5,
+                                    ),
+                                    alignment: Alignment.centerRight,
+                                    clipper: ChatBubbleClipper4(
+                                        type: BubbleType.sendBubble),
+                                    backGroundColor: Colors.tealAccent,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          _messageController.text,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18),
+                                        ),
+                                      ],
+                                    ),
+                                  ));
                             });
 
                             socket.emit("roommessage", {
