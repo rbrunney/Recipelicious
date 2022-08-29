@@ -26,5 +26,5 @@ urlpatterns = [
     path('deleteUser/', deleteUser),
     path('getUser/<int:id>', getUser),
     path('getUser/<str:username>', getUserByUsername),
-    path('forgotPassword', forgotPassword)
+    path('forgotPassword/', forgotPassword)
 ]
