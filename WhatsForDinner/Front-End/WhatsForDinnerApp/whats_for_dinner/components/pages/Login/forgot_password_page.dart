@@ -5,6 +5,7 @@ import '../../util/to_prev_page.dart';
 import 'code_authentication_page.dart';
 import 'dart:math';
 import '../../util/globals.dart' as globals;
+import 'change_pass_page.dart';
 import 'dart:convert';
 
 class ForgotPasswordPage extends StatelessWidget {
@@ -71,6 +72,9 @@ class ForgotPasswordPage extends StatelessWidget {
                           child: CodeAuthentication(
                             generatedCode: authenticationCode,
                             userEmail: usersEmail.text,
+                            pageAfterAuthenticated: ChangePassPage(
+                              userEmail: usersEmail.text,
+                            ),
                           ),
                           type: PageTransitionType.bottomToTop));
                 },

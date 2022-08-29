@@ -119,6 +119,7 @@ class LoginPage extends StatelessWidget {
                                         "http://10.0.2.2:8888/users/passwordCheck/${_usernameController.text}/${_passwordController.text}")
                                     .then((value) {
                                   try {
+                                    print(value);
                                     if (json.decode(value)["result"]) {
                                       globals.userID =
                                           json.decode(value)["userID"];
