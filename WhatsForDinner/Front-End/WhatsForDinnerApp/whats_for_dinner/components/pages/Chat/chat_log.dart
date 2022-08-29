@@ -49,6 +49,9 @@ class _ChatLog extends State<ChatLog> {
 
     socket.on('room-response', (data) {
       if (data.runtimeType != List<dynamic>) {
+        if (!mounted) {
+          return;
+        }
         setState(() {
           chatLog.insert(
             0,
@@ -69,8 +72,17 @@ class _ChatLog extends State<ChatLog> {
           );
         });
       } else {
+        if (!mounted) {
+          return;
+        }
+        setState(() {
+          chatLog.clear();
+        });
         for (var chatMsg in data) {
           if (globals.userID == int.parse(chatMsg['userID'])) {
+            if (!mounted) {
+              return;
+            }
             setState(() {
               chatLog.insert(
                 0,
@@ -91,6 +103,9 @@ class _ChatLog extends State<ChatLog> {
               );
             });
           } else {
+            if (!mounted) {
+              return;
+            }
             setState(() {
               chatLog.insert(
                 0,
@@ -162,6 +177,9 @@ class _ChatLog extends State<ChatLog> {
                     controller: _messageController,
                     onSubmitted: (value) {
                       if (_messageController.text != '') {
+                        if (!mounted) {
+                          return;
+                        }
                         setState(() {
                           chatLog.insert(
                             0,
@@ -216,6 +234,9 @@ class _ChatLog extends State<ChatLog> {
                         icon: const Icon(Icons.send_rounded),
                         onPressed: () {
                           if (_messageController.text != '') {
+                            if (!mounted) {
+                              return;
+                            }
                             setState(() {
                               chatLog.insert(
                                 0,
