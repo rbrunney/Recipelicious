@@ -298,35 +298,35 @@ class testAPIcalls(TestCase):
         self.assertEqual(delResponseCorrectPassword.json()["message"], "User Account Deleted")
         self.assertNotEqual(delResponseCorrectPassword.json()["date-time"], None)
 
+    # Depends on RabbitMQ service - not integral to testing
+    # def testForgotPassword(self):
+    #     userData = {
+    #         "name":"test03",
+    #         "username":"testuser06",
+    #         "password":"defoAPassword",
+    #         "email":"yetanothertestemail2@outlook.com",
+    #         "birthday":"2003-12-12",
+    #     }
 
-    def testForgotPassword(self):
-        userData = {
-            "name":"test03",
-            "username":"testuser06",
-            "password":"defoAPassword",
-            "email":"yetanothertestemail2@outlook.com",
-            "birthday":"2003-12-12",
-        }
+    #     djangoClient = Client()
 
-        djangoClient = Client()
+    #     response = djangoClient.post("/createUser/", userData)
 
-        response = djangoClient.post("/createUser/", userData)
+    #     print(response.json())
 
-        print(response.json())
+    #     self.assertNotEqual(response, None)
+    #     self.assertEqual(response.json()["message"],"Account Created")
+    #     self.assertNotEqual(response.json()["result"]["userID"], None)
+    #     self.assertEqual(response.json()["result"]["name"], "test03")
+    #     self.assertEqual(response.json()["result"]["email"], "yetanothertestemail2@outlook.com")
+    #     self.assertNotEqual(response.json()["date-time"], None)
 
-        self.assertNotEqual(response, None)
-        self.assertEqual(response.json()["message"],"Account Created")
-        self.assertNotEqual(response.json()["result"]["userID"], None)
-        self.assertEqual(response.json()["result"]["name"], "test03")
-        self.assertEqual(response.json()["result"]["email"], "yetanothertestemail2@outlook.com")
-        self.assertNotEqual(response.json()["date-time"], None)
+    #     reqData = {
+    #         "email": "yetanothertestemail2@outlook.com"
+    #     }
 
-        reqData = {
-            "email": "yetanothertestemail2@outlook.com"
-        }
+    #     forgetResponse = djangoClient.post("/forgotPassword/", reqData)
 
-        forgetResponse = djangoClient.post("/forgotPassword/", reqData)
-
-        print(forgetResponse)
+    #     print(forgetResponse)
 
         # print(forgetResponse.json())
