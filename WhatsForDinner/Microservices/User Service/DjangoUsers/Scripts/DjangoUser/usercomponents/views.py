@@ -56,6 +56,8 @@ def send_message_to_queue(message_details: dict):
     publishingChannel.close()
     rabbitMQSyncConnection.close()
 
+salt = bcrypt.gensalt(10)
+
 # def blockedConnectionFlag():
 #     connection_free = False
 
@@ -112,7 +114,7 @@ def forgotPassword(request, *args, **kwargs):
 def createUser(request, *args, **kwargs):
     requestData = request.data
 
-    hashedPass = bcrypt.hashpw(requestData["password"].encode("utf8"), bcrypt.gensalt(10))
+    hashedPass = bcrypt.hashpw(requestData["password"].encode("utf8"), salt)
 
     data = User(name = requestData["name"], username = requestData["username"], password = hashedPass.decode("utf8"), email = requestData["email"], birthday = requestData["birthday"])
 
@@ -171,8 +173,6 @@ def updateUser(request, *args, **kwargs):
 
     userToUpdate = User()
 
-    salt = bcrypt.gensalt(10)
-
     email = requestData["email"]
 
     print(email)
@@ -186,6 +186,8 @@ def updateUser(request, *args, **kwargs):
 
         for key in keyList:
             if(key == "password"):
+
+
                 hashedPassword = bcrypt.hashpw(updateDict["password"].encode("utf8"), salt)
                 setattr(userToUpdate, "password", hashedPassword.decode("utf8"))
             elif(key == "name"):
