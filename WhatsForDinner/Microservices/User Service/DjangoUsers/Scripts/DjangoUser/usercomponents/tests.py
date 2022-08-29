@@ -51,7 +51,7 @@ class testAPIcalls(TestCase):
 
         self.assertNotEqual(response, None)
         self.assertEqual(response.json()["result"], True)
-        self.assertEqual(response.json()["userID"], 4)
+        self.assertNotEqual(response.json()["userID"], None)
         self.assertEqual(response.json()["name"],"dude")
 
         response = djangoClient.get("/getUser/4")
@@ -92,7 +92,7 @@ class testAPIcalls(TestCase):
 
         self.assertNotEqual(response, None)
         self.assertEqual(response.json()["message"],"Account Created")
-        self.assertEqual(response.json()["result"]["userID"], 8)
+        self.assertNotEqual(response.json()["result"]["userID"], None)
         self.assertEqual(response.json()["result"]["name"], "testymctest")
         self.assertEqual(response.json()["result"]["email"], "testyemail@email.com")
         self.assertNotEqual(response.json()["date-time"], None)
@@ -120,10 +120,12 @@ class testAPIcalls(TestCase):
 
         self.assertNotEqual(response, None)
         self.assertEqual(response.json()["message"],"Account Created")
-        self.assertEqual(response.json()["result"]["userID"], 6)
+        self.assertNotEqual(response.json()["result"]["userID"], None)
         self.assertEqual(response.json()["result"]["name"], "testymctest04")
         self.assertEqual(response.json()["result"]["email"], "testyemailmk2@email.com")
         self.assertNotEqual(response.json()["date-time"], None)
+
+        userId = response.json()["result"]["userID"]
 
         duplicateResponse = djangoClient.post("/createUser/", userData)
 
@@ -131,7 +133,7 @@ class testAPIcalls(TestCase):
 
         self.assertNotEqual(duplicateResponse, None)
         self.assertEqual(duplicateResponse.json()["message"],"Account already created")
-        self.assertEqual(duplicateResponse.json()["result"]["userID"], 6)
+        self.assertEqual(duplicateResponse.json()["result"]["userID"], userId)
         self.assertEqual(duplicateResponse.json()["result"]["name"], "testymctest04")
         self.assertEqual(duplicateResponse.json()["result"]["email"],"testyemailmk2@email.com")
 
@@ -206,5 +208,125 @@ class testAPIcalls(TestCase):
 
     def testCheckPw(self):
         userData = {
-            "":""
+            "name":"test01",
+            "username":"doofus",
+            "password":"defoAPassword",
+            "email":"anotherTestEmail@outlook.com",
+            "birthday":"2003-12-12",
         }
+
+        djangoClient = Client()
+        response = djangoClient.post("/createUser/", userData)
+
+        print(response.json())
+
+        self.assertNotEqual(response, None)
+        self.assertEqual(response.json()["message"],"Account Created")
+        self.assertNotEqual(response.json()["result"]["userID"], None)
+        self.assertEqual(response.json()["result"]["name"], "test01")
+        self.assertEqual(response.json()["result"]["email"], "anotherTestEmail@outlook.com")
+        self.assertNotEqual(response.json()["date-time"], None)
+
+        userId = response.json()["result"]["userID"]
+
+        userName = "doofus"
+        password = "defoAPassword"
+
+        pwResponse = djangoClient.get(f"/passwordCheck/{userName}/{password}")
+
+        print(pwResponse.json())
+
+        self.assertEqual(pwResponse.json()["message"], "Login credentials correct")
+        self.assertEqual(pwResponse.json()["userID"], userId)
+        self.assertEqual(pwResponse.json()["result"], True)
+        self.assertNotEqual(pwResponse.json()["date-time"], None)
+
+        pwIncorrect = djangoClient.get(f"/passwordCheck/{userName}/blargh")
+
+        print(pwIncorrect.json())
+
+        self.assertEqual(pwIncorrect.json()["message"], "Login credentials incorrect")
+        self.assertEqual(pwIncorrect.json()["userID"], userId)
+        self.assertEqual(pwIncorrect.json()["result"], False)
+        self.assertNotEqual(pwIncorrect.json()["date-time"], None)
+
+    def testDeleteUser(self):
+        userData = {
+            "name":"test02",
+            "username":"testuser05",
+            "password":"defoAPassword",
+            "email":"yetanothertestemail@outlook.com",
+            "birthday":"2003-12-12",
+        }
+
+        djangoClient = Client()
+
+        response = djangoClient.post("/createUser/", userData)
+
+        print(response.json())
+
+        self.assertNotEqual(response, None)
+        self.assertEqual(response.json()["message"],"Account Created")
+        self.assertNotEqual(response.json()["result"]["userID"], None)
+        self.assertEqual(response.json()["result"]["name"], "test02")
+        self.assertEqual(response.json()["result"]["email"], "yetanothertestemail@outlook.com")
+        self.assertNotEqual(response.json()["date-time"], None)
+
+        deleteReq = {
+            "username":"testuser05",
+            "password":"defoAPasword"
+        }
+
+        delResponse = djangoClient.delete("/deleteUser/", deleteReq, content_type="application/json")
+
+        print(delResponse.json())
+
+        self.assertNotEqual(delResponse, None)
+        self.assertEqual(delResponse.json()["message"], "Incorrect password given")
+        self.assertNotEqual(delResponse.json()["date-time"], None)
+
+        deleteReqCorrectPass = {
+            "username":"testuser05",
+            "password":"defoAPassword"
+        }
+
+        delResponseCorrectPassword = djangoClient.delete("/deleteUser/", deleteReqCorrectPass, content_type="application/json")
+
+        print(delResponseCorrectPassword.json())
+
+        self.assertNotEqual(delResponseCorrectPassword, None)
+        self.assertEqual(delResponseCorrectPassword.json()["message"], "User Account Deleted")
+        self.assertNotEqual(delResponseCorrectPassword.json()["date-time"], None)
+
+
+    def testForgotPassword(self):
+        userData = {
+            "name":"test03",
+            "username":"testuser06",
+            "password":"defoAPassword",
+            "email":"yetanothertestemail2@outlook.com",
+            "birthday":"2003-12-12",
+        }
+
+        djangoClient = Client()
+
+        response = djangoClient.post("/createUser/", userData)
+
+        print(response.json())
+
+        self.assertNotEqual(response, None)
+        self.assertEqual(response.json()["message"],"Account Created")
+        self.assertNotEqual(response.json()["result"]["userID"], None)
+        self.assertEqual(response.json()["result"]["name"], "test03")
+        self.assertEqual(response.json()["result"]["email"], "yetanothertestemail2@outlook.com")
+        self.assertNotEqual(response.json()["date-time"], None)
+
+        reqData = {
+            "email": "yetanothertestemail2@outlook.com"
+        }
+
+        forgetResponse = djangoClient.post("/forgotPassword/", reqData)
+
+        print(forgetResponse)
+
+        # print(forgetResponse.json())

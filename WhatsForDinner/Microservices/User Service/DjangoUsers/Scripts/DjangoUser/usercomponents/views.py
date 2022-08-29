@@ -54,13 +54,16 @@ def send_message_to_queue(message_details: dict):
     publishingChannel.basic_publish(exchange='', routing_key="usercreation", body=json.dumps(message_details))
     
     publishingChannel.close()
+    rabbitMQSyncConnection.close()
+
+salt = bcrypt.gensalt(10)
 
 # def blockedConnectionFlag():
 #     connection_free = False
 
 # def unblockedConnectionFlag():
-global connection_free
-connection_free = True
+# global connection_free
+# connection_free = True
 
 # connection_free = True
 
@@ -111,7 +114,7 @@ def forgotPassword(request, *args, **kwargs):
 def createUser(request, *args, **kwargs):
     requestData = request.data
 
-    hashedPass = bcrypt.hashpw(requestData["password"].encode("utf8"), bcrypt.gensalt(10))
+    hashedPass = bcrypt.hashpw(requestData["password"].encode("utf8"), salt)
 
     data = User(name = requestData["name"], username = requestData["username"], password = hashedPass.decode("utf8"), email = requestData["email"], birthday = requestData["birthday"])
 
@@ -170,8 +173,6 @@ def updateUser(request, *args, **kwargs):
 
     userToUpdate = User()
 
-    salt = bcrypt.gensalt(10)
-
     email = requestData["email"]
 
     print(email)
@@ -185,6 +186,8 @@ def updateUser(request, *args, **kwargs):
 
         for key in keyList:
             if(key == "password"):
+
+
                 hashedPassword = bcrypt.hashpw(updateDict["password"].encode("utf8"), salt)
                 setattr(userToUpdate, "password", hashedPassword.decode("utf8"))
             elif(key == "name"):
@@ -290,8 +293,8 @@ def deleteUser(request, *args, **kwargs):
     #also more decryption for password
     requestData = request.data
 
+    userToDelete = User.objects.get(username=requestData["username"])
     try:
-        userToDelete = User.objects.get(username=requestData["username"])
         userSerializer = UserSerializer(userToDelete)
         if(bcrypt.checkpw(requestData["password"].encode("utf8"),userSerializer.data["password"].encode("utf8"))):
             userToDelete.delete()
@@ -307,7 +310,7 @@ def deleteUser(request, *args, **kwargs):
             }
             return JsonResponse(response, status=401)
     except Exception as e:
-        print(e.with_traceback.__str__())
+        traceback.print_exception(etype=Exception, value=e, tb=e.__traceback__)
         response = {
             "message": "Account not found",
             "date-time": datetime.datetime.now()
