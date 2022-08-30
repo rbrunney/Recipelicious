@@ -6,3 +6,4 @@ String username = "";
 String password = "";
 bool isLoggedIn = false;
 String dropdownValue = 'oz';
+String fridgeID = '';
