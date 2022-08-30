@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../Home/Meal Cards/Back/meal_info.dart';
+import 'chat_meal_card_info.dart';
 
 class ChatMealCard extends StatefulWidget {
   bool isUpvoted;
@@ -8,6 +7,9 @@ class ChatMealCard extends StatefulWidget {
   bool isDownVoted;
   int downVoteCount;
   String imageUrl;
+  String mealId;
+  String mealName;
+  String mealCreator;
   ChatMealCard(
       {Key? key,
       this.isUpvoted = false,
@@ -15,7 +17,10 @@ class ChatMealCard extends StatefulWidget {
       this.upvoteCount = 0,
       this.downVoteCount = 0,
       this.imageUrl =
-          'https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg'})
+          'https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg',
+      this.mealId = '',
+      this.mealName = '',
+      this.mealCreator = ''})
       : super(key: key);
 
   @override
@@ -34,7 +39,7 @@ class _ChatMealCardState extends State<ChatMealCard> {
             Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                    builder: (BuildContext context) => MealInfo(
+                    builder: (BuildContext context) => ChatMealInfo(
                           imgUrl: widget.imageUrl,
                         )));
           },
@@ -60,9 +65,9 @@ class _ChatMealCardState extends State<ChatMealCard> {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(left: 15, top: 5, bottom: 5),
-                    child: const Text(
-                      'Name of Meal Here',
-                      style: TextStyle(
+                    child: Text(
+                      widget.mealName,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -73,8 +78,8 @@ class _ChatMealCardState extends State<ChatMealCard> {
                     padding: const EdgeInsets.only(
                       left: 15,
                     ),
-                    child: const Text(
-                      'This is a test description...',
+                    child: Text(
+                      'Creator: ${widget.mealCreator}',
                     ),
                   ),
                   Container(

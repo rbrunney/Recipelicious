@@ -19,6 +19,11 @@ import socketio
 #once all users disconnect the chatroom itself will be emptied at the end of the day - maybe a little tough due to TIMEZONES
 #gonna be rough, having both redis and mongodb
 
+#UPDATE: Redis can piss off.
+#All messages are serialized into mongodb arraylists and we're grabbing user rooms by lists of invited users
+#To be honest we'd have a full room deletion system with owning user ids but it's been a bit and really I'm not
+#adding more to this until I need to add more.
+
 @api_view(("POST",))
 def createRooms(request, *args, **kwargs):
     requestData = request.data
