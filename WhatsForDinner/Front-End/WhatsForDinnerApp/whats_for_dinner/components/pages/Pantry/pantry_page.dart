@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'create_ingredient_page.dart';
 import '../Account/Account_util/add_floating_button.dart';
 import 'ingredient_card.dart';
+import '../../util/requests.dart';
+import '../../util/globals.dart' as globals;
+import 'dart:convert';
 
 class PantryPage extends StatefulWidget {
   const PantryPage({Key? key}) : super(key: key);
@@ -11,14 +14,14 @@ class PantryPage extends StatefulWidget {
 }
 
 class _CreatePantryState extends State<PantryPage> {
-  List<Map<String, dynamic>> ingredients = [
-    {'name': 'Chocolate', 'qty': 2, 'type': 'oz'},
-    {'name': 'Tomato', 'qty': 7, 'type': 'lbs'},
-    {'name': 'your mom', 'qty': 1, 'type': 'lbs'},
-  ];
+  Requests requests = Requests();
+  List<Map<String, dynamic>> ingredients = [];
 
   @override
   Widget build(BuildContext context) {
+    Future<String>? futurePantryInfo = requests
+        .makeGetRequest("http://10.0.2.2:8888/fridge/${globals.fridgeID}");
+
     return SafeArea(
       child: Scaffold(
         floatingActionButton: const AddFloatingButton(
@@ -46,8 +49,8 @@ class _CreatePantryState extends State<PantryPage> {
 
                     return Dismissible(
                       key: Key(ingredientName),
-                      onDismissed: (direction){
-                          ingredients.removeAt(index);
+                      onDismissed: (direction) {
+                        ingredients.removeAt(index);
                       },
                       child: IngredientCard(
                         ingredientName: ingredientName,

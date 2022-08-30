@@ -4,6 +4,7 @@ import '../../util/to_prev_page.dart';
 import 'alert_pop_up.dart';
 import 'login_page.dart';
 import 'dart:convert';
+import '../../util/globals.dart' as globals;
 
 class CreateAccount extends StatelessWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -173,6 +174,12 @@ class CreateAccount extends StatelessWidget {
                           "birthday":
                               _birthdayController.text.replaceAll("/", "-")
                         };
+
+                        Map<String, dynamic> newFridge = {
+                          "userName": _usernameController.text,
+                          "fridgeName": "${_usernameController.text}'s fridge",
+                          "ingredients": []
+                        };
                         requests
                             .makePostRequest(
                                 "http://10.0.2.2:8888/users/createUser/",
@@ -180,6 +187,10 @@ class CreateAccount extends StatelessWidget {
                             .then((value) {
                           print(json.decode(value));
                           if (json.decode(value)["result"]["userID"] != null) {
+                            requests.makePostRequest(
+                                "http://10.0.2.2:8888/fridge", newFridge).then((value) => {
+                                  globals.fridgeID = json.decode(value)["fridgeID"]
+                                });
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                     builder: (context) => const LoginPage()),
