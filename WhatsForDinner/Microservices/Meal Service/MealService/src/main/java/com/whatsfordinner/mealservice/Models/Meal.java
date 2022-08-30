@@ -31,6 +31,10 @@ public class Meal {
 
     private int likes;
 
+    private List<String> usersWhoLiked;
+
+    private List<String> usersWhoSaved;
+
     @Override
     public String toString(){
         String meal = id + " " + creator + " " + name + " " + servingSize + " " + recipe + " " + likes + "\n";

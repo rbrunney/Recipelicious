@@ -3,6 +3,7 @@ import '../../../../util/requests.dart';
 import '../Back/meal_info.dart';
 import 'dart:convert';
 import '../../../Account/Edit_pages/edit_my_meal_page.dart';
+import '../../../../util/globals.dart' as globals;
 
 class MealCard extends StatefulWidget {
   MealCard(
@@ -132,7 +133,7 @@ class _MealCard extends State<MealCard> {
                             if (_liked) {
                               requests
                                   .makeGetRequest(
-                                      "http://10.0.2.2:8888/meal/like/${widget.mealID}")
+                                      "http://10.0.2.2:8888/meal/like/${widget.mealID}/${globals.username}")
                                   .then((value) {
                                 setState(() {
                                   widget.likes = json.decode(value)['results'];
@@ -141,7 +142,7 @@ class _MealCard extends State<MealCard> {
                             } else {
                               requests
                                   .makeGetRequest(
-                                      "http://10.0.2.2:8888/meal/unlike/${widget.mealID}")
+                                      "http://10.0.2.2:8888/meal/unlike/${widget.mealID}/${globals.username}")
                                   .then((value) {
                                 setState(() {
                                   widget.likes = json.decode(value)['results'];
@@ -165,9 +166,22 @@ class _MealCard extends State<MealCard> {
                             : Icons.bookmark_add_outlined),
                         onPressed: () {
                           setState(() {
-                            //need to make request dependent on state
                             _bookMarked = !_bookMarked;
                           });
+
+                          if (_bookMarked) {
+                            requests
+                                .makeGetRequest(
+                                    "http://10.0.2.2:8888/meal/save/${widget.mealID}/${globals.username}")
+                                .then((value) {
+                            });
+                          } else {
+                            requests
+                                .makeGetRequest(
+                                    "http://10.0.2.2:8888/meal/unsave/${widget.mealID}/${globals.username}")
+                                .then((value) {
+                            });
+                          }
                         },
                       ),
                     ),

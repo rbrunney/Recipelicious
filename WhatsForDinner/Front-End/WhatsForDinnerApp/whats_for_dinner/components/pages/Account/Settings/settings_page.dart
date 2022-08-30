@@ -126,7 +126,7 @@ class _SettingsPage extends State<SettingsPage> {
                         int authenticationCode =
                             random.nextInt(900000) + 100000;
                         requests.makePostRequest(
-                            "http://10.0.2.2:8888/users/forgotPassword", {
+                            "http://10.0.2.2:8888/users/forgotPassword/", {
                           "email": globals.email,
                           "authCode": authenticationCode
                         }).then((value) {

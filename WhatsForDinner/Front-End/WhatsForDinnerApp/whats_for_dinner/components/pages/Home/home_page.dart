@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import '../../util/requests.dart';
 import 'Meal Cards/Front/meal_card.dart';
+import '../../util/globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -31,6 +32,11 @@ class _HomePage extends State<HomePage> {
                   json.decode(snapshot.data!)["results"];
 
               for (var meal in mealInformation) {
+                bool liked = false;
+                bool bookMarked = false;
+                
+                if(meal['usersWhoLiked'].contains(globals.username)) {liked = !liked;}
+                if(meal['usersWhoSaved'].contains(globals.username)) {bookMarked = !bookMarked;}
                 homeInformation.add(MealCard(
                   mealID: meal["id"],
                   mealName: meal["name"],
@@ -38,6 +44,8 @@ class _HomePage extends State<HomePage> {
                   likes: meal["likes"],
                   ingredients: meal["ingredients"],
                   recipe: meal["recipe"],
+                  liked: liked,
+                  bookMarked: bookMarked
                 ));
               }
 

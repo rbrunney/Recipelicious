@@ -128,7 +128,9 @@ class _CreateMealState extends State<CreateMeal> {
                           "servingSize": int.parse(servingSizeController.text),
                           "ingredients": ingredients,
                           "recipe": recipe,
-                          "likes": 0
+                          "likes": 0,
+                          "usersWhoLiked": [],
+                          "usersWhoSaved": []
                         };
                         request
                             .makePostRequest(
