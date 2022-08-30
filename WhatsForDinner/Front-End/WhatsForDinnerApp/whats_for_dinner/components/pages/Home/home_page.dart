@@ -32,21 +32,16 @@ class _HomePage extends State<HomePage> {
                   json.decode(snapshot.data!)["results"];
 
               for (var meal in mealInformation) {
-                bool liked = false;
-                bool bookMarked = false;
-                
-                if(meal['usersWhoLiked'].contains(globals.username)) {liked = !liked;}
-                if(meal['usersWhoSaved'].contains(globals.username)) {bookMarked = !bookMarked;}
                 homeInformation.add(MealCard(
-                  mealID: meal["id"],
-                  mealName: meal["name"],
-                  creator: meal["creator"],
-                  likes: meal["likes"],
-                  ingredients: meal["ingredients"],
-                  recipe: meal["recipe"],
-                  liked: liked,
-                  bookMarked: bookMarked
-                ));
+                    mealID: meal["id"],
+                    mealName: meal["name"],
+                    creator: meal["creator"],
+                    likes: meal["likes"],
+                    ingredients: meal["ingredients"],
+                    recipe: meal["recipe"],
+                    liked: meal['usersWhoLiked'].contains(globals.username),
+                    bookMarked:
+                        meal['usersWhoSaved'].contains(globals.username)));
               }
 
               return Column(

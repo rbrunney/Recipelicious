@@ -65,14 +65,17 @@ class _MealAppBar extends State<MealAppBar> {
 
                             for (var meal in mealInformation) {
                               usersCreatedMeals.add(MealCard(
-                                beingEdited: true,
-                                mealID: meal["id"],
-                                mealName: meal["name"],
-                                creator: meal["creator"],
-                                likes: meal["likes"],
-                                ingredients: meal["ingredients"],
-                                recipe: meal["recipe"],
-                              ));
+                                  beingEdited: true,
+                                  mealID: meal["id"],
+                                  mealName: meal["name"],
+                                  creator: meal["creator"],
+                                  likes: meal["likes"],
+                                  ingredients: meal["ingredients"],
+                                  recipe: meal["recipe"],
+                                  liked: meal['usersWhoLiked']
+                                      .contains(globals.username),
+                                  bookMarked: meal['usersWhoSaved']
+                                      .contains(globals.username)));
                             }
 
                             return Column(
@@ -106,14 +109,17 @@ class _MealAppBar extends State<MealAppBar> {
 
                             for (var meal in mealInformation) {
                               usersLikedMeals.add(MealCard(
-                                beingEdited: true,
-                                mealID: meal["id"],
-                                mealName: meal["name"],
-                                creator: meal["creator"],
-                                likes: meal["likes"],
-                                ingredients: meal["ingredients"],
-                                recipe: meal["recipe"],
-                              ));
+                                  beingEdited: true,
+                                  mealID: meal["id"],
+                                  mealName: meal["name"],
+                                  creator: meal["creator"],
+                                  likes: meal["likes"],
+                                  ingredients: meal["ingredients"],
+                                  recipe: meal["recipe"],
+                                  liked: meal['usersWhoLiked']
+                                      .contains(globals.username),
+                                  bookMarked: meal['usersWhoSaved']
+                                      .contains(globals.username)));
                             }
 
                             return Column(
@@ -147,14 +153,17 @@ class _MealAppBar extends State<MealAppBar> {
 
                             for (var meal in mealInformation) {
                               usersSavedMeals.add(MealCard(
-                                beingEdited: true,
-                                mealID: meal["id"],
-                                mealName: meal["name"],
-                                creator: meal["creator"],
-                                likes: meal["likes"],
-                                ingredients: meal["ingredients"],
-                                recipe: meal["recipe"],
-                              ));
+                                  beingEdited: true,
+                                  mealID: meal["id"],
+                                  mealName: meal["name"],
+                                  creator: meal["creator"],
+                                  likes: meal["likes"],
+                                  ingredients: meal["ingredients"],
+                                  recipe: meal["recipe"],
+                                  liked: meal['usersWhoLiked']
+                                      .contains(globals.username),
+                                  bookMarked: meal['usersWhoSaved']
+                                      .contains(globals.username)));
                             }
 
                             return Column(
