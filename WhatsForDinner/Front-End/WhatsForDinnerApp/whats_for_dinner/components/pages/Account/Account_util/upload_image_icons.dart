@@ -26,7 +26,7 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
     uploadImage() {
       Requests()
           .makeGetRequest(
-              "http://10.0.2.2:8888/generateLink/${globals.imgUrl.split('/').last}")
+              "http://10.0.2.2:8888/generateLink/put/${globals.imgUrl.split('/').last}")
           .then((value) async {
         File file = File(globals.imgUrl);
         final stream = http.ByteStream(Stream.castFrom(file.openRead()));

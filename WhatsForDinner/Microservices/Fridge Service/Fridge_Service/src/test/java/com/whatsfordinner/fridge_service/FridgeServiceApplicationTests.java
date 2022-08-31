@@ -160,7 +160,7 @@ public class FridgeServiceApplicationTests {
 		Ingredient ingredient = new Ingredient();
 
 		ingredient.setName("Potatoes");
-		ingredient.setQty("4");
+		ingredient.setQty(4);
 
 		String ingredientJson = new ObjectMapper().valueToTree(ingredient).toString();
 
@@ -222,7 +222,7 @@ public class FridgeServiceApplicationTests {
 		Ingredient ingredient = new Ingredient();
 
 		ingredient.setName("Potatoes");
-		ingredient.setQty("4");
+		ingredient.setQty(4);
 
 		String ingredientJson = new ObjectMapper().valueToTree(ingredient).toString();
 
@@ -296,7 +296,7 @@ public class FridgeServiceApplicationTests {
 		Ingredient ingredient = new Ingredient();
 
 		ingredient.setName("Potatoes");
-		ingredient.setQty("4");
+		ingredient.setQty(4);
 
 		String ingredientJson = new ObjectMapper().valueToTree(ingredient).toString();
 
@@ -326,7 +326,7 @@ public class FridgeServiceApplicationTests {
 		Ingredient updatedIngredient = new Ingredient();
 
 		updatedIngredient.setName("Potatoes");
-		updatedIngredient.setQty("10");
+		updatedIngredient.setQty(10);
 
 		String updatedItemJson = new ObjectMapper().valueToTree(updatedIngredient).toString();
 
@@ -397,14 +397,14 @@ public class FridgeServiceApplicationTests {
 		Ingredient newIngredient1 = new Ingredient();
 
 		newIngredient1.setName("cola");
-		newIngredient1.setQty("2");
+		newIngredient1.setQty(2);
 
 		newInventory.add(newIngredient1);
 
 		Ingredient newIngredient2 = new Ingredient();
 
 		newIngredient2.setName("Potatoes");
-		newIngredient2.setQty("10");
+		newIngredient2.setQty(10);
 
 		newInventory.add(newIngredient2);
 
