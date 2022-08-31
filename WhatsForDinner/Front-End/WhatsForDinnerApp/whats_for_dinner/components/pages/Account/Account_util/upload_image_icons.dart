@@ -35,14 +35,9 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
         var request = http.MultipartRequest(
             'PUT', Uri.parse(json.decode(value)["results"]));
 
-        final multipartFile = http.MultipartFile.fromBytes(
-            'file', await File.fromUri(Uri.parse(globals.imgUrl)).readAsBytes(),
-            contentType: MediaType('image', 'jpeg'));
-
-        // request.files.add(await http.MultipartFile.fromPath(
-        //     'file', globals.imgUrl,
-        //     contentType: MediaType('image', 'jpeg')));
-        request.files.add(multipartFile);
+        request.files.add(await http.MultipartFile.fromPath(
+            'file', globals.imgUrl,
+            contentType: MediaType('image', 'jpeg')));
         request.fields.addAll(
             {'key': globals.imgUrl.split('/').last, 'acl': 'public-read'});
 

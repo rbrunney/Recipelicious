@@ -33,7 +33,7 @@ class _HomePage extends State<HomePage> {
 
               for (var meal in mealInformation) {
                 homeInformation.add(MealCard(
-                    imageUrl: meal["imgLink"],
+                    // imageUrl: meal["imgLink"],
                     mealID: meal["id"],
                     mealName: meal["name"],
                     creator: meal["creator"],
