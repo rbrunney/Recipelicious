@@ -11,7 +11,7 @@ services:
     networks:
       - base-net
     deploy:
-      replicas: 1
+      replicas: 3
 
   chat-room-service: 
     build: 
@@ -37,7 +37,7 @@ services:
     networks:
       - base-net
     deploy:
-      replicas: 1
+      replicas: 3
 
   meal-service:
     build:
@@ -50,7 +50,7 @@ services:
     networks:
       - base-net
     deploy:
-      replicas: 1
+      replicas: 3
 
   user-service:
     build: 
@@ -73,7 +73,7 @@ services:
     networks:
       - base-net
     deploy:
-      replicas: 1
+      replicas: 3
 
   whatsfordinner-gateway:
     build:
@@ -105,7 +105,7 @@ services:
       - rabbitmq
       - user-service
     deploy:
-      replicas: 1
+      replicas: 3
     networks:
       - base-net
 
