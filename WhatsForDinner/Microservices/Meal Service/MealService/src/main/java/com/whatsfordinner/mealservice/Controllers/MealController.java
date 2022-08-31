@@ -3,6 +3,7 @@ package com.whatsfordinner.mealservice.Controllers;
 import com.whatsfordinner.mealservice.Bll.MealBll;
 import com.whatsfordinner.mealservice.Models.Ingredient;
 import com.whatsfordinner.mealservice.Models.Meal;
+import org.apache.http.protocol.ResponseServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +31,31 @@ public class MealController {
     @GetMapping("/findByName/{name}")
     public ResponseEntity<Map<String, Object>> findByName(@PathVariable String name){return mealBll.getMealByName(name);}
 
-    @GetMapping("/like/{mealID}")
-    public ResponseEntity<Map<String, Object>> likeMeal(@PathVariable String mealID){return mealBll.likeMeal(mealID);}
+    @GetMapping("/like/{mealID}/{username}")
+    public ResponseEntity<Map<String, Object>> likeMeal(@PathVariable String mealID, @PathVariable String username){return mealBll.likeMeal(mealID, username);}
 
-    @GetMapping("/unlike/{mealID}")
-    public ResponseEntity<Map<String, Object>> unlikeMeal(@PathVariable String mealID){return mealBll.unlikeMeal(mealID);}
+    @GetMapping("/save/{mealID}/{username}")
+    public ResponseEntity<Map<String, Object>> saveMeal(@PathVariable String mealID, @PathVariable String username) {
+        return mealBll.saveMeal(mealID, username);
+    }
+
+    @GetMapping("/unlike/{mealID}/{username}")
+    public ResponseEntity<Map<String, Object>> unlikeMeal(@PathVariable String mealID, @PathVariable String username){return mealBll.unlikeMeal(mealID, username);}
+
+    @GetMapping("/unsave/{mealID}/{username}")
+    public ResponseEntity<Map<String, Object>> unsaveMeal(@PathVariable String mealID, @PathVariable String username) {
+        return mealBll.unsaveMeal(mealID, username);
+    }
+
+    @GetMapping("/getLikedMeals/{username}")
+    public ResponseEntity<Map<String, Object>> getLikedMealsByUser(@PathVariable String username) {
+        return mealBll.getLikedMealsByUsername(username);
+    }
+
+    @GetMapping("/getSavedMeals/{username}")
+    public ResponseEntity<Map<String, Object>> getSavedMealsByUser(@PathVariable String username) {
+        return mealBll.getSavedMealsByUsername(username);
+    }
 
     @GetMapping("/findByMostLikes/{offset}")
     public ResponseEntity<Map<String, Object>> getByMostLiked(@PathVariable int offset){return mealBll.returnSortedMeals(offset);}

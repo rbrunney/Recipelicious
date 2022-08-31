@@ -215,7 +215,7 @@ public class MealBll {
 
     }
 
-    public ResponseEntity<Map<String, Object>> likeMeal(String mealID){
+    public ResponseEntity<Map<String, Object>> likeMeal(String mealID, String username){
 
         Map<String, Object> response = new HashMap<>();
 
@@ -224,6 +224,12 @@ public class MealBll {
         int likes = meal.getLikes();
 
         meal.setLikes(likes + 1);
+
+        if(meal.getUsersWhoLiked() == null) {
+            meal.setUsersWhoLiked(new ArrayList<>());
+        }
+
+        meal.getUsersWhoLiked().add(username);
 
         mealRepo.save(meal);
 
@@ -234,7 +240,26 @@ public class MealBll {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public ResponseEntity<Map<String, Object>> unlikeMeal(String mealID){
+    public ResponseEntity<Map<String, Object>> saveMeal(String mealID, String username) {
+        Map<String, Object> response = new HashMap<>();
+
+        Meal meal = mealRepo.findMealById(mealID);
+
+        if(meal.getUsersWhoLiked() == null) {
+            meal.setUsersWhoSaved(new ArrayList<>());
+        }
+        meal.getUsersWhoSaved().add(username);
+
+        mealRepo.save(meal);
+
+        response.put("message", "Meal Saved");
+        response.put("results", meal.getUsersWhoSaved());
+        response.put("Date-Time", LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> unlikeMeal(String mealID, String username){
 
         Map<String, Object> response = new HashMap<>();
 
@@ -244,10 +269,74 @@ public class MealBll {
 
         meal.setLikes(likes - 1);
 
+        if(meal.getUsersWhoLiked() == null) {
+            meal.setUsersWhoSaved(new ArrayList<>());
+        }
+
+        meal.getUsersWhoLiked().remove(username);
+
         mealRepo.save(meal);
 
         response.put("message", "meal Unliked");
         response.put("results", meal.getLikes());
+        response.put("Date-Time", LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> unsaveMeal(String mealID, String username) {
+        Map<String, Object> response = new HashMap<>();
+
+        Meal meal = mealRepo.findMealById(mealID);
+
+        if(meal.getUsersWhoLiked() == null) {
+            meal.setUsersWhoSaved(new ArrayList<>());
+        }
+
+        meal.getUsersWhoSaved().remove(username);
+
+        mealRepo.save(meal);
+
+        response.put("message", "Meal Unsaved");
+        response.put("results", meal.getUsersWhoSaved());
+        response.put("Date-Time", LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> getLikedMealsByUsername(String username) {
+        Map<String, Object> response = new HashMap<>();
+
+        List<Meal> meals = mealRepo.findAll();
+        List<Meal> mealsLiked = new ArrayList<>();
+
+        for(Meal meal: meals) {
+            if(meal.getUsersWhoLiked().contains(username)) {
+                mealsLiked.add(meal);
+            }
+        }
+
+        response.put("message", "Got all meals liked by " + username);
+        response.put("results", mealsLiked);
+        response.put("Date-Time", LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> getSavedMealsByUsername(String username) {
+        Map<String, Object> response = new HashMap<>();
+
+        List<Meal> meals = mealRepo.findAll();
+        List<Meal> mealsLiked = new ArrayList<>();
+
+        for(Meal meal: meals) {
+            if(meal.getUsersWhoSaved().contains(username)) {
+                mealsLiked.add(meal);
+            }
+        }
+
+        response.put("message", "Got all meals saved by " + username);
+        response.put("results", mealsLiked);
         response.put("Date-Time", LocalDateTime.now());
 
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -12,4 +12,6 @@ public class Ingredient {
 
     private String qty;
 
+    private String type;
+
 }

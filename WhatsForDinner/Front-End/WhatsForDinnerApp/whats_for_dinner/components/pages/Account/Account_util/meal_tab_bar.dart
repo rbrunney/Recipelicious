@@ -16,11 +16,19 @@ class MealAppBar extends StatefulWidget {
 class _MealAppBar extends State<MealAppBar> {
   Requests requests = Requests();
   List<MealCard> usersCreatedMeals = [];
+  List<MealCard> usersLikedMeals = [];
+  List<MealCard> usersSavedMeals = [];
 
   @override
   Widget build(BuildContext context) {
     Future<String> getMadeMeals = requests.makeGetRequest(
         "http://10.0.2.2:8888/meal//findByCreator/${globals.username}");
+
+    Future<String> getLikedMeals = requests.makeGetRequest(
+        "http://10.0.2.2:8888/meal/getLikedMeals/${globals.username}");
+
+    Future<String> getSavedMeals = requests.makeGetRequest(
+        "http://10.0.2.2:8888/meal/getSavedMeals/${globals.username}");
 
     return Expanded(
       child: Container(
@@ -57,14 +65,17 @@ class _MealAppBar extends State<MealAppBar> {
 
                             for (var meal in mealInformation) {
                               usersCreatedMeals.add(MealCard(
-                                beingEdited: true,
-                                mealID: meal["id"],
-                                mealName: meal["name"],
-                                creator: meal["creator"],
-                                likes: meal["likes"],
-                                ingredients: meal["ingredients"],
-                                recipe: meal["recipe"],
-                              ));
+                                  beingEdited: true,
+                                  mealID: meal["id"],
+                                  mealName: meal["name"],
+                                  creator: meal["creator"],
+                                  likes: meal["likes"],
+                                  ingredients: meal["ingredients"],
+                                  recipe: meal["recipe"],
+                                  liked: meal['usersWhoLiked']
+                                      .contains(globals.username),
+                                  bookMarked: meal['usersWhoSaved']
+                                      .contains(globals.username)));
                             }
 
                             return Column(
@@ -88,25 +99,89 @@ class _MealAppBar extends State<MealAppBar> {
                 Container(
                   margin: const EdgeInsets.only(top: 15),
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        MealCard(
-                            imageUrl:
-                                "https://static.india.com/wp-content/uploads/2015/10/538.jpg?impolicy=Medium_Resize&w=1200&h=800")
-                      ],
-                    ),
+                    child: FutureBuilder<String>(
+                        future: getLikedMeals,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            usersLikedMeals.clear();
+                            List<dynamic> mealInformation =
+                                json.decode(snapshot.data!)["results"];
+
+                            for (var meal in mealInformation) {
+                              usersLikedMeals.add(MealCard(
+                                  beingEdited: true,
+                                  mealID: meal["id"],
+                                  mealName: meal["name"],
+                                  creator: meal["creator"],
+                                  likes: meal["likes"],
+                                  ingredients: meal["ingredients"],
+                                  recipe: meal["recipe"],
+                                  liked: meal['usersWhoLiked']
+                                      .contains(globals.username),
+                                  bookMarked: meal['usersWhoSaved']
+                                      .contains(globals.username)));
+                            }
+
+                            return Column(
+                              children: usersLikedMeals,
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('${snapshot.error}');
+                          }
+
+                          return Center(
+                              heightFactor: 20,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.tealAccent,
+                                ),
+                              ));
+                        }),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 15),
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        MealCard(
-                            imageUrl:
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ66a6A1tHGHDU8v8ObH3-62Q4AuZlCicpMbg&usqp=CAU")
-                      ],
-                    ),
+                    child: FutureBuilder<String>(
+                        future: getSavedMeals,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            usersSavedMeals.clear();
+                            List<dynamic> mealInformation =
+                                json.decode(snapshot.data!)["results"];
+
+                            for (var meal in mealInformation) {
+                              usersSavedMeals.add(MealCard(
+                                  beingEdited: true,
+                                  mealID: meal["id"],
+                                  mealName: meal["name"],
+                                  creator: meal["creator"],
+                                  likes: meal["likes"],
+                                  ingredients: meal["ingredients"],
+                                  recipe: meal["recipe"],
+                                  liked: meal['usersWhoLiked']
+                                      .contains(globals.username),
+                                  bookMarked: meal['usersWhoSaved']
+                                      .contains(globals.username)));
+                            }
+
+                            return Column(
+                              children: usersSavedMeals,
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('${snapshot.error}');
+                          }
+
+                          return Center(
+                              heightFactor: 20,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: const CircularProgressIndicator(
+                                  color: Colors.tealAccent,
+                                ),
+                              ));
+                        }),
                   ),
                 ),
               ],

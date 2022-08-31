@@ -3,6 +3,7 @@ import '../../../../util/requests.dart';
 import '../Back/meal_info.dart';
 import 'dart:convert';
 import '../../../Account/Edit_pages/edit_my_meal_page.dart';
+import '../../../../util/globals.dart' as globals;
 
 class MealCard extends StatefulWidget {
   MealCard(
@@ -21,8 +22,8 @@ class MealCard extends StatefulWidget {
       this.beingEdited = false})
       : super(key: key);
 
-  final bool liked;
-  final bool bookMarked;
+  bool liked;
+  bool bookMarked;
   final String imageUrl;
   final String mealName;
   final String description;
@@ -38,17 +39,7 @@ class MealCard extends StatefulWidget {
 }
 
 class _MealCard extends State<MealCard> {
-  late bool _liked;
-  late bool _bookMarked;
-
   Requests requests = Requests();
-
-  @override
-  void initState() {
-    super.initState();
-    _liked = false;
-    _bookMarked = false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,17 +113,17 @@ class _MealCard extends State<MealCard> {
                     Expanded(
                       flex: 1,
                       child: IconButton(
-                          icon: Icon(_liked
+                          icon: Icon(widget.liked
                               ? Icons.thumb_up
                               : Icons.thumb_up_outlined),
                           onPressed: () {
                             setState(() {
-                              _liked = !_liked;
+                              widget.liked = !widget.liked;
                             });
-                            if (_liked) {
+                            if (widget.liked) {
                               requests
                                   .makeGetRequest(
-                                      "http://10.0.2.2:8888/meal/like/${widget.mealID}")
+                                      "http://10.0.2.2:8888/meal/like/${widget.mealID}/${globals.username}")
                                   .then((value) {
                                 setState(() {
                                   widget.likes = json.decode(value)['results'];
@@ -141,7 +132,7 @@ class _MealCard extends State<MealCard> {
                             } else {
                               requests
                                   .makeGetRequest(
-                                      "http://10.0.2.2:8888/meal/unlike/${widget.mealID}")
+                                      "http://10.0.2.2:8888/meal/unlike/${widget.mealID}/${globals.username}")
                                   .then((value) {
                                 setState(() {
                                   widget.likes = json.decode(value)['results'];
@@ -160,14 +151,27 @@ class _MealCard extends State<MealCard> {
                     Expanded(
                       flex: 1,
                       child: IconButton(
-                        icon: Icon(_bookMarked
+                        icon: Icon(widget.bookMarked
                             ? Icons.bookmark
                             : Icons.bookmark_add_outlined),
                         onPressed: () {
                           setState(() {
-                            //need to make request dependent on state
-                            _bookMarked = !_bookMarked;
+                            widget.bookMarked = !widget.bookMarked;
                           });
+
+                          if (widget.bookMarked) {
+                            requests
+                                .makeGetRequest(
+                                    "http://10.0.2.2:8888/meal/save/${widget.mealID}/${globals.username}")
+                                .then((value) {
+                            });
+                          } else {
+                            requests
+                                .makeGetRequest(
+                                    "http://10.0.2.2:8888/meal/unsave/${widget.mealID}/${globals.username}")
+                                .then((value) {
+                            });
+                          }
                         },
                       ),
                     ),
