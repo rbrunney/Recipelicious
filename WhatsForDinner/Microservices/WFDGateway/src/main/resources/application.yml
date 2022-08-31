@@ -18,6 +18,11 @@ spring:
           uri: lb://meal-service
           predicates:
             - Path=/meal/**
+
+        - id: aws-s3-link-generator
+          uri: lb://aws-s3-link-generator
+          predicates:
+            - Path=/generateLink/**
 #          filters:
 #            - RewritePath=/meal/(?<segment>.*), /$\{segment}
         - id: fridge-service
