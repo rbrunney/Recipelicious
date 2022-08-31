@@ -23,6 +23,8 @@ public class Meal {
 
     private String description;
 
+    private String imgLink;
+
     private int servingSize;
 
     private List<Ingredient> ingredients;

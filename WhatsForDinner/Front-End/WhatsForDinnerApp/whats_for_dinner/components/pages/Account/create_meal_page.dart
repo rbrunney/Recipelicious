@@ -6,6 +6,7 @@ import '../../util/add_bar_ordered.dart';
 import '../../util/requests.dart';
 import '../../util/globals.dart' as globals;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class CreateMeal extends StatefulWidget {
   const CreateMeal({Key? key}) : super(key: key);
@@ -120,8 +121,8 @@ class _CreateMealState extends State<CreateMeal> {
                       if (nameOfMealController.text.isNotEmpty &&
                           ingredients.isNotEmpty &&
                           recipe.isNotEmpty) {
-
                         Map<String, dynamic> newMeal = {
+                          "imgLink": globals.imgUrl,
                           "creator": globals.username,
                           "name": nameOfMealController.text,
                           "description": descriptionOfMealController.text,
@@ -132,12 +133,15 @@ class _CreateMealState extends State<CreateMeal> {
                           "usersWhoLiked": [],
                           "usersWhoSaved": []
                         };
+
                         request
                             .makePostRequest(
                                 "http://10.0.2.2:8888/meal", newMeal)
                             .then((value) {
                           print(value);
                         });
+                        globals.imgUrl =
+                            "https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg";
                         Navigator.of(context).pop();
                       } else {
                         await showDialog<void>(
