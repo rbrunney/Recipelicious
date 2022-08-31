@@ -8,3 +8,4 @@ bool isLoggedIn = false;
 String dropdownValue = 'oz';
 String fridgeID = '';
 String mealID = "";
+String imgUrl = "https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg";

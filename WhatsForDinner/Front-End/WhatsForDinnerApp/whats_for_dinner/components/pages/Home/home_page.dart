@@ -31,8 +31,14 @@ class _HomePage extends State<HomePage> {
               List<dynamic> mealInformation =
                   json.decode(snapshot.data!)["results"];
 
+              requests
+                  .makeGetRequest(
+                      "http://10.0.2.2:8888/generateLink/get/bef8e1b2-32ef-4218-8f83-6d9abdbe16068316534677010386837.jpg")
+                  .then((value) => print(value));
+
               for (var meal in mealInformation) {
                 homeInformation.add(MealCard(
+                    imageUrl: globals.imgUrl,
                     mealID: meal["id"],
                     mealName: meal["name"],
                     creator: meal["creator"],

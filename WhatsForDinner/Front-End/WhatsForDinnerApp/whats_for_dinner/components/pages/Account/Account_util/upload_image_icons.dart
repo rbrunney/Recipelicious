@@ -1,11 +1,17 @@
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import '../../../util/globals.dart' as globals;
+import '../../../util/requests.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:http_parser/http_parser.dart';
 
 class UploadImageIcons extends StatefulWidget {
   String imgUrl;
   bool hasImg;
-  UploadImageIcons({Key? key, this.hasImg = false, this.imgUrl = ''}) : super(key: key);
+  UploadImageIcons({Key? key, this.hasImg = false, this.imgUrl = ''})
+      : super(key: key);
 
   @override
   State<UploadImageIcons> createState() => _UploadImageIconsState();
@@ -17,10 +23,36 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
 
   @override
   Widget build(BuildContext context) {
+    uploadImage() {
+      Requests()
+          .makeGetRequest(
+              "http://10.0.2.2:8888/generateLink/put/${globals.imgUrl.split('/').last}")
+          .then((value) async {
+        File file = File(globals.imgUrl);
+        final stream = http.ByteStream(Stream.castFrom(file.openRead()));
+        final length = await file.length();
+
+        var request = http.MultipartRequest(
+            'PUT', Uri.parse(json.decode(value)["results"]));
+
+        request.files.add(await http.MultipartFile.fromPath(
+            'file', globals.imgUrl,
+            contentType: MediaType('image', 'jpeg')));
+        request.fields.addAll(
+            {'key': globals.imgUrl.split('/').last, 'acl': 'public-read'});
+
+        await request.send();
+        globals.imgUrl =
+            "https://whatsfordinner-pro290.s3.us-west-1.amazonaws.com/${globals.imgUrl.split('/').last}";
+      });
+    }
+
     pickImage(ImageSource typeOfPhoto) async {
       XFile? xFileImage = await imagePicker.pickImage(source: typeOfPhoto);
       if (xFileImage != null) {
         image = File(xFileImage.path);
+        globals.imgUrl = image!.path;
+        uploadImage();
         setState(() {});
       }
     }
@@ -88,8 +120,8 @@ class _UploadImageIconsState extends State<UploadImageIcons> {
               ),
             ),
           )
-        else if(widget.hasImg)
-        Card(
+        else if (widget.hasImg)
+          Card(
             margin: const EdgeInsets.all(10),
             elevation: 2,
             shape: RoundedRectangleBorder(
