@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../util/to_prev_page.dart';
+import '../Login/alert_pop_up.dart';
 import 'dropdown_menu.dart';
+import '../../util/globals.dart' as globals;
+import 'dart:convert';
+import '../../util/requests.dart';
 
 class CreateIngredientPage extends StatefulWidget {
   const CreateIngredientPage({Key? key}) : super(key: key);
@@ -14,6 +18,8 @@ class _CreateIngredientState extends State<CreateIngredientPage> {
   Widget build(BuildContext context) {
     TextEditingController nameOfIngredientController = TextEditingController();
     TextEditingController quantityController = TextEditingController();
+    Requests requests = Requests();
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -75,19 +81,42 @@ class _CreateIngredientState extends State<CreateIngredientPage> {
               child: const DropdownMenu(),
             ),
             Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.tealAccent, // background
-                      ),
-                      child: const Text(
-                        'Create Ingredient',
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
-                ),
+              margin: const EdgeInsets.symmetric(vertical: 20),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.tealAccent, // background
+                  ),
+                  child: const Text(
+                    'Create Ingredient',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                  onPressed: () {
+                    if (nameOfIngredientController.text.isEmpty ||
+                        quantityController.text.isEmpty) {
+                      showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertPopUp(
+                              title: 'Incomplete Form',
+                              content:
+                                  'Please check all fields have been filled out correctly',
+                            );
+                          });
+                    } else {
+                      Map<String, dynamic> newIngredient = {
+                        "name": nameOfIngredientController.text,
+                        "qty": int.parse(quantityController.text),
+                        "type": globals.dropdownValue
+                      };
+                      requests.makePostRequestWithAuth(
+                          "http://10.0.2.2:8888/fridge/${globals.fridgeID}/addItem",
+                          newIngredient,
+                          globals.username,
+                          globals.password);
+                      Navigator.pop(context);
+                    }
+                  }),
+            ),
           ]),
         ),
       ),

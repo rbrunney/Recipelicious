@@ -10,4 +10,6 @@ public interface FridgeRepo extends MongoRepository<Fridge, String> {
 
     Fridge findByFridgeID(String fridgeID);
 
+    Fridge findByUserName(String username);
+
 }

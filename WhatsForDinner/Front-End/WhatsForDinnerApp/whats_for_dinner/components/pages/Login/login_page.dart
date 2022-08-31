@@ -128,6 +128,18 @@ class LoginPage extends StatelessWidget {
                                       globals.password =
                                           _passwordController.text;
                                       globals.isLoggedIn = true;
+                                      requests
+                                          .makeGetRequestWithAuth(
+                                              "http://10.0.2.2:8888/fridge/getByUsername/${globals.username}",
+                                              globals.username,
+                                              globals.password)
+                                          .then((value) {
+                                        print(json.decode(value));
+                                        globals.fridgeID =
+                                            json.decode(value)["result"]
+                                                ["FridgeID"];
+                                        print(globals.fridgeID);
+                                      });
 
                                       requests
                                           .makeGetRequest(

@@ -24,6 +24,11 @@ public class FridgeController {
         return fridgeBll.findFridgeByID(auth, fridgeID);
     }
 
+    @GetMapping("/getByUsername/{username}")
+    public ResponseEntity<Map<String, Object>> getFridgeByUsername(@RequestHeader(value = "Authorization") String auth, @PathVariable String username){
+        return fridgeBll.findFridgeByUsername(auth, username);
+    }
+
     @PostMapping("")
     public ResponseEntity<Map<String, Object>> createFridge(@RequestHeader(value = "Authorization") String auth, @RequestBody Fridge fridge){
         return fridgeBll.createFridge(auth, fridge);
