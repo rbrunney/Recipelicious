@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../util/requests.dart';
+import '../../util/globals.dart' as globals;
+import 'dart:convert';
 
 class IngredientCard extends StatefulWidget {
   String ingredientName;
@@ -17,6 +20,8 @@ class IngredientCard extends StatefulWidget {
 }
 
 class _IngredientCardState extends State<IngredientCard> {
+  Requests requests = Requests();
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -50,6 +55,15 @@ class _IngredientCardState extends State<IngredientCard> {
                           if (widget.ingredientQty > 1) {
                             setState(() {
                               widget.ingredientQty--;
+                              requests.makePutRequestWithAuth(
+                                  "http://10.0.2.2:8888/fridge/${globals.fridgeID}/updateItem",
+                                  {
+                                    "name": widget.ingredientName,
+                                    "qty": widget.ingredientQty,
+                                    "type": widget.ingredientType
+                                  },
+                                  globals.username,
+                                  globals.password);
                             });
                           } else {
                             await showDialog<void>(
@@ -84,6 +98,15 @@ class _IngredientCardState extends State<IngredientCard> {
                     onPressed: () {
                       setState(() {
                         widget.ingredientQty++;
+                        requests.makePutRequestWithAuth(
+                                  "http://10.0.2.2:8888/fridge/${globals.fridgeID}/updateItem",
+                                  {
+                                    "name": widget.ingredientName,
+                                    "qty": widget.ingredientQty,
+                                    "type": widget.ingredientType
+                                  },
+                                  globals.username,
+                                  globals.password);
                       });
                     },
                     icon: const Icon(FontAwesomeIcons.plus),

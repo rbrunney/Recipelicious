@@ -185,12 +185,18 @@ class CreateAccount extends StatelessWidget {
                                 "http://10.0.2.2:8888/users/createUser/",
                                 newUser)
                             .then((value) {
-                          print(json.decode(value));
                           if (json.decode(value)["result"]["userID"] != null) {
-                            requests.makePostRequest(
-                                "http://10.0.2.2:8888/fridge", newFridge).then((value) => {
-                                  globals.fridgeID = json.decode(value)["fridgeID"]
-                                });
+                            requests
+                                .makePostRequestWithAuth(
+                                    "http://10.0.2.2:8888/fridge",
+                                    newFridge,
+                                    globals.username,
+                                    globals.password)
+                                .then((value) {
+                              print(json.decode(value));
+                              globals.fridgeID = json.decode(value)["result"]["FridgeID"];
+                            });
+                            print(globals.fridgeID);
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
                                     builder: (context) => const LoginPage()),

@@ -14,14 +14,19 @@ import java.util.Map;
 @RequestMapping("/fridge")
 public class FridgeController {
 
-    @Value("${EUREKA_HOST}")
-    private String test;
+//    @Value("${EUREKA_HOST}")
+//    private String test;
     @Autowired
     private FridgeBll fridgeBll;
 
     @GetMapping("/{fridgeID}")
     public ResponseEntity<Map<String, Object>> getFridge(@RequestHeader(value = "Authorization") String auth, @PathVariable String fridgeID){
         return fridgeBll.findFridgeByID(auth, fridgeID);
+    }
+
+    @GetMapping("/getByUsername/{username}")
+    public ResponseEntity<Map<String, Object>> getFridgeByUsername(@RequestHeader(value = "Authorization") String auth, @PathVariable String username){
+        return fridgeBll.findFridgeByUsername(auth, username);
     }
 
     @PostMapping("")
@@ -54,8 +59,8 @@ public class FridgeController {
         return fridgeBll.deleteItem(auth, fridgeID, ingredient);
     }
 
-    @GetMapping("/test")
-    public String testEurekaENV(){
-        return test;
-    }
+//    @GetMapping("/test")
+//    public String testEurekaENV(){
+//        return test;
+//    }
 }

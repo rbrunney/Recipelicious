@@ -48,6 +48,29 @@ public class FridgeBll {
 
     }
 
+    public ResponseEntity<Map<String, Object>> findFridgeByUsername(String auth, String username) {
+        Map<String, Object> response = new HashMap<>();
+        Fridge fridge = fridgeRepo.findByUserName(username);
+
+        if (FridgeUtil.userIsAuthorized(auth)){
+            Map<String, Object> result = new HashMap<>();
+
+            result.put("FridgeID", fridge.getFridgeID());
+            result.put("name", fridge.getFridgeName());
+            result.put("inventory", fridge.getIngredients());
+
+            response.put("message", "fridge retrieved");
+            response.put("result", result);
+            response.put("Date-Time", LocalDateTime.now());
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        response.put("message", "Credential was invalid");
+        response.put("Date-Time", LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
     public ResponseEntity<Map<String, Object>> createFridge(String auth, Fridge fridge) {
 
 
@@ -240,7 +263,4 @@ public class FridgeBll {
 
 
     }
-
-
-
 }
