@@ -140,17 +140,17 @@ This Mobile Application ("Whats for Dinner?") was made in order to learn and app
 6. A good output will look something similar as shown below.
     - Images being built
 
-    ![dockerImages](https://github.com/rbrunney/WhatsForDinner/tree/main/WhatsForDinner/readme_imgs/DockerImages.PNG?raw=true)
+    ![dockerImages](https://github.com/rbrunney/WhatsForDinner/blob/main/WhatsForDinner/readme_imgs/DockerImages.PNG?raw=true)
 
     - Containers being started
 
-    ![dockerContainers](https://github.com/rbrunney/WhatsForDinner/tree/main/WhatsForDinner/readme_imgs/DockerContainers.PNG?raw=true)
+    ![dockerContainers](https://github.com/rbrunney/WhatsForDinner/blob/main/WhatsForDinner/readme_imgs/DockerContainers.PNG?raw=true)
 
 8. Once the containers have been built we now go ahead and run our emulator. If you followed the Flutter Installation, lets go ahead and open Android Studio and run our emulator. Should look like below.
 
     - Emulator
 
-    ![androidEmulator](https://github.com/rbrunney/WhatsForDinner/tree/main/WhatsForDinner/readme_imgs/Emulator.PNG?raw=true) 
+    ![androidEmulator](https://github.com/rbrunney/WhatsForDinner/blob/main/WhatsForDinner/readme_imgs/Emulator.PNG?raw=true) 
 
 7. Once the emulator is up and running lets open a terminal in this desired path. In order to do so move into this folder path within the porject directory
     ```
@@ -167,11 +167,11 @@ This Mobile Application ("Whats for Dinner?") was made in order to learn and app
 
     - Successful Command Run
 
-    ![flutterCommand](https://github.com/rbrunney/WhatsForDinner/tree/main/WhatsForDinner/readme_imgs/FlutterRunCMD.PNG?raw=true) 
+    ![flutterCommand](https://github.com/rbrunney/WhatsForDinner/blob/main/WhatsForDinner/readme_imgs/FlutterRunCMD.PNG?raw=true) 
 
     - Successful App Run
 
-    ![appRun](https://github.com/rbrunney/WhatsForDinner/tree/main/WhatsForDinner/readme_imgs/FlutterAppRun.PNG?raw=true) 
+    ![appRun](https://github.com/rbrunney/WhatsForDinner/blob/main/WhatsForDinner/readme_imgs/FlutterAppRun.PNG?raw=true) 
 
 10. When you have it succesfully running, you will be greeted with a login page.
 
