@@ -99,7 +99,7 @@ class LoginPage extends StatelessWidget {
                         alignment: Alignment.center,
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.tealAccent, // background
+                              backgroundColor: Colors.tealAccent, // background
                             ),
                             onPressed: () {
                               if (_usernameController.text.isEmpty ||

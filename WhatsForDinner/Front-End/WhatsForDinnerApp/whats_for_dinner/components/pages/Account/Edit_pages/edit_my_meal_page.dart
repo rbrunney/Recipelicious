@@ -4,6 +4,8 @@ import '../Account_util/upload_image_icons.dart';
 import '../../../util/add_bar_bullet.dart';
 import '../../../util/add_bar_ordered.dart';
 import '../../../util/requests.dart';
+import '../../../util/globals.dart' as globals;
+import 'dart:convert';
 
 class EditMyMealPage extends StatefulWidget {
   final String nameOfMeal;
@@ -27,9 +29,11 @@ class EditMyMealPage extends StatefulWidget {
 class _EditMyMealPageState extends State<EditMyMealPage> {
   TextEditingController nameOfMealController = TextEditingController();
   TextEditingController descriptionOfMealController = TextEditingController();
+  TextEditingController servingSizeController = TextEditingController();
 
   List<dynamic> ingredients = [];
   Map<String, dynamic> recipe = {};
+  Requests requests = Requests();
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +94,25 @@ class _EditMyMealPageState extends State<EditMyMealPage> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: const Text(
+                  'Serving Size',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                width: 60,
+                height: 60,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                child: TextField(
+                    controller: servingSizeController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "SS...",
+                        labelText: 'SS')),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 15),
+                child: const Text(
                   'Ingredients',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -119,8 +142,26 @@ class _EditMyMealPageState extends State<EditMyMealPage> {
                       if (nameOfMealController.text.isNotEmpty &&
                           ingredients.isNotEmpty &&
                           recipe.isNotEmpty) {
-                        print('Call Davids Api');
-                      
+                        Map<String, dynamic> newMeal = {
+                          "imgLink": globals.imgUrl,
+                          "creator": globals.username,
+                          "name": nameOfMealController.text,
+                          "description": descriptionOfMealController.text,
+                          "servingSize": int.parse(servingSizeController.text),
+                          "ingredients": ingredients,
+                          "recipe": recipe,
+                          "likes": 0,
+                          "usersWhoLiked": [],
+                          "usersWhoSaved": []
+                        };
+
+                        requests
+                            .makePutRequest(
+                                "http://10.0.2.2:8888/meal", newMeal)
+                            .then((value) {
+                          print(value);
+                        });
+
                         Navigator.of(context).pop();
                       } else {
                         await showDialog<void>(

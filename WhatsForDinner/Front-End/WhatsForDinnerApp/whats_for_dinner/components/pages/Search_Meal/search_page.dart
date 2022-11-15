@@ -143,13 +143,14 @@ class _SearchPageState extends State<SearchPage> {
                   },
                 )
               ]),
-            Container(
-              alignment: Alignment.center,
-              child: const Text(
-                'Recommended',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            if (!isClicked)
+              Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  'Recommended',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
             FutureBuilder<String>(
                 future: futureSearchInfo,
                 builder: (context, snapshot) {
