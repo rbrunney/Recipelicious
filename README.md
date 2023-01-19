@@ -5,7 +5,7 @@
 </div>
 <br>
 <div class="mainDescription" align="center">
-    A Mobile Application aimed at helping answer the question "What's For Dinner?". This Project was made using Service Based Architecture Designs Principles.
+    A Mobile Application aimed at helping answer the age-old question "What's For Dinner?". This Project was made using Service Based Architecture Designs Principles.
 </div>
 <br>
 <br>
