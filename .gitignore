@@ -6,7 +6,9 @@
 __pycache__/
 
 #Ignoring djangoLib
-Lib
+WhatsForDinner/Microservices/Chat Room Service/Lib
+WhatsForDinner/Microservices/Chat Room Service/Scripts/Lib
+
 # Log file
 *.log
 
