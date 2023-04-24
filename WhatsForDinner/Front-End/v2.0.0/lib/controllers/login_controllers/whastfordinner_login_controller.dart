@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:whatsfordinner/controllers/login_controllers/util/login_controller.dart';
+import 'package:whatsfordinner/controllers/login_controllers/util/ilogin_controller.dart';
 import 'package:whatsfordinner/controllers/token_controllers/token_controller.dart';
 import 'package:whatsfordinner/controllers/user_data_controllers/user_data_controller.dart';
 
