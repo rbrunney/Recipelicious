@@ -5,8 +5,6 @@
 #pycache ignore
 __pycache__/
 
-#Ignoring djangoLib
-Lib
 # Log file
 *.log
 
