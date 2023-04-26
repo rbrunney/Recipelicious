@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsfordinner/util/widgets/page/base_page_layout.dart';
+import 'package:whatsfordinner/util/widgets/page/layouts/base_page_layout.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -11,6 +11,10 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
-    return const BasePage(contents: []);
+    return BasePageLayout(contents: buildContents());
   }
+}
+
+List<Widget> buildContents() {
+  return [];
 }
