@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:whatsfordinner/util/style/style.dart';
+import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 import 'package:whatsfordinner/util/widgets/page/layouts/base_page_layout.dart';
 
 class LandingPage extends StatefulWidget {
@@ -16,5 +18,12 @@ class _LandingPageState extends State<LandingPage> {
 }
 
 List<Widget> buildContents() {
-  return [];
+  return [
+    CustomButton(
+      text: "Login",
+        color: Color(CustomColorPalette.primaryColor),
+        onTap: () {
+
+    })
+  ];
 }

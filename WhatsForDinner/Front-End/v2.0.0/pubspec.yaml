@@ -26,12 +26,7 @@ assets:
   - assets/images/
   - assets/fonts/
 
-# fonts:
-#   - family: WorkSansBold
-#     fonts:
-#       - asset: assets/fonts/Work_Sans/static/WorkSans-Bold.ttf
-
-#   - family: WorkSans
-#     fonts:
-#       - asset: assets/fonts/Work_Sans/static/WorkSans-Regular.ttf
-
+fonts:
+  - family: GTWalsheimPro
+    fonts:
+      - asset: assets/fonts/GT Walsheim Pro/GTWalsheimPro-Regular.ttf
