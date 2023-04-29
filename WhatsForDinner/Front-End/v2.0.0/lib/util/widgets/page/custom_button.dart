@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
           decoration: BoxDecoration(
               color: hasFillColor ? color : Color(CustomColorPalette.primaryColor),
               border: hasBorder ? Border.all(color: Color(CustomColorPalette.lineColor)) : null,
-              borderRadius: const BorderRadius.all(Radius.circular(10))),
+              borderRadius: const BorderRadius.all(Radius.circular(25))),
           child: SizedBox(
             height: 45,
             width: MediaQuery.of(context).size.width * 0.90,
@@ -43,7 +43,7 @@ class CustomButton extends StatelessWidget {
                 CustomText(
                   text: text,
                   color: Color(CustomColorPalette.white),
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   leftMargin: prefixImagePath != '' ? 10 : 0,
                 )

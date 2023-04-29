@@ -12,5 +12,5 @@ class CustomColorPalette {
 
 class TextFont {
   static String titleFont = '';
-  static String textFont = '';
+  static String textFont = 'GTWalsheimPro';
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
-import 'package:whatsfordinner/util/widgets/page/layouts/base_page_layout.dart';
+import 'package:whatsfordinner/util/widgets/page/layouts/base_page_no_scroll_layout.dart';
+import 'package:whatsfordinner/util/widgets/text/custom_text.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -13,17 +14,63 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
-    return BasePageLayout(contents: buildContents());
+    return BasePageNoScrollLayout(contents: buildContents());
   }
 }
 
 List<Widget> buildContents() {
   return [
-    CustomButton(
-      text: "Login",
-        color: Color(CustomColorPalette.primaryColor),
-        onTap: () {
+    const Expanded(
+      flex: 3,
+      child: Placeholder(),
+    ),
+    Expanded(
+      flex: 1,
+      child: Align(
+        alignment: FractionalOffset.bottomCenter,
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              child: CustomButton(
+                  text: "Get Started",
+                  color: Color(CustomColorPalette.primaryColor),
+                  onTap: () {
 
-    })
+                  }),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: CustomButton(
+                text: 'Continue with Google',
+                prefixImagePath: './assets/images/google_logo.png',
+                color: Color(CustomColorPalette.lineColor),
+                onTap: () {  },
+              )
+            ),
+            createLoginText()
+          ],
+        ),
+      )
+    )
   ];
+}
+
+Row createLoginText() {
+  return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CustomText(
+            text: "Already have an account? ",
+            fontSize: 17,
+            color: Color(CustomColorPalette.textTitleColor)
+        ),
+        CustomText(
+            text: "Log in",
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Color(CustomColorPalette.primaryColor)
+        )
+      ],
+    );
 }
