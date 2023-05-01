@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsfordinner/pages/login/login_page.dart';
+import 'package:whatsfordinner/pages/register/register_page.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 import 'package:whatsfordinner/util/widgets/page/layouts/base_page_no_scroll_layout.dart';
@@ -36,7 +37,12 @@ class _LandingPageState extends State<LandingPage> {
                       text: "Get Started",
                       color: Color(CustomColorPalette.primaryColor),
                       onTap: () {
-
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute (
+                              builder: (BuildContext context) => const RegisterPage(),
+                            )
+                        );
                       }),
                 ),
                 Container(
