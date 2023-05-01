@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsfordinner/pages/landing_page/landing_page.dart';
+import 'package:whatsfordinner/pages/landing/landing_page.dart';
 
 void main() {
   runApp(const WhatsForDinner());
