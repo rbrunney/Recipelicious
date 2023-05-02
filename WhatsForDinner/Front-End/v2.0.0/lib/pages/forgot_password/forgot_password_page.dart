@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:whatsfordinner/pages/verification_code/verification_code_page.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 import 'package:whatsfordinner/util/widgets/page/to_previous_page.dart';
+import 'package:whatsfordinner/util/widgets/text/custom_text.dart';
 import 'package:whatsfordinner/util/widgets/text/custom_text_field.dart';
 import 'package:whatsfordinner/util/widgets/text/page_title.dart';
 
@@ -84,7 +86,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       topMargin: 10,
       bottomMargin: 10,
       text: "Don't worry! We will send you a one time code! Please enter your email.",
-      fontSize: 15,
+      fontSize: 15, color: Color(CustomColorPalette.textTitleColor),
     );
   }
 
