@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsfordinner/controllers/token_controllers/token_controller.dart';
 import 'package:whatsfordinner/pages/forgot_password/forgot_password_page.dart';
+import 'package:whatsfordinner/pages/home/home_page.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 import 'package:whatsfordinner/util/widgets/page/to_previous_page.dart';
@@ -38,6 +39,13 @@ class _LoginPageState extends State<LoginPage> {
     //           child: const HomePage(),
     //           type: PageTransitionType.rightToLeftWithFade));
     // });
+
+    Navigator.push(
+        context,
+        MaterialPageRoute (
+          builder: (BuildContext context) => const HomePage(),
+        )
+    );
   }
 
   @override
