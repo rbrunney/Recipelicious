@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsfordinner/pages/home/home_page.dart';
 import 'package:whatsfordinner/pages/landing/landing_page.dart';
+import 'package:whatsfordinner/util/navigation/bottom_tab_navigation.dart';
 
 void main() {
   runApp(const WhatsForDinner());
@@ -17,7 +18,7 @@ class WhatsForDinner extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const BottomTabNavigation(),
     );
   }
 }
