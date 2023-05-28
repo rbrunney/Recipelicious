@@ -1,6 +1,6 @@
 <div class="mainTitle" align="center">
     
-#    Whats For Dinner
+#    Recipelicious
 
 </div>
 <br>
@@ -41,7 +41,7 @@
 <br>
 
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-This Mobile Application ("Whats for Dinner?") was made in order to learn and apply Service Based Architecture Design Principles within a small group. Some of the technologies used in the project include Dart, Python, Java, Flutter, Django, Spring Boot, Spring Cloud, MongoDB, MySQL, Docker, Docker Compose, Socket IO, and AWS S3. This project really pushed us to learn new technologies and frameworks, along with Service Based Architecture Design.
+This Mobile Application ("Recipelicous") was made in order to learn and apply Service Based Architecture Design Principles within a small group. Some of the technologies used in the project include Dart, Python, Java, Flutter, Django, Spring Boot, Spring Cloud, MongoDB, MySQL, Docker, Docker Compose, Socket IO, and AWS S3. This project really pushed us to learn new technologies and frameworks, along with Service Based Architecture Design.
 
 <br>
 <div class="header" align="center">
@@ -101,7 +101,7 @@ This Mobile Application ("Whats for Dinner?") was made in order to learn and app
 3. Once the Git Bash Terminal is open run the following command to clone the repository to get source code
 
     ```
-    git clone https://github.com/rbrunney/WhatsForDinner
+    git clone https://github.com/rbrunney/Recipelicious
     ```
 4. Once download is complete you are ready to test out the project!
 
