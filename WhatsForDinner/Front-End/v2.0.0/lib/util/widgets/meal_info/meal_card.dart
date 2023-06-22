@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:whatsfordinner/models/meal.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/text/custom_text.dart';
 
@@ -32,9 +33,15 @@ class _MealCardState extends State<MealCard> {
                   children: [
                     Visibility(visible: widget.isNew, child: buildBadge("New")),
                     buildMealImage(),
-                    buildTitle("Cheese Burger"),
-                    buildStats(),
-                    buildDifficulty("Hard", 3)
+                    buildMealInformation(
+                        Meal(
+                          title: "Cheese Burger",
+                          steps: 5,
+                          cookingTime: CookingTime(),
+                          overallRating: 4.5,
+                          totalCalories: 16,
+                          difficulty: "Medium"
+                    ))
                   ],
                 )
               ),
@@ -60,12 +67,32 @@ class _MealCardState extends State<MealCard> {
     );
   }
 
-  Row buildTitle(String mealTitle) {
+  Container buildMealInformation(Meal meal) {
+    return Container(
+      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.37),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.025),
+            child: buildTitle(meal.title),
+          ),
+          buildStats(meal.overallRating, meal.cookingTime),
+          Container(
+            margin: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.03),
+            child: buildDifficulty(meal.difficulty, meal.steps)
+          )
+        ],
+      )
+    );
+  }
+
+  Row buildTitle(String? mealTitle) {
     return Row(
       children: [
         CustomText(
-          text: mealTitle,
-          fontSize: 23,
+          text: mealTitle.toString(),
+          fontSize: 20,
           fontWeight: FontWeight.bold,
           color: Color(CustomColorPalette.textTitleColor),
         )
@@ -73,33 +100,36 @@ class _MealCardState extends State<MealCard> {
     );
   }
 
-  Row buildStats() {
+  Row buildStats(double? rating, CookingTime? time) {
     return Row(
       children: [
+        Container(
+          margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.03),
+          child: Row(
+            children: [
+              Icon(
+                  AntDesign.star,
+                  size: 20,
+                  color: Color(CustomColorPalette.primaryColor)
+              ),
+              CustomText(
+                  text: " $rating (5)",
+                  color: Color(CustomColorPalette.textBodyColor))
+            ],
+          ),
+        ),
         Row(
           children: [
-            Icon(
-                AntDesign.star,
-              color: Color(CustomColorPalette.primaryColor)
+            Container(
+              margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.01),
+              child: Icon(
+                AntDesign.clockcircle,
+                size: 15,
+                color: Color(CustomColorPalette.textBodyColor),
+              ),
             ),
             CustomText(
-              text: "4.5(5)",
-                color: Color(CustomColorPalette.textBodyColor))
-          ],
-        ),
-        Row(
-          children: [
-            const Icon(MaterialCommunityIcons.fire),
-            CustomText(
-                text: "16 kcal",
-                color: Color(CustomColorPalette.textBodyColor))
-          ],
-        ),
-        Row(
-          children: [
-            const Icon(AntDesign.clockcircle),
-            CustomText(
-                text: "1:45",
+                text: "${time?.hours}:${time?.minutes}",
                 color: Color(CustomColorPalette.textBodyColor))
           ],
         )
@@ -107,9 +137,32 @@ class _MealCardState extends State<MealCard> {
     );
   }
 
-  Row buildDifficulty(String difficulty, int totalSteps) {
+  Row buildDifficulty(String? difficulty, int? totalSteps) {
     return Row(
-      children: const [
+      children: [
+        Container(
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.015),
+          margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.03),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            color: Color(CustomColorPalette.primaryColor),
+          ),
+          child: CustomText(
+            text: difficulty.toString(),
+            color: Colors.white,
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.015),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            color: Color(CustomColorPalette.secondaryColor),
+          ),
+          child: CustomText(
+            text: "$totalSteps steps",
+            color: Colors.white,
+          ),
+        )
 
       ],
     );
