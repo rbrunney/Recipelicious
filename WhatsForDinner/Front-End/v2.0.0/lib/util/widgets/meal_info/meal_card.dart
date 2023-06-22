@@ -30,9 +30,11 @@ class _MealCardState extends State<MealCard> {
                 ),
                 child: Stack(
                   children: [
-                    Visibility(visible: widget.isNew, child: buildBadge()),
+                    Visibility(visible: widget.isNew, child: buildBadge("New")),
                     buildMealImage(),
-                    buildStats()
+                    buildTitle("Cheese Burger"),
+                    buildStats(),
+                    buildDifficulty("Hard", 3)
                   ],
                 )
               ),
@@ -58,12 +60,28 @@ class _MealCardState extends State<MealCard> {
     );
   }
 
+  Row buildTitle(String mealTitle) {
+    return Row(
+      children: [
+        CustomText(
+          text: mealTitle,
+          fontSize: 23,
+          fontWeight: FontWeight.bold,
+          color: Color(CustomColorPalette.textTitleColor),
+        )
+      ],
+    );
+  }
+
   Row buildStats() {
     return Row(
       children: [
         Row(
           children: [
-            const Icon(AntDesign.star),
+            Icon(
+                AntDesign.star,
+              color: Color(CustomColorPalette.primaryColor)
+            ),
             CustomText(
               text: "4.5(5)",
                 color: Color(CustomColorPalette.textBodyColor))
@@ -89,7 +107,15 @@ class _MealCardState extends State<MealCard> {
     );
   }
 
-  Row buildBadge() {
+  Row buildDifficulty(String difficulty, int totalSteps) {
+    return Row(
+      children: const [
+
+      ],
+    );
+  }
+
+  Row buildBadge(String badgeTitle) {
     return Row(
       children: [
         const Expanded(flex: 5, child: Text('')),
@@ -107,7 +133,7 @@ class _MealCardState extends State<MealCard> {
               color: Color(CustomColorPalette.primaryColor),
             ),
             child: CustomText(
-              text: "New",
+              text: badgeTitle,
               color: Color(CustomColorPalette.white),
             ),
           )

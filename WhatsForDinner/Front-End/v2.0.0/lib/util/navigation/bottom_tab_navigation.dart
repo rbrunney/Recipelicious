@@ -45,15 +45,15 @@ class _BottomTabNavigationState extends State<BottomTabNavigation> {
           showUnselectedLabels: false,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(MaterialCommunityIcons.chart_line),
+              icon: Icon(MaterialCommunityIcons.chef_hat),
               label: 'Portfolio',
             ),
             BottomNavigationBarItem(
-              icon: Icon(MaterialCommunityIcons.book_education_outline),
+              icon: Icon(MaterialCommunityIcons.book_outline),
               label: 'Lesson',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Ionicons.podium_outline),
+              icon: Icon(Ionicons.newspaper_outline),
               label: 'Challenge',
             ),
             BottomNavigationBarItem(
