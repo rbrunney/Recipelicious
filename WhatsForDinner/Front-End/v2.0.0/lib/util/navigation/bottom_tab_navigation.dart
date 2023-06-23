@@ -46,15 +46,15 @@ class _BottomTabNavigationState extends State<BottomTabNavigation> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(MaterialCommunityIcons.chef_hat),
-              label: 'Portfolio',
+              label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(MaterialCommunityIcons.book_outline),
-              label: 'Lesson',
+              icon: Icon(Ionicons.chatbubbles_outline),
+              label: 'Chat',
             ),
             BottomNavigationBarItem(
               icon: Icon(Ionicons.newspaper_outline),
-              label: 'Challenge',
+              label: 'Recipes',
             ),
             BottomNavigationBarItem(
                 icon: Icon(MaterialCommunityIcons.account_circle_outline),
