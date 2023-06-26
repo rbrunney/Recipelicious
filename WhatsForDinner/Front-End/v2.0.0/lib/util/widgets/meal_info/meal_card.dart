@@ -129,7 +129,8 @@ class _MealCardState extends State<MealCard> {
               ),
             ),
             CustomText(
-                text: "${time?.hours}:${time?.minutes}",
+                // text: "${time?.hours}:${time?.minutes}",
+              text: "1:45",
                 color: Color(CustomColorPalette.textBodyColor))
           ],
         )

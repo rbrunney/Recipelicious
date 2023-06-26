@@ -41,8 +41,7 @@ class _BottomTabNavigationState extends State<BottomTabNavigation> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
+          showUnselectedLabels: true,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(MaterialCommunityIcons.chef_hat),
@@ -63,7 +62,7 @@ class _BottomTabNavigationState extends State<BottomTabNavigation> {
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Color(CustomColorPalette.primaryColor),
-          unselectedItemColor: Color(CustomColorPalette.secondaryColor),
+          unselectedItemColor: Color(CustomColorPalette.textBodyColor),
           onTap: onTapped,
         ),
       ),
