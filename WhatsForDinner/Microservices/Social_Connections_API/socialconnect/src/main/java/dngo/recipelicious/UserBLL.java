@@ -37,10 +37,24 @@ public class UserBLL {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
+        if(requestingUser.getFriendsTo().stream().anyMatch(predicate -> predicate.getSecondUser().getId().equals(friendUser.getId()))){
+            Map<String, Object> response = new HashMap<>();
+
+            response.put("message", "User is already friends with target user!");
+            response.put("user1", requestingUser);
+            response.put("user2", friendUser);
+            response.put("date-time", LocalDateTime.now().toString());
+
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+
+
         UserRelation relation = new UserRelation();
 
         relation.setFirstUser(requestingUser);
         relation.setSecondUser(friendUser);
+        userRelationJPA.saveAndFlush(relation);
 
         requestingUser.getFriendsTo().add(relation);
 
@@ -50,7 +64,6 @@ public class UserBLL {
             {add(requestingUser); add(friendUser);}
         });
 
-        userRelationJPA.saveAndFlush(relation);
 
         Map<String, Object> response = new HashMap<>();
 
@@ -59,6 +72,74 @@ public class UserBLL {
         response.put("user2", friendUser);
         response.put("date-time", LocalDateTime.now().toString());
 
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> removeFriend(Long idOfRequestingUser, Long idOfFriendUser){
+
+        User requestingUser = userJPA.findById(idOfRequestingUser).orElse(null);
+        User friendUser = userJPA.findById(idOfFriendUser).orElse(null);
+
+        if(requestingUser == null || friendUser == null){
+            Map<String, Object> response = new HashMap<>();
+
+            response.put("message", "Invalid user supplied!");
+            response.put("date-time", LocalDateTime.now().toString());
+
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        UserRelation relationToDelete = requestingUser.getFriendsTo().stream().filter(predicate -> predicate.getSecondUser().getId().equals(friendUser.getId())).findFirst().orElse(null);
+
+        if(relationToDelete == null){
+            Map<String, Object> response = new HashMap<>();
+
+            response.put("message", "User is not friends with this person!");
+            response.put("date-time", LocalDateTime.now().toString());
+
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        requestingUser.getFriendsTo().remove(relationToDelete);
+        friendUser.getFriendsFrom().remove(relationToDelete);
+
+        userJPA.saveAllAndFlush(new ArrayList<User>(){
+            {add(requestingUser); add(friendUser);}
+        });
+
+        userRelationJPA.delete(relationToDelete);
+        userRelationJPA.flush();
+
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("message", "Friend deleted");
+        response.put("user1", requestingUser);
+        response.put("user2", friendUser);
+        response.put("date-time", LocalDateTime.now().toString());
+
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> getFriendships(Long userId){
+        User requestedUser = userJPA.findById(userId).orElse(null);
+
+        if(requestedUser == null){
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Invalid user supplied!");
+            response.put("date-time", LocalDateTime.now().toString());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+
+        String userRelationString = "Friendships for user " + requestedUser.getUsername() + " retrieved";
+
+        response.put("message", userRelationString);
+        response.put("friendsFrom", requestedUser.getFriendsFrom());
+        response.put("friendsTo", requestedUser.getFriendsTo());
+        response.put("date-time", LocalDateTime.now().toString());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

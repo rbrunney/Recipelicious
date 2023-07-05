@@ -1,11 +1,14 @@
 package dngo.recipelicious;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Set;
 
 @Entity
+//@JsonIdentityInfo(property = "id", generator = ObjectIdGenerators.PropertyGenerator.class)
 public class User {
 
     @Id
@@ -13,8 +16,10 @@ public class User {
     @Column(name="user_id")
     private Long id;
 
+
     @OneToMany(mappedBy = "firstUser", fetch = FetchType.LAZY)
     private Set<UserRelation> friendsTo;
+
 
     @OneToMany(mappedBy = "secondUser", fetch = FetchType.LAZY)
     private Set<UserRelation> friendsFrom;

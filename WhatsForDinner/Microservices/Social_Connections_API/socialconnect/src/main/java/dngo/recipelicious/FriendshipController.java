@@ -3,10 +3,7 @@ package dngo.recipelicious;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -25,6 +22,20 @@ public class FriendshipController {
 
         return userBLL.addFriend(userOneId, userTwoId);
     }
+
+    @RequestMapping(value = "/deleteFriendship", method = RequestMethod.DELETE)
+    public ResponseEntity<Map<String, Object>> deleteFriendship(@RequestBody JsonNode userIds){
+        Long userOneId = userIds.get("user1").asLong();
+        Long userTwoId = userIds.get("user2").asLong();
+
+        return userBLL.removeFriend(userOneId, userTwoId);
+    }
+
+    @RequestMapping(value = "/getUserFriendships", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getUserFriendships(@RequestParam Long userId){
+        return userBLL.getFriendships(userId);
+    }
+
 
 
 
