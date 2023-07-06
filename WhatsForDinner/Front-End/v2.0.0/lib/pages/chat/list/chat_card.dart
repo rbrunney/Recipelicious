@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import '../../../util/style/style.dart';
 import '../../../util/widgets/text/custom_text.dart';
@@ -7,10 +8,12 @@ class ChatCard extends StatefulWidget {
   final bool hasRecentMessage;
   final bool isLastMessageFromUser;
   final String lastMessage;
+  final String chatPicture;
   const ChatCard({
     Key? key,
     this.hasRecentMessage = false,
     this.isLastMessageFromUser = false,
+    this.chatPicture = '',
     required this.lastMessage
   }) : super(key: key);
 
@@ -42,42 +45,50 @@ class _ChatCardState extends State<ChatCard> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Row(
+            child: Stack(
               children: [
-                Container(
-                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
-                    child: const CircleAvatar(
-                      radius: 25,
-                    )
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.05,
-                    left: MediaQuery.of(context).size.width * 0.03
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.008),
-                        child: CustomText(
-                          color: Color(CustomColorPalette.textTitleColor),
-                          text: "David Ngo",
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                Row(
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05),
+                        child: widget.chatPicture != '' ? const CircleAvatar(
+                          radius: 25,
+                        ) : Icon(
+                          MaterialIcons.account_circle,
+                          size: 50,
+                          color: Color(CustomColorPalette.textBodyColor),
+                        )
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.width * 0.05,
+                          left: MediaQuery.of(context).size.width * 0.03
                       ),
-                      CustomText(
-                        color: widget.hasRecentMessage ? Color(CustomColorPalette.textTitleColor) : Color(CustomColorPalette.textBodyColor),
-                        text: widget.isLastMessageFromUser ? "Me: ${widget.lastMessage}" : checkMessageLength(widget.lastMessage),
-                      )
-                    ],
-                  ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.008),
+                            child: CustomText(
+                              color: Color(CustomColorPalette.textTitleColor),
+                              text: "David Ngo",
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          CustomText(
+                            color: widget.hasRecentMessage ? Color(CustomColorPalette.textTitleColor) : Color(CustomColorPalette.textBodyColor),
+                            text: widget.isLastMessageFromUser ? "Me: ${widget.lastMessage}" : checkMessageLength(widget.lastMessage),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.055,
-                    left: MediaQuery.of(context).size.width * 0.095
+                      top: MediaQuery.of(context).size.width * 0.055,
+                      left: MediaQuery.of(context).size.width * 0.65
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -88,14 +99,14 @@ class _ChatCardState extends State<ChatCard> {
                         fontSize: 13,
                       ),
                       Visibility(
-                        visible: widget.hasRecentMessage,
-                        child: buildTotalNotifications(3)
+                          visible: widget.hasRecentMessage,
+                          child: buildTotalNotifications(3)
                       )
                     ],
                   ),
                 )
               ],
-            ),
+            )
           ),
         )
     );
@@ -103,7 +114,10 @@ class _ChatCardState extends State<ChatCard> {
 
   Container buildTotalNotifications(int totalNotifications) {
     return Container(
-      margin: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.015),
+      margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.width * 0.022,
+        right: MediaQuery.of(context).size.width * 0.045
+      ),
       child: CircleAvatar(
         backgroundColor: Color(CustomColorPalette.primaryColor),
         radius: 10,
