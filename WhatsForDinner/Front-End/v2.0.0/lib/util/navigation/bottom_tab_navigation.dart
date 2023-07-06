@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:whatsfordinner/pages/chat/list/chat_list_page.dart';
 import 'package:whatsfordinner/pages/home/home_page.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 
@@ -35,7 +36,7 @@ class _BottomTabNavigationState extends State<BottomTabNavigation> {
           },
           children: const [
             HomePage(),
-            HomePage(),
+            ChatListPage(),
             HomePage(),
             HomePage(),
           ],

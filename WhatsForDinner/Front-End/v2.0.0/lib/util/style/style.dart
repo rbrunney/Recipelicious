@@ -8,6 +8,9 @@ class CustomColorPalette {
   static int textBodyColor = 0xFFBEBEBE;
   static int lineColor = 0xFFEEEFF0;
   static int white = 0xFFFFFFFF;
+
+  static int backgroundGray = 0xFFEEEFF0;
+  static int textGray = 0xFFBDBDC1;
 }
 
 class TextFont {
