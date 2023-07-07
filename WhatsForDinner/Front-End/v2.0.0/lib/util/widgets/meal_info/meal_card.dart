@@ -19,7 +19,7 @@ class _MealCardState extends State<MealCard> {
         alignment: Alignment.center,
         child: GestureDetector(
             onTap: () {
-              print('What the nut');
+
             },
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.18,
