@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:whatsfordinner/models/meal.dart';
+import 'package:whatsfordinner/pages/meal/meal_start_page.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/text/custom_text.dart';
 
@@ -19,7 +20,10 @@ class _MealCardState extends State<MealCard> {
         alignment: Alignment.center,
         child: GestureDetector(
             onTap: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MealStartPage())
+              );
             },
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.18,

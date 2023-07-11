@@ -33,7 +33,6 @@ class CustomButton extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(25))),
           child: SizedBox(
             height: 45,
-            width: MediaQuery.of(context).size.width * 0.90,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
