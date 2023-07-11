@@ -1,0 +1,53 @@
+.App {
+  text-align: center;
+}
+
+
+
+.form-outline .form-control {
+  min-height: auto;
+  padding: 0.32rem 0.75rem;
+  border: 0;
+  background: transparent;
+  transition: all .2s linear;
+}
+.form-control.form-control-lg {
+  line-height: 2.15;
+  border-radius: 0.25rem;
+}
+
+
+
+
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+.d-flex {
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+

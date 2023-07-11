@@ -1,0 +1,28 @@
+@import '~mdb-ui-kit/css/mdb.min.css';
+$circleSize: 40px;
+
+
+// Functions
+@mixin centerDiv() {
+    margin: 40px;
+}
+
+
+.class {
+    @include centerDiv();
+
+    //&-yourmom {
+    //    margin: yo
+    //}
+
+    // &-yoshi {
+    //     margin: 
+    // }
+
+    size: $circleSize;
+
+}
+
+.another-class {
+    @include centerDiv();
+}
