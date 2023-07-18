@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:whatsfordinner/pages/account/account_page.dart';
 import 'package:whatsfordinner/pages/chat/list/chat_list_page.dart';
 import 'package:whatsfordinner/pages/home/home_page.dart';
+import 'package:whatsfordinner/pages/recipe_collection/recipe_collection_page.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 
 class BottomTabNavigation extends StatefulWidget {
@@ -38,7 +39,7 @@ class _BottomTabNavigationState extends State<BottomTabNavigation> {
           children: const [
             HomePage(),
             ChatListPage(),
-            HomePage(),
+            RecipeCollectionPage(),
             AccountPage(),
           ],
         ),
