@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:whatsfordinner/pages/meal/ingredient.dart';
+import 'package:whatsfordinner/pages/meal/ingredient_card.dart';
 import 'package:whatsfordinner/pages/meal/meal_tab_info_bar.dart';
+import 'package:whatsfordinner/pages/meal/recipe_detial_card.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 import 'package:whatsfordinner/util/widgets/page/layouts/base_page_no_scroll_layout.dart';
@@ -10,9 +11,11 @@ import '../../util/widgets/text/custom_text.dart';
 
 class MealStartPage extends StatefulWidget {
   final double rating;
-  const MealStartPage({
+  bool isSaved;
+  MealStartPage({
     Key? key,
-    this.rating = 5
+    this.rating = 5,
+    this.isSaved = false
   }) : super(key: key);
 
   @override
@@ -46,19 +49,7 @@ class _MealStartPageState extends State<MealStartPage> {
           ),
           child: SingleChildScrollView(
             child: Column(
-              children: const [
-                IngredientCard(ingredientName: "Milk", servingSize: "2 cups",),
-                IngredientCard(ingredientName: "Bread", servingSize: "2 slices",),
-                IngredientCard(ingredientName: "Ground Beef", servingSize: "5 lbs",),
-                IngredientCard(ingredientName: "Cheese", servingSize: "10 cups",),
-                IngredientCard(ingredientName: "Pepper", servingSize: "10 cups",),
-                IngredientCard(ingredientName: "Salt", servingSize: "10 cups",),
-                IngredientCard(ingredientName: "Red Chili Flakes", servingSize: "10 cups",),
-                IngredientCard(ingredientName: "Paprika", servingSize: "10 cups",),
-                IngredientCard(ingredientName: "Cayenne Pepper", servingSize: "10 cups",),
-
-
-              ],
+              children: buildRecipeDetails(),
             ),
           ),
         ),
@@ -67,6 +58,29 @@ class _MealStartPageState extends State<MealStartPage> {
         buildBottomBar()
       ],
     );
+  }
+
+  List<Widget> buildRecipeDetails() {
+    return const [
+      RecipeDetailCard(title: "Chef", detail: "rbrunney",),
+      RecipeDetailCard(title: "Likes", detail: "504 likes",),
+      RecipeDetailCard(title: "Saves", detail: "201 saves",),
+      RecipeDetailCard(title: "Total Steps", detail: "5 steps",),
+    ];
+  }
+
+  List<Widget> buildIngredients() {
+    return const [
+      IngredientCard(ingredientName: "Milk", servingSize: "2 cups",),
+      IngredientCard(ingredientName: "Bread", servingSize: "2 slices",),
+      IngredientCard(ingredientName: "Ground Beef", servingSize: "5 lbs",),
+      IngredientCard(ingredientName: "Cheese", servingSize: "10 cups",),
+      IngredientCard(ingredientName: "Pepper", servingSize: "10 cups",),
+      IngredientCard(ingredientName: "Salt", servingSize: "10 cups",),
+      IngredientCard(ingredientName: "Red Chili Flakes", servingSize: "10 cups",),
+      IngredientCard(ingredientName: "Paprika", servingSize: "10 cups",),
+      IngredientCard(ingredientName: "Cayenne Pepper", servingSize: "10 cups",),
+    ];
   }
 
   Container buildHeader() {
@@ -273,12 +287,19 @@ class _MealStartPageState extends State<MealStartPage> {
                 radius: 23,
                 backgroundColor: Color(CustomColorPalette.white),
                 child: IconButton(
-                  icon: Icon(
+                  icon: widget.isSaved ? Icon(
+                    Ionicons.bookmark,
+                    size: 25,
+                    color: Color(CustomColorPalette.primaryColor)
+                  ) : Icon(
                       Ionicons.bookmark_outline,
                       size: 25,
                       color: Color(CustomColorPalette.primaryColor)
                   ),
                   onPressed: () {
+                    setState(() {
+                      widget.isSaved = !widget.isSaved;
+                    });
                   },
                 )
             )

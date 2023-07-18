@@ -22,7 +22,7 @@ class _MealCardState extends State<MealCard> {
             onTap: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MealStartPage())
+                  MaterialPageRoute(builder: (context) => MealStartPage())
               );
             },
             child: SizedBox(

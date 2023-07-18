@@ -78,7 +78,7 @@ class _AddBarState extends State<AddBarBullet> {
                     labelText: 'Qty'),
               ),
             ),
-            Expanded(flex: 1, child: DropdownMenu())
+            // Expanded(flex: 1, child: DropdownMenu())
           ],
         ),
         Container(

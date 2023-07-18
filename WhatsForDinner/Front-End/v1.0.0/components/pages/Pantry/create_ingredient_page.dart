@@ -78,7 +78,7 @@ class _CreateIngredientState extends State<CreateIngredientPage> {
               width: 80,
               height: 60,
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              child: const DropdownMenu(),
+              // child: const DropdownMenu(),
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 20),
