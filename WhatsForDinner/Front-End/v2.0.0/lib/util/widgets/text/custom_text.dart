@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 
 class CustomText extends StatefulWidget {
+  int maxLines;
   double topMargin;
   double bottomMargin;
   double leftMargin;
@@ -20,6 +21,7 @@ class CustomText extends StatefulWidget {
     this.rightMargin = 0,
     this.fontSize = 15,
     this.text = '',
+    this.maxLines = 1,
     this.alignment = Alignment.center,
     this.fontWeight = FontWeight.normal,
     required this.color,
@@ -37,6 +39,7 @@ class _CustomTextState extends State<CustomText> {
         alignment: widget.alignment,
         child: Text(
           widget.text,
+          overflow: TextOverflow.visible,
           style: TextStyle(
               fontFamily: TextFont.textFont,
               fontSize: widget.fontSize,

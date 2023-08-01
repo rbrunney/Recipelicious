@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:whatsfordinner/pages/meal/ingredient_card.dart';
 import 'package:whatsfordinner/pages/meal/meal_tab_info_bar.dart';
 import 'package:whatsfordinner/pages/meal/recipe_detial_card.dart';
+import 'package:whatsfordinner/pages/meal/recipe_instruction/recipe_instruction_page.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 import 'package:whatsfordinner/util/widgets/page/layouts/base_page_no_scroll_layout.dart';
@@ -98,16 +100,16 @@ class _MealStartPageState extends State<MealStartPage> {
           ),
           Expanded(
             flex: 6,
-            child: Container(
-              margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.1),
-              child: CustomText(
-                  text: "Cheese Burger",
-                  alignment: Alignment.centerLeft,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Color(CustomColorPalette.textTitleColor)
-              )
+            child: CustomText(
+                text: "Cheese Burger",
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Color(CustomColorPalette.textTitleColor)
             )
+          ),
+          Expanded(
+            flex: 1,
+            child: buildShareButton()
           )
         ],
       )
@@ -134,6 +136,32 @@ class _MealStartPageState extends State<MealStartPage> {
           )
         )
       )
+    );
+  }
+
+  Container buildShareButton() {
+    return Container(
+        child: CircleAvatar(
+            radius: 25,
+            backgroundColor: Color(CustomColorPalette.backgroundGray),
+            child: CircleAvatar(
+                radius: 22,
+                backgroundColor: Color(CustomColorPalette.white),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: IconButton(
+                    icon: Icon(
+                        Ionicons.share_outline,
+                        size: 20,
+                        color: Color(CustomColorPalette.primaryColor)
+                    ),
+                    onPressed: () async {
+                      await Share.share('Check this out');
+                    },
+                  )
+                )
+            )
+        )
     );
   }
 
@@ -268,7 +296,14 @@ class _MealStartPageState extends State<MealStartPage> {
                   text: "Start Cooking",
                   color: Color(CustomColorPalette.primaryColor),
                   onTap: () {
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RecipeInstructionPage(
+                          currentStep: 7,
+                          totalSteps: 12,
+                          rating: widget.rating,
+                        ))
+                    );
                   },
                 )
               )
@@ -296,7 +331,7 @@ class _MealStartPageState extends State<MealStartPage> {
                       size: 25,
                       color: Color(CustomColorPalette.primaryColor)
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       widget.isSaved = !widget.isSaved;
                     });
