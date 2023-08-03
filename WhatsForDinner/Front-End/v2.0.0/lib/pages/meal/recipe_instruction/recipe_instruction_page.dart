@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:whatsfordinner/pages/meal/ingredient_card.dart';
 import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 
 import '../../../util/style/style.dart';
@@ -28,12 +29,30 @@ class _RecipeInstructionPageState extends State<RecipeInstructionPage> {
       contents: [
         buildHeader(),
         buildProgressBar(),
-        buildMainImage(),
-        buildRecipeInstruction(),
-        buildIngredientsBox(),
-        const Spacer(),
-        const Divider(thickness: 1.5,),
-        buildBottomBar()
+        Expanded(
+          flex: 6,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildMainImage(),
+                buildRecipeInstruction(),
+                buildIngredientsBox(),
+                buildIngredients(),
+
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Column(
+            children: [
+              const Spacer(),
+              const Divider(thickness: 1.5,),
+              buildBottomBar()
+            ],
+          )
+        )
       ],
     );
   }
@@ -236,8 +255,10 @@ class _RecipeInstructionPageState extends State<RecipeInstructionPage> {
             ],
           ),
           CustomText(
-            leftMargin: 55,
-            text: "When making this recipe put the ingredients into it so it it poggers. Lets see how far this goes bevause it would be cool to see how far it will actually wrap now this is even more of a test becuasea please just work very poggers poggers so a ha ha",
+            leftMargin: 5,
+            rightMargin: 5,
+            alignment: Alignment.centerLeft,
+            text: "     When making this recipe put the ingredients into it so it it poggers. Lets see how far this goes bevause it would be cool to see how far it will actually wrap now this is even more of a test becuasea please just work very poggers poggers so a ha ha",
             fontSize: 18,
             color: Color(CustomColorPalette.textTitleColor)
           )
@@ -263,6 +284,19 @@ class _RecipeInstructionPageState extends State<RecipeInstructionPage> {
     );
   }
 
+  Container buildIngredients() {
+    return Container(
+      child: Column(
+        children: const [
+          IngredientCard(ingredientName: "Test", servingSize: "1.6g"),
+          IngredientCard(ingredientName: "Test", servingSize: "1.6g"),
+          IngredientCard(ingredientName: "Test", servingSize: "1.6g"),
+          IngredientCard(ingredientName: "Test", servingSize: "1.6g")
+        ],
+      ),
+    );
+  }
+
   Container buildBottomBar() {
     return Container(
       margin: EdgeInsets.only(
@@ -271,7 +305,7 @@ class _RecipeInstructionPageState extends State<RecipeInstructionPage> {
           bottom: MediaQuery.of(context).size.height * 0.02,
           top: MediaQuery.of(context).size.height * 0.01
       ),
-      alignment: Alignment.bottomCenter,
+      // alignment: Alignment.bottomCenter,
       child: CustomButton(
         text: "Next Step",
         color: Color(CustomColorPalette.primaryColor),
