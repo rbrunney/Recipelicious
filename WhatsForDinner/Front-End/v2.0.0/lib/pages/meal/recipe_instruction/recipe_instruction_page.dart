@@ -6,6 +6,7 @@ import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 import '../../../util/style/style.dart';
 import '../../../util/widgets/page/layouts/base_page_no_scroll_layout.dart';
 import '../../../util/widgets/text/custom_text.dart';
+import '../completed_recipe_page.dart';
 
 class RecipeInstructionPage extends StatefulWidget {
   final int totalSteps;
@@ -320,6 +321,11 @@ class _RecipeInstructionPageState extends State<RecipeInstructionPage> {
                 ))
             );
           }
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CompletedRecipePage())
+          );
         },
       ),
     );
