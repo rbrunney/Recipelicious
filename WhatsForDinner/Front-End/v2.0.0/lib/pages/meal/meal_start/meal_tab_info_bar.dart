@@ -29,7 +29,7 @@ class _MealTabInfoBarState extends State<MealTabInfoBar> {
               child: InkWell(
                 onTap: () {
                   setState(() {
-                  isActive = !isActive;
+                    isActive = !isActive;
                   });
                 },
                 child: buildTab("Ingredients", isActive),

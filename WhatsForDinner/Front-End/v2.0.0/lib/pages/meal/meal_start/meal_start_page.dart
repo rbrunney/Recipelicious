@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:whatsfordinner/pages/meal/ingredient_card.dart';
-import 'package:whatsfordinner/pages/meal/meal_tab_info_bar.dart';
+import 'package:whatsfordinner/pages/meal/util/meal_image.dart';
 import 'package:whatsfordinner/pages/meal/recipe_detial_card.dart';
 import 'package:whatsfordinner/pages/meal/recipe_instruction/recipe_instruction_page.dart';
+import 'package:whatsfordinner/util/navigation/custom_tab_navigation.dart';
 import 'package:whatsfordinner/util/style/style.dart';
 import 'package:whatsfordinner/util/widgets/page/custom_button.dart';
 import 'package:whatsfordinner/util/widgets/page/layouts/base_page_no_scroll_layout.dart';
+import 'package:whatsfordinner/util/widgets/util/circle_icon_button.dart';
+import 'package:whatsfordinner/util/widgets/util/meal_stat.dart';
 
-import '../../util/widgets/text/custom_text.dart';
+import '../../../util/widgets/text/custom_text.dart';
 
 class MealStartPage extends StatefulWidget {
   final double rating;
@@ -25,13 +28,14 @@ class MealStartPage extends StatefulWidget {
 }
 
 class _MealStartPageState extends State<MealStartPage> {
+
   @override
   Widget build(BuildContext context) {
     return BasePageNoScrollLayout(
       contents: [
         buildHeader(),
         buildMainImage(),
-        const MealTabInfoBar(),
+        buildTabNavigation(),
         Container(
           margin: EdgeInsets.only(
             top: MediaQuery.of(context).size.height * 0.03,
@@ -62,6 +66,15 @@ class _MealStartPageState extends State<MealStartPage> {
     );
   }
 
+  Container buildTabNavigation() {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.05
+      ),
+      child: const CustomTabNavigation()
+    );
+  }
+
   List<Widget> buildRecipeDetails() {
     return const [
       RecipeDetailCard(title: "Chef", detail: "rbrunney",),
@@ -86,10 +99,12 @@ class _MealStartPageState extends State<MealStartPage> {
   }
 
   Container buildHeader() {
+    final double sideMargin = MediaQuery.of(context).size.height * 0.02;
+
     return Container(
       margin: EdgeInsets.only(
-        left: MediaQuery.of(context).size.width * 0.05,
-        right: MediaQuery.of(context).size.width * 0.05,
+        left: sideMargin,
+        right: sideMargin,
         top: MediaQuery.of(context).size.height * 0.04
       ),
       child: Row(
@@ -99,7 +114,7 @@ class _MealStartPageState extends State<MealStartPage> {
             child: buildPreviousButton(),
           ),
           Expanded(
-            flex: 6,
+            flex: 4,
             child: CustomText(
                 text: "Cheese Burger",
                 fontSize: 25,
@@ -116,84 +131,65 @@ class _MealStartPageState extends State<MealStartPage> {
     );
   }
 
-  Container buildPreviousButton() {
-    return Container(
-      child: CircleAvatar(
-        radius: 25,
-        backgroundColor: Color(CustomColorPalette.backgroundGray),
-        child: CircleAvatar(
-          radius: 23,
-          backgroundColor: Color(CustomColorPalette.white),
-          child: IconButton(
-            icon: Icon(
-                Ionicons.arrow_back_outline,
-                size: 25,
-                color: Color(CustomColorPalette.primaryColor)
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-        )
-      )
+  CircleIconButton buildPreviousButton() {
+    return CircleIconButton(
+      icon: Ionicons.arrow_back_outline,
+      onTap: () {
+        Navigator.pop(context);
+      },
     );
   }
 
-  Container buildShareButton() {
-    return Container(
-        child: CircleAvatar(
-            radius: 25,
-            backgroundColor: Color(CustomColorPalette.backgroundGray),
-            child: CircleAvatar(
-                radius: 22,
-                backgroundColor: Color(CustomColorPalette.white),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: IconButton(
-                    icon: Icon(
-                        Ionicons.share_outline,
-                        size: 20,
-                        color: Color(CustomColorPalette.primaryColor)
-                    ),
-                    onPressed: () async {
-                      await Share.share('Check this out');
-                    },
-                  )
-                )
-            )
-        )
+  CircleIconButton buildShareButton() {
+    return CircleIconButton(
+        icon: Ionicons.share_outline,
+        onTap: () async {
+          await Share.share('Check this out');
+        }
     );
   }
 
   Container buildMainImage() {
     return Container(
       margin: EdgeInsets.symmetric(
-        vertical: MediaQuery.of(context).size.height * 0.03,
+        vertical: MediaQuery.of(context).size.height * 0.025,
         horizontal: MediaQuery.of(context).size.width * 0.05
       ),
-      child: Stack(
-        children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                color: Color(CustomColorPalette.primaryColor),
+      child: const MealImage()
+    );
+  }
 
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                child: Image.network(
-                  "https://i.pinimg.com/736x/ba/92/7f/ba927ff34cd961ce2c184d47e8ead9f6.jpg",
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
-                )
-              )
-            ),
-          buildRating(),
-          buildCookTime(),
-          buildDifficulty(),
-        ],
+  Container buildMealStats() {
+    final double sideMargin = MediaQuery.of(context).size.width * 0.05;
+    return Container(
+      margin: EdgeInsets.only(
+        left: sideMargin,
+        right: sideMargin,
+        bottom: MediaQuery.of(context).size.height * 0.015
       ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Expanded(
+            child: MealStat(
+                icon: FontAwesome.star_o,
+                stat: "4.6"
+            ),
+          ),
+          Expanded(
+            child: MealStat(
+                icon: Ionicons.alarm_outline,
+                stat: "8:46"
+            ),
+          ),
+          Expanded(
+              child: MealStat(
+                  icon: Ionicons.flag_outline,
+                  stat: "Medium"
+              )
+          )
+        ],
+      )
     );
   }
 
