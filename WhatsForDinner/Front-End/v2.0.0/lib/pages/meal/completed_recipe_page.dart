@@ -21,42 +21,21 @@ class _CompletedRecipePageState extends State<CompletedRecipePage> {
       contents: [
         buildHeader(),
         buildMainImage(),
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.15
-          ),
-          child: Row(
-            children: [
-              Expanded(child: buildSaveButton()),
-              Expanded(child: buildCommentButton()),
-              Expanded(child: buildShareButton()),
-              Expanded(child: buildLikeButton()),
-            ],
-          )
-        ),
-        CustomText(
-          text: "Don't stop here cheif! There are so many more recipes to be discovered! Tasty Adventures Await!",
-          fontSize: 18,
-          color: Color(CustomColorPalette.textTitleColor),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.05
-          ),
-          child: CustomButton(
-            text: "Complete",
-            color: Color(CustomColorPalette.primaryColor),
-            onTap: () {  },
-          ),
-        )
+        buildEngagementButtons(),
+        buildCompletedMessage(),
+        const Spacer(),
+        buildCompleteButton()
       ],
     );
   }
 
   Container buildHeader() {
     return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.05
+      margin: EdgeInsets.only(
+        left: MediaQuery.of(context).size.width * 0.05,
+        right: MediaQuery.of(context).size.width * 0.05,
+        top: MediaQuery.of(context).size.height * 0.05,
+        bottom: MediaQuery.of(context).size.height * 0.18
       ),
       child: Column(
         children: [
@@ -73,9 +52,10 @@ class _CompletedRecipePageState extends State<CompletedRecipePage> {
 
   Container buildMainImage() {
     return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: MediaQuery.of(context).size.height * 0.03,
-          horizontal: MediaQuery.of(context).size.width * 0.05
+      margin: EdgeInsets.only(
+        left: MediaQuery.of(context).size.width * 0.05,
+        right: MediaQuery.of(context).size.width * 0.05,
+        bottom: MediaQuery.of(context).size.height * 0.06
       ),
       child: Stack(
         children: [
@@ -83,7 +63,6 @@ class _CompletedRecipePageState extends State<CompletedRecipePage> {
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 color: Color(CustomColorPalette.primaryColor),
-
               ),
               child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -272,6 +251,76 @@ class _CompletedRecipePageState extends State<CompletedRecipePage> {
                 )
             )
         )
+    );
+  }
+
+  Container buildEngagementButtons() {
+    return Container(
+        margin: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.15,
+          right: MediaQuery.of(context).size.width * 0.15,
+          bottom: MediaQuery.of(context).size.height * 0.06
+        ),
+        child: Row(
+          children: [
+            Expanded(child: buildLikeButton()),
+            Expanded(child: buildCommentButton()),
+            Expanded(child: buildSaveButton()),
+            Expanded(child: buildShareButton()),
+          ],
+        )
+    );
+  }
+
+  Container buildCompletedMessage() {
+
+    Color textColor = Color(CustomColorPalette.textTitleColor);
+    double textSize = 20;
+
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.05
+      ),
+      child: Column(
+        children: [
+          CustomText(
+            alignment: Alignment.center,
+            text: "Don't stop here chef!",
+            fontSize: textSize,
+            color: textColor
+          ),
+          CustomText(
+              alignment: Alignment.center,
+              text: "There are more recipes to be explored!",
+              fontSize: textSize,
+              color: textColor
+          ),
+          CustomText(
+            topMargin: 15,
+            alignment: Alignment.center,
+            text: "Tasty Adventures Await!",
+            fontSize: textSize,
+            color: textColor,
+          ),
+        ],
+      )
+    );
+  }
+
+  Container buildCompleteButton() {
+    return Container(
+      margin: EdgeInsets.only(
+        right: MediaQuery.of(context).size.width * 0.05,
+        left: MediaQuery.of(context).size.width * 0.05,
+        bottom: MediaQuery.of(context).size.height * 0.1,
+      ),
+      child: CustomButton(
+        text: "Complete",
+        color: Color(CustomColorPalette.primaryColor),
+        onTap: () {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        },
+      ),
     );
   }
 }

@@ -320,12 +320,12 @@ class _RecipeInstructionPageState extends State<RecipeInstructionPage> {
                   rating: widget.rating,
                 ))
             );
+          } else {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CompletedRecipePage())
+            );
           }
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CompletedRecipePage())
-          );
         },
       ),
     );
