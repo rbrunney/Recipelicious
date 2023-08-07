@@ -36,9 +36,9 @@ class _MealStartPageState extends State<MealStartPage> {
         buildHeader(),
         buildMainImage(),
         Expanded(
-          child: buildTabNavigation(),
+          child: buildTabNavigation()
         ),
-        const Spacer(),
+        // const Spacer(),
         const Divider(thickness: 1.5,),
         buildBottomBar()
       ],
@@ -63,34 +63,44 @@ class _MealStartPageState extends State<MealStartPage> {
     );
   }
 
-  SingleChildScrollView buildRecipeDetails() {
-    return SingleChildScrollView(
-      child: Column(
-        children: const [
-          RecipeDetailCard(title: "Chef", detail: "rbrunney",),
-          RecipeDetailCard(title: "Likes", detail: "504 likes",),
-          RecipeDetailCard(title: "Saves", detail: "201 saves",),
-          RecipeDetailCard(title: "Total Steps", detail: "5 steps",),
-        ]
-      )
+  Container buildRecipeDetails() {
+    return Container(
+      margin: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height * 0.015
+      ),
+      child: SingleChildScrollView(
+          child: Column(
+              children: const [
+                RecipeDetailCard(title: "Chef", detail: "rbrunney",),
+                RecipeDetailCard(title: "Likes", detail: "504 likes",),
+                RecipeDetailCard(title: "Saves", detail: "201 saves",),
+                RecipeDetailCard(title: "Total Steps", detail: "5 steps",),
+              ]
+          )
+      ),
     );
   }
 
-  SingleChildScrollView buildIngredients() {
-    return SingleChildScrollView(
-        child: Column(
-            children: const [
-              IngredientCard(ingredientName: "Milk", servingSize: "2 cups",),
-              IngredientCard(ingredientName: "Bread", servingSize: "2 slices",),
-              IngredientCard(ingredientName: "Ground Beef", servingSize: "5 lbs",),
-              IngredientCard(ingredientName: "Cheese", servingSize: "10 cups",),
-              IngredientCard(ingredientName: "Pepper", servingSize: "10 cups",),
-              IngredientCard(ingredientName: "Salt", servingSize: "10 cups",),
-              IngredientCard(ingredientName: "Red Chili Flakes", servingSize: "10 cups",),
-              IngredientCard(ingredientName: "Paprika", servingSize: "10 cups",),
-              IngredientCard(ingredientName: "Cayenne Pepper", servingSize: "10 cups",),
-            ]
-        )
+  Container buildIngredients() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 0.015
+      ),
+      child: SingleChildScrollView(
+          child: Column(
+              children: const [
+                IngredientCard(ingredientName: "Milk", servingSize: "2 cups",),
+                IngredientCard(ingredientName: "Bread", servingSize: "2 slices",),
+                IngredientCard(ingredientName: "Ground Beef", servingSize: "5 lbs",),
+                IngredientCard(ingredientName: "Cheese", servingSize: "10 cups",),
+                IngredientCard(ingredientName: "Pepper", servingSize: "10 cups",),
+                IngredientCard(ingredientName: "Salt", servingSize: "10 cups",),
+                IngredientCard(ingredientName: "Red Chili Flakes", servingSize: "10 cups",),
+                IngredientCard(ingredientName: "Paprika", servingSize: "10 cups",),
+                IngredientCard(ingredientName: "Cayenne Pepper", servingSize: "10 cups",),
+              ]
+          )
+      )
     );
   }
 

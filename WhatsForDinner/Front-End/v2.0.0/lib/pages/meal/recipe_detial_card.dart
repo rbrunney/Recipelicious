@@ -19,9 +19,6 @@ class _RecipeDetailCardState extends State<RecipeDetailCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.05
-      ),
       child: Row(
         children: [
           Expanded(

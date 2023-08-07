@@ -4,7 +4,7 @@ import 'package:whatsfordinner/util/widgets/text/custom_text.dart';
 
 class CustomTabNavigation extends StatefulWidget {
   final List<String> tabOptions;
-  final List<SingleChildScrollView> tabViewOptions;
+  final List<Container> tabViewOptions;
   const CustomTabNavigation({
     super.key,
     required this.tabOptions,
@@ -53,7 +53,7 @@ class _CustomTabNavigationState extends State<CustomTabNavigation> with SingleTi
     return Column(
       children: [
         SizedBox(
-          height: 50,
+          height: 40,
           child: Container(
               height: MediaQuery.of(context).size.height * 0.05,
               decoration: BoxDecoration(

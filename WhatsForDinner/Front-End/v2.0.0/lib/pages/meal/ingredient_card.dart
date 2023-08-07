@@ -23,7 +23,6 @@ class _IngredientCardState extends State<IngredientCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
       child: Row(
         children: [
           Expanded(
