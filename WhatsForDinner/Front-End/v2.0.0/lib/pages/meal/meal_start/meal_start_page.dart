@@ -35,29 +35,8 @@ class _MealStartPageState extends State<MealStartPage> {
       contents: [
         buildHeader(),
         buildMainImage(),
-        buildTabNavigation(),
-        Container(
-          margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.03,
-            bottom: 0
-          ),
-          child: const Divider(
-            height: 0.5,
-            thickness: 1,
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.03,
-          ),
-          constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.35
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: buildRecipeDetails(),
-            ),
-          ),
+        Expanded(
+          child: buildTabNavigation(),
         ),
         const Spacer(),
         const Divider(thickness: 1.5,),
@@ -71,31 +50,48 @@ class _MealStartPageState extends State<MealStartPage> {
       margin: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width * 0.05
       ),
-      child: const CustomTabNavigation()
+      child: CustomTabNavigation(
+        tabOptions: const [
+          "Ingredients",
+          "Recipe",
+        ],
+        tabViewOptions: [
+          buildIngredients(),
+          buildRecipeDetails()
+        ],
+      )
     );
   }
 
-  List<Widget> buildRecipeDetails() {
-    return const [
-      RecipeDetailCard(title: "Chef", detail: "rbrunney",),
-      RecipeDetailCard(title: "Likes", detail: "504 likes",),
-      RecipeDetailCard(title: "Saves", detail: "201 saves",),
-      RecipeDetailCard(title: "Total Steps", detail: "5 steps",),
-    ];
+  SingleChildScrollView buildRecipeDetails() {
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          RecipeDetailCard(title: "Chef", detail: "rbrunney",),
+          RecipeDetailCard(title: "Likes", detail: "504 likes",),
+          RecipeDetailCard(title: "Saves", detail: "201 saves",),
+          RecipeDetailCard(title: "Total Steps", detail: "5 steps",),
+        ]
+      )
+    );
   }
 
-  List<Widget> buildIngredients() {
-    return const [
-      IngredientCard(ingredientName: "Milk", servingSize: "2 cups",),
-      IngredientCard(ingredientName: "Bread", servingSize: "2 slices",),
-      IngredientCard(ingredientName: "Ground Beef", servingSize: "5 lbs",),
-      IngredientCard(ingredientName: "Cheese", servingSize: "10 cups",),
-      IngredientCard(ingredientName: "Pepper", servingSize: "10 cups",),
-      IngredientCard(ingredientName: "Salt", servingSize: "10 cups",),
-      IngredientCard(ingredientName: "Red Chili Flakes", servingSize: "10 cups",),
-      IngredientCard(ingredientName: "Paprika", servingSize: "10 cups",),
-      IngredientCard(ingredientName: "Cayenne Pepper", servingSize: "10 cups",),
-    ];
+  SingleChildScrollView buildIngredients() {
+    return SingleChildScrollView(
+        child: Column(
+            children: const [
+              IngredientCard(ingredientName: "Milk", servingSize: "2 cups",),
+              IngredientCard(ingredientName: "Bread", servingSize: "2 slices",),
+              IngredientCard(ingredientName: "Ground Beef", servingSize: "5 lbs",),
+              IngredientCard(ingredientName: "Cheese", servingSize: "10 cups",),
+              IngredientCard(ingredientName: "Pepper", servingSize: "10 cups",),
+              IngredientCard(ingredientName: "Salt", servingSize: "10 cups",),
+              IngredientCard(ingredientName: "Red Chili Flakes", servingSize: "10 cups",),
+              IngredientCard(ingredientName: "Paprika", servingSize: "10 cups",),
+              IngredientCard(ingredientName: "Cayenne Pepper", servingSize: "10 cups",),
+            ]
+        )
+    );
   }
 
   Container buildHeader() {
